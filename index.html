@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmotiQuest</title>
+
+  <!-- Fuentes y estilos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <main id="app">
+    <!-- ==========================
+         CABECERA GLOBAL
+         ========================== -->
+    <header id="main-header">
+      <h1 class="app-title">EmotiQuest</h1>
+      <nav id="main-nav" class="hidden">
+        <button id="nav-login" data-screen="login-screen">Inicio</button>
+        <button id="nav-quiz" data-screen="quiz-screen">Cuestionario</button>
+        <button id="nav-results" data-screen="result-screen">Resultados</button>
+        <button id="nav-report" data-screen="report-screen">Reporte</button>
+      </nav>
+    </header>
+
+    <!-- ==========================
+         PANTALLA 1: LOGIN FALSO
+         ========================== -->
+    <section id="login-screen" class="screen visible" aria-label="Inicio de sesión">
+      <h2>¡Comienza tu aventura emocional!</h2>
+
+      <form id="login-form" class="card" autocomplete="off">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" name="nombre" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="genero">Género</label>
+          <select id="genero" name="genero" required>
+            <option value="">Selecciona</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="edad">Edad</label>
+          <input id="edad" name="edad" type="number" min="1" required />
+        </div>
+
+        <div class="form-group">
+          <label for="grado">Grado escolar</label>
+          <input id="grado" name="grado" type="text" required />
+        </div>
+
+        <button type="submit" class="btn-primary">Ingresar</button>
+      </form>
+    </section>
+
+    <!-- ==========================
+         PANTALLA 2: CUESTIONARIO
+         ========================== -->
+    <section id="quiz-screen" class="screen hidden" aria-label="Cuestionario emocional">
+      <h2>Cuestionario</h2>
+
+      <div id="pregunta-container" class="card question-box">
+        <!-- Pregunta cargada dinámicamente -->
+      </div>
+
+      <div id="opciones-container" class="options-grid">
+        <!-- Botones de opciones -->
+      </div>
+
+      <div class="quiz-controls">
+        <button id="siguiente-btn" class="btn-secondary">Siguiente</button>
+        <button id="terminar-btn" class="btn-danger hidden">Terminar</button>
+      </div>
+
+      <!-- Indicador de progreso -->
+      <div id="progress-bar" class="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         PANTALLA 3: RESULTADOS
+         ========================== -->
+    <section id="result-screen" class="screen hidden" aria-label="Resultados del cuestionario">
+      <h2>Tu mezcla emocional</h2>
+
+      <div class="result-area">
+        <div id="batidos-list" class="batidos-grid"></div>
+        <div id="licuadora-area" class="licuadora"></div>
+        <div id="avatar-area" class="avatar"></div>
+      </div>
+
+      <div id="mensaje-final" class="mensaje-final"></div>
+
+      <div class="buttons">
+        <button id="ver-reporte-btn" class="btn-primary">Ver reporte</button>
+        <button id="volver-btn" class="btn-secondary">Volver al inicio</button>
+      </div>
+    </section>
+
+    <!-- ==========================
+         PANTALLA 4: REPORTE
+         ========================== -->
+    <section id="report-screen" class="screen hidden" aria-label="Reporte de resultados">
+      <h2>Reporte de Participantes</h2>
+
+      <div id="report-summary" class="card">
+        <!-- Datos dinámicos generados desde main.js -->
+      </div>
+
+      <div class="buttons">
+        <button id="volver-inicio-reporte" class="btn-secondary">Volver al inicio</button>
+        <button id="exportar-btn" class="btn-primary">Exportar reporte</button>
+      </div>
+    </section>
+
+    <!-- ==========================
+         PIE GLOBAL
+         ========================== -->
+    <footer id="main-footer">
+      <p>© 2025 EmotiQuest · Proyecto educativo emocional</p>
+    </footer>
+  </main>
+
+  <!-- ==========================
+       SCRIPTS
+       ========================== -->
+  <script src="js/main.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Node / VSCode / sistema
+node_modules/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Archivos de build / temporales
+dist/
+build/
+*.log
+
+# credenciales locales
+.env

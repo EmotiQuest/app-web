@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "pregunta": "¿Si tu emoción de hoy fuera un sabor, cuál sería?",
+    "condicion": "siempre",
+    "opciones": [
+      { "texto": "Dulce", "emocion": "alegria" },
+      { "texto": "Amargo", "emocion": "tristeza" },
+      { "texto": "Picante", "emocion": "enojo" },
+      { "texto": "Suave", "emocion": "calma" },
+      { "texto": "Ácido", "emocion": "miedo" }
+    ]
+  },
+  {
+    "id": 2,
+    "pregunta": "¿Qué sabor (emoción) sentiste durante tu fin de semana?",
+    "condicion": "lunes",
+    "opciones": [
+      { "texto": "Dulce", "emocion": "alegria" },
+      { "texto": "Amargo", "emocion": "tristeza" },
+      { "texto": "Picante", "emocion": "enojo" },
+      { "texto": "Refrescante", "emocion": "calma" },
+      { "texto": "Ácido", "emocion": "miedo" }
+    ]
+  },
+  {
+    "id": 3,
+    "pregunta": "Si tu semana fuera un sabor relacionado con cómo te sentiste, ¿cuál sería?",
+    "condicion": "viernes",
+    "opciones": [
+      { "texto": "Dulce", "emocion": "alegria" },
+      { "texto": "Amargo", "emocion": "tristeza" },
+      { "texto": "Picante", "emocion": "enojo" },
+      { "texto": "Suave", "emocion": "calma" },
+      { "texto": "Ácido", "emocion": "miedo" }
+    ]
+  },
+  {
+    "id": 4,
+    "pregunta": "¿Qué sientes al pensar en tu familia el día de hoy?",
+    "condicion": "siempre",
+    "opciones": [
+      { "texto": "Agradecido", "emocion": "alegria" },
+      { "texto": "Distante", "emocion": "tristeza" },
+      { "texto": "Molesto", "emocion": "enojo" },
+      { "texto": "Tranquilo", "emocion": "calma" },
+      { "texto": "Inseguro", "emocion": "miedo" }
+    ]
+  },
+  {
+    "id": 5,
+    "pregunta": "¿Cómo te sientes con tus compañeros de clase?",
+    "condicion": "siempre",
+    "opciones": [
+      { "texto": "Contento", "emocion": "alegria" },
+      { "texto": "Solo", "emocion": "tristeza" },
+      { "texto": "Irritado", "emocion": "enojo" },
+      { "texto": "Cómodo", "emocion": "calma" },
+      { "texto": "Tenso", "emocion": "miedo" }
+    ]
+  },
+  {
+    "id": 6,
+    "pregunta": "Al terminar esta experiencia, ¿qué emoción define cómo te sientes ahora?",
+    "condicion": "siempre",
+    "opciones": [
+      { "texto": "Feliz", "emocion": "alegria" },
+      { "texto": "Triste", "emocion": "tristeza" },
+      { "texto": "Molesto", "emocion": "enojo" },
+      { "texto": "Relajado", "emocion": "calma" },
+      { "texto": "Nervioso", "emocion": "miedo" }
+    ]
+  }
+]
