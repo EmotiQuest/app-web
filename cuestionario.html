@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiQuest - Cuestionario</title>
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/quiz.css">
+</head>
+<body class="quiz-page">
+  
+  <!-- Header -->
+  <header class="quiz-header">
+    <div class="container">
+      <h1 class="quiz-title">🎨 EmotiQuest</h1>
+      <p class="user-greeting" id="user-greeting">
+        <!-- Se llena con JavaScript -->
+      </p>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    
+    <div class="quiz-container">
+      
+      <!-- Barra de progreso -->
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      
+      <div class="progress-text" id="progress-text">
+        Pregunta 1 de 10
+      </div>
+
+      <!-- Card de pregunta -->
+      <div class="question-card">
+        <div class="question-header">
+          <h2 class="question-title" id="question-title">
+            <!-- Pregunta dinámica -->
+          </h2>
+        </div>
+
+        <!-- Opciones de respuesta -->
+        <div class="options-grid" id="options-grid">
+          <!-- Botones dinámicos -->
+        </div>
+
+        <!-- Visualización del batido seleccionado -->
+        <div class="batido-preview hidden" id="batido-preview">
+          <div class="batido-cup" id="batido-cup"></div>
+          <p class="batido-label" id="batido-label">¡Respuesta registrada!</p>
+        </div>
+      </div>
+
+      <!-- Controles de navegación -->
+      <div class="quiz-controls">
+        <button id="btn-anterior" class="btn btn-secondary hidden">
+          ← Anterior
+        </button>
+        
+        <button id="btn-siguiente" class="btn btn-primary" disabled>
+          Siguiente →
+        </button>
+        
+        <button id="btn-terminar" class="btn btn-success hidden" disabled>
+          🎉 Terminar
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>© 2025 EmotiQuest - Descubre tus emociones</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/storage.js"></script>
+  <script src="./js/emociones.js"></script>
+  <script src="./js/cuestionario.js"></script>
+
+</body>
+</html>

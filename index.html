@@ -1,141 +1,126 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>EmotiQuest</title>
-
-  <!-- Fuentes y estilos -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiQuest - Inicio</title>
+  
+  <!-- Fuentes Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="css/styles.css" />
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
+<body class="login-page">
+  
+  <!-- Contenedor principal -->
+  <main class="container">
+    
+    <!-- Card de login -->
+    <div class="login-card">
+      
+      <!-- Logo/Título -->
+      <div class="login-header">
+        <h1 class="app-title">🎨 EmotiQuest</h1>
+        <p class="app-subtitle">Descubre tus emociones a través de sabores</p>
+      </div>
 
-<body>
-  <main id="app">
-    <!-- ==========================
-         CABECERA GLOBAL
-         ========================== -->
-    <header id="main-header">
-      <h1 class="app-title">EmotiQuest</h1>
-      <nav id="main-nav" class="hidden">
-        <button id="nav-login" data-screen="login-screen">Inicio</button>
-        <button id="nav-quiz" data-screen="quiz-screen">Cuestionario</button>
-        <button id="nav-results" data-screen="result-screen">Resultados</button>
-        <button id="nav-report" data-screen="report-screen">Reporte</button>
-      </nav>
-    </header>
-
-    <!-- ==========================
-         PANTALLA 1: LOGIN FALSO
-         ========================== -->
-    <section id="login-screen" class="screen visible" aria-label="Inicio de sesión">
-      <h2>¡Comienza tu aventura emocional!</h2>
-
-      <form id="login-form" class="card" autocomplete="off">
+      <!-- Formulario de login -->
+      <form id="login-form" class="login-form">
+        
+        <!-- Campo: Nombre -->
         <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input id="nombre" name="nombre" type="text" required />
+          <label for="nombre">
+            <span class="label-icon">👤</span>
+            Nombre
+          </label>
+          <input 
+            type="text" 
+            id="nombre" 
+            name="nombre" 
+            placeholder="Escribe tu nombre"
+            required 
+            autocomplete="off"
+          >
         </div>
 
+        <!-- Campo: Género -->
         <div class="form-group">
-          <label for="genero">Género</label>
+          <label for="genero">
+            <span class="label-icon">⚧️</span>
+            Género
+          </label>
           <select id="genero" name="genero" required>
-            <option value="">Selecciona</option>
+            <option value="">Selecciona tu género</option>
             <option value="masculino">Masculino</option>
             <option value="femenino">Femenino</option>
             <option value="otro">Otro</option>
           </select>
         </div>
 
+        <!-- Campo: Edad -->
         <div class="form-group">
-          <label for="edad">Edad</label>
-          <input id="edad" name="edad" type="number" min="1" required />
+          <label for="edad">
+            <span class="label-icon">🎂</span>
+            Edad
+          </label>
+          <input 
+            type="number" 
+            id="edad" 
+            name="edad" 
+            min="5" 
+            max="100" 
+            placeholder="Tu edad"
+            required
+          >
         </div>
 
+        <!-- Campo: Grado escolar -->
         <div class="form-group">
-          <label for="grado">Grado escolar</label>
-          <input id="grado" name="grado" type="text" required />
+          <label for="grado">
+            <span class="label-icon">🎓</span>
+            Grado escolar
+          </label>
+          <input 
+            type="text" 
+            id="grado" 
+            name="grado" 
+            placeholder="Ejemplo: 5to grado"
+            required
+          >
         </div>
 
-        <button type="submit" class="btn-primary">Ingresar</button>
+        <!-- Mensaje de error (oculto por defecto) -->
+        <div id="error-message" class="error-message hidden">
+          <!-- Mensaje dinámico -->
+        </div>
+
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-primary">
+          Comenzar mi aventura emocional
+        </button>
+
       </form>
-    </section>
 
-    <!-- ==========================
-         PANTALLA 2: CUESTIONARIO
-         ========================== -->
-    <section id="quiz-screen" class="screen hidden" aria-label="Cuestionario emocional">
-      <h2>Cuestionario</h2>
-
-      <div id="pregunta-container" class="card question-box">
-        <!-- Pregunta cargada dinámicamente -->
+      <!-- Footer del card -->
+      <div class="login-footer">
+        <p>¿Eres profesor? <a href="./admin.html" class="link-admin">Ir al panel de administración</a></p>
       </div>
 
-      <div id="opciones-container" class="options-grid">
-        <!-- Botones de opciones -->
-      </div>
+    </div>
 
-      <div class="quiz-controls">
-        <button id="siguiente-btn" class="btn-secondary">Siguiente</button>
-        <button id="terminar-btn" class="btn-danger hidden">Terminar</button>
-      </div>
-
-      <!-- Indicador de progreso -->
-      <div id="progress-bar" class="progress-bar">
-        <div id="progress-fill"></div>
-      </div>
-    </section>
-
-    <!-- ==========================
-         PANTALLA 3: RESULTADOS
-         ========================== -->
-    <section id="result-screen" class="screen hidden" aria-label="Resultados del cuestionario">
-      <h2>Tu mezcla emocional</h2>
-
-      <div class="result-area">
-        <div id="batidos-list" class="batidos-grid"></div>
-        <div id="licuadora-area" class="licuadora"></div>
-        <div id="avatar-area" class="avatar"></div>
-      </div>
-
-      <div id="mensaje-final" class="mensaje-final"></div>
-
-      <div class="buttons">
-        <button id="ver-reporte-btn" class="btn-primary">Ver reporte</button>
-        <button id="volver-btn" class="btn-secondary">Volver al inicio</button>
-      </div>
-    </section>
-
-    <!-- ==========================
-         PANTALLA 4: REPORTE
-         ========================== -->
-    <section id="report-screen" class="screen hidden" aria-label="Reporte de resultados">
-      <h2>Reporte de Participantes</h2>
-
-      <div id="report-summary" class="card">
-        <!-- Datos dinámicos generados desde main.js -->
-      </div>
-
-      <div class="buttons">
-        <button id="volver-inicio-reporte" class="btn-secondary">Volver al inicio</button>
-        <button id="exportar-btn" class="btn-primary">Exportar reporte</button>
-      </div>
-    </section>
-
-    <!-- ==========================
-         PIE GLOBAL
-         ========================== -->
-    <footer id="main-footer">
-      <p>© 2025 EmotiQuest · Proyecto educativo emocional</p>
-    </footer>
   </main>
 
-  <!-- ==========================
-       SCRIPTS
-       ========================== -->
-  <script src="js/main.js" type="module"></script>
+  <!-- Footer global -->
+  <footer class="main-footer">
+    <p>© 2025 EmotiQuest - Proyecto educativo emocional</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/storage.js"></script>
+  <script src="./js/login.js"></script>
+
 </body>
 </html>

@@ -1,204 +1,433 @@
-/* ==========================
-   RESET Y CONFIGURACIÓN BASE
-   ========================== */
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+/* ============================================
+   EMOTIQUEST - ESTILOS GLOBALES
+   ============================================ */
+
+/* ==================== VARIABLES CSS ==================== */
+:root {
+  /* Colores principales */
+  --color-primary: #007bff;
+  --color-primary-hover: #0056b3;
+  --color-secondary: #6c757d;
+  --color-secondary-hover: #545b62;
+  --color-danger: #dc3545;
+  --color-danger-hover: #a71d2a;
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  
+  /* Colores de emociones */
+  --color-alegria: #e1c03c;
+  --color-tristeza: #4860cb;
+  --color-enojo: #f44339;
+  --color-calma: #62e85e;
+  --color-nerviosismo: #FF9A76;
+  --color-desmotivacion: #6b698c;
+  --color-motivacion: #9746d5;
+  --color-inseguridad: #c434a0;
+  
+  /* Colores de fondo */
+  --bg-gradient-start: #ffdee9;
+  --bg-gradient-end: #b5fffc;
+  --bg-card: #ffffff;
+  --bg-overlay: rgba(0, 0, 0, 0.05);
+  
+  /* Textos */
+  --text-dark: #2c3e50;
+  --text-medium: #555;
+  --text-light: #888;
+  --text-white: #ffffff;
+  
+  /* Sombras */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.2);
+  
+  /* Bordes */
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 1rem;
+  --border-radius-lg: 1.5rem;
+  
+  /* Espaciados */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Transiciones */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ==================== RESET ==================== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+/* ==================== TIPOGRAFÍA ==================== */
 body {
-  background: linear-gradient(135deg, #ffdee9, #b5fffc);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-dark);
+  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
   min-height: 100vh;
-  /* Nunito como fuente principal (Google Fonts en index.html) */
-  font-family: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-
-/* Clase alternativa por si queremos aplicarla a elementos concretos */
-.oregano-regular {
-  font-family: "Oregano", cursive;
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* Clase utilitaria para Nunito (ejemplo: .nunito-regular) */
-.nunito-regular {
-  font-family: "Nunito", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* Aplicar Nunito solo a encabezados y botones */
-h1, h2, h3, h4, h5, h6,
-button, .btn-primary, .btn-secondary, .btn-danger {
-  font-family: "Nunito", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-main {
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
-}
-
-/* ==========================
-   PANTALLAS
-   ========================== */
-.screen {
-  display: none;
-  padding: 2rem;
-}
-
-.screen.visible {
-  display: block;
-}
-
-.card {
-  background: #fff;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem;
-}
-
-/* ==========================
-   FORMULARIO LOGIN
-   ========================== */
-form {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  overflow-x: hidden;
 }
 
-input, select {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: var(--spacing-sm);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p {
+  margin-bottom: var(--spacing-sm);
+}
+
+/* ==================== LAYOUT PRINCIPAL ==================== */
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==================== CARDS ==================== */
+.card, .login-card {
+  background: var(--bg-card);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 500px;
+}
+
+/* ==================== HEADER DE LOGIN ==================== */
+.login-header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.app-title {
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-motivacion));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--spacing-xs);
+  animation: fadeInDown 0.6s ease;
+}
+
+.app-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-medium);
+  font-weight: 300;
+  animation: fadeInUp 0.6s ease 0.2s backwards;
+}
+
+/* ==================== FORMULARIOS ==================== */
+.login-form, form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  position: relative;
+  animation: fadeInUp 0.5s ease backwards;
+}
+
+.form-group:nth-child(1) { animation-delay: 0.3s; }
+.form-group:nth-child(2) { animation-delay: 0.4s; }
+.form-group:nth-child(3) { animation-delay: 0.5s; }
+.form-group:nth-child(4) { animation-delay: 0.6s; }
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.label-icon {
+  font-size: 1.2rem;
+}
+
+input, select, textarea {
+  padding: var(--spacing-sm);
+  border: 2px solid #e0e0e0;
+  border-radius: var(--border-radius-sm);
   font-size: 1rem;
+  font-family: inherit;
+  transition: all var(--transition-normal);
+  outline: none;
+  background: #fafafa;
 }
 
-button {
-  cursor: pointer;
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  transition: 0.3s;
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
-/* ==========================
-   BOTONES
-   ========================== */
-.btn-primary {
-  background: #007bff;
+input::placeholder {
+  color: #aaa;
+}
+
+/* Estados de error */
+.form-group.error input,
+.form-group.error select {
+  border-color: var(--color-danger);
+  background: #fff5f5;
+}
+
+.field-error {
+  color: var(--color-danger);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.error-message {
+  background: var(--color-danger);
   color: white;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  animation: slideDown 0.3s ease;
+}
+
+.error-message.hidden {
+  display: none;
+}
+
+/* ==================== BOTONES ==================== */
+button, .btn {
+  cursor: pointer;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all var(--transition-normal);
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--text-white);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-  background: #005fcc;
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
-  background: #6c757d;
-  color: white;
+  background: var(--color-secondary);
+  color: var(--text-white);
 }
 
 .btn-secondary:hover {
-  background: #545b62;
+  background: var(--color-secondary-hover);
+  transform: translateY(-2px);
 }
 
 .btn-danger {
-  background: #dc3545;
-  color: white;
+  background: var(--color-danger);
+  color: var(--text-white);
 }
 
 .btn-danger:hover {
-  background: #a71d2a;
+  background: var(--color-danger-hover);
+  transform: translateY(-2px);
 }
 
-/* ==========================
-   QUIZ Y OPCIONES
-   ========================== */
-.options-grid {
-  display: grid;
-  gap: 0.5rem;
-  margin-top: 1rem;
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
 }
 
-.options-grid button {
-  background: #f0f0f0;
-  border: 1px solid #ccc;
+/* ==================== FOOTER DEL LOGIN ==================== */
+.login-footer {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid #e0e0e0;
+  animation: fadeIn 0.8s ease 0.7s backwards;
 }
 
-.options-grid button:hover {
-  background: #d3f8e2;
+.login-footer p {
+  color: var(--text-medium);
+  font-size: 0.9rem;
+  margin: 0;
 }
 
-/* ==========================
-   RESULTADOS / ANIMACIONES
-   ========================== */
-.batidos-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
+.link-admin {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition-fast);
 }
 
-.batidos-grid div {
-  width: 50px;
-  height: 100px;
-  border-radius: 10px;
-  background: pink;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  animation: flotar 2s infinite ease-in-out alternate;
+.link-admin:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
 }
 
-@keyframes flotar {
-  from { transform: translateY(0); }
-  to { transform: translateY(-10px); }
+/* ==================== FOOTER GLOBAL ==================== */
+.main-footer {
+  text-align: center;
+  padding: var(--spacing-md);
+  color: var(--text-medium);
+  font-size: 0.85rem;
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
 }
 
-.licuadora {
-  width: 150px;
-  height: 200px;
-  background: #ddd;
-  margin: 1rem auto;
-  border-radius: 10px;
-  position: relative;
-  overflow: hidden;
-  animation: vibrar 0.3s infinite linear alternate;
-}
-
-@keyframes vibrar {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(1deg); }
-}
-
-.avatar {
-  width: 150px;
-  height: 150px;
-  margin: 1rem auto;
-  background: url("../assets/avatars/default.png") center/contain no-repeat;
-}
-
-.mensaje-final {
-  font-size: 1.1rem;
-  margin-top: 1rem;
-}
-
-/* ==========================
-   REPORTE
-   ========================== */
-#report-summary {
-  text-align: left;
-}
-
+/* ==================== UTILIDADES ==================== */
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: var(--spacing-sm); }
+.mt-2 { margin-top: var(--spacing-md); }
+.mt-3 { margin-top: var(--spacing-lg); }
+
+.mb-1 { margin-bottom: var(--spacing-sm); }
+.mb-2 { margin-bottom: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-lg); }
+
+/* ==================== ANIMACIONES ==================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding: var(--spacing-sm);
+  }
+  
+  .card, .login-card {
+    padding: var(--spacing-md);
+  }
+  
+  .app-title {
+    font-size: 2.5rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+  h3 { font-size: 1.5rem; }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 2rem;
+  }
+  
+  .app-subtitle {
+    font-size: 1rem;
+  }
+  
+  button, .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+  }
 }
