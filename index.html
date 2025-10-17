@@ -83,13 +83,24 @@
             <span class="label-icon">🎓</span>
             Grado escolar
           </label>
-          <input 
-            type="text" 
-            id="grado" 
-            name="grado" 
-            placeholder="Ejemplo: 5to grado"
-            required
-          >
+          <select id="grado" name="grado" required>
+            <option value="">Selecciona tu grado</option>
+            <optgroup label="Primaria">
+              <option value="1° Primaria">1° Primaria</option>
+              <option value="2° Primaria">2° Primaria</option>
+              <option value="3° Primaria">3° Primaria</option>
+              <option value="4° Primaria">4° Primaria</option>
+              <option value="5° Primaria">5° Primaria</option>
+            </optgroup>
+            <optgroup label="Bachillerato">
+              <option value="6° Grado">6° Grado</option>
+              <option value="7° Grado">7° Grado</option>
+              <option value="8° Grado">8° Grado</option>
+              <option value="9° Grado">9° Grado</option>
+              <option value="10° Grado">10° Grado</option>
+              <option value="11° Grado">11° Grado</option>
+            </optgroup>
+          </select>
         </div>
 
         <!-- Mensaje de error (oculto por defecto) -->

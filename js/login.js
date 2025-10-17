@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
       nombre: document.getElementById('nombre').value.trim(),
       genero: document.getElementById('genero').value,
       edad: parseInt(document.getElementById('edad').value),
-      grado: document.getElementById('grado').value.trim()
+      grado: document.getElementById('grado').value  // Ya es un select, no necesita trim
     };
   }
   
@@ -150,8 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Validar grado
-    if (!datos.grado || datos.grado.length < 2) {
-      mostrarErrorCampo('grado', 'Por favor, ingresa tu grado escolar');
+    if (!datos.grado) {
+      mostrarErrorCampo('grado', 'Por favor, selecciona tu grado escolar');
       esValido = false;
     }
     
@@ -200,8 +200,8 @@ document.addEventListener('DOMContentLoaded', function() {
         break;
         
       case 'grado':
-        if (!valor || valor.length < 2) {
-          mostrarErrorCampo(id, 'Ingresa tu grado');
+        if (!valor) {
+          mostrarErrorCampo(id, 'Selecciona tu grado');
         }
         break;
     }
@@ -315,4 +315,3 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   console.log('✅ login.js cargado correctamente');
-  

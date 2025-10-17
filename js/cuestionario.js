@@ -92,8 +92,8 @@ async function cargarPreguntas() {
     // Filtrar preguntas según el día
     filtrarPreguntasPorDia();
     
-    // Mezclar aleatoriamente
-    preguntasFiltradas = mezclarArray(preguntasFiltradas);
+    // NO mezclar aquí porque filtrarPreguntasPorDia ya lo hace
+    // y coloca la pregunta 6 al final
     
     console.log(`✅ ${preguntasFiltradas.length} preguntas disponibles`);
     
@@ -109,23 +109,39 @@ async function cargarPreguntas() {
 function filtrarPreguntasPorDia() {
   const hoy = new Date().getDay(); // 0 = domingo, 1 = lunes, ..., 5 = viernes, 6 = sábado
   
-  preguntasFiltradas = preguntas.filter(pregunta => {
+  // Separar pregunta 6 (final) del resto
+  let preguntaFinal = null;
+  let preguntasNormales = [];
+  
+  preguntas.forEach(pregunta => {
+    // La pregunta con id 6 siempre va al final
+    if (pregunta.id === 6) {
+      preguntaFinal = pregunta;
+      return;
+    }
+    
+    // Filtrar el resto según condición
     if (pregunta.condicion === 'siempre') {
-      return true;
+      preguntasNormales.push(pregunta);
+    } else if (pregunta.condicion === 'lunes' && hoy === 1) {
+      preguntasNormales.push(pregunta);
+    } else if (pregunta.condicion === 'viernes' && hoy === 5) {
+      preguntasNormales.push(pregunta);
     }
-    
-    if (pregunta.condicion === 'lunes' && hoy === 1) {
-      return true;
-    }
-    
-    if (pregunta.condicion === 'viernes' && hoy === 5) {
-      return true;
-    }
-    
-    return false;
   });
   
+  // Mezclar solo las preguntas normales
+  preguntasNormales = mezclarArray(preguntasNormales);
+  
+  // Agregar pregunta final al último
+  if (preguntaFinal) {
+    preguntasNormales.push(preguntaFinal);
+  }
+  
+  preguntasFiltradas = preguntasNormales;
+  
   console.log(`🗓️ Día: ${obtenerNombreDia(hoy)}, Preguntas filtradas: ${preguntasFiltradas.length}`);
+  console.log('📌 Pregunta final (ID 6) colocada al último');
 }
 
 /**
@@ -226,8 +242,8 @@ function seleccionarOpcion(opcion, boton) {
   btnSiguiente.disabled = false;
   btnTerminar.disabled = false;
   
-  // Mostrar preview del batido
-  mostrarBatidoPreview(opcion.emocion);
+  // NO MOSTRAR preview del batido (comentado)
+  // mostrarBatidoPreview(opcion.emocion);
   
   console.log(`✅ Respuesta seleccionada: ${opcion.texto} (${opcion.emocion})`);
 }

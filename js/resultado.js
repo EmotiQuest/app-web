@@ -260,27 +260,22 @@ function mostrarMensajeFinal() {
 }
 
 /**
- * Muestra las estadísticas de emociones
+ * Muestra las estadísticas de emociones (SIN PORCENTAJES)
  */
 function mostrarEstadisticas() {
   const totalRespuestas = respuestas.length;
   const datosGrafico = window.SistemaEmociones.generarDatosGrafico(conteoEmociones);
   
-  let html = '<h3 class="stats-title">Distribución de tus emociones</h3>';
+  let html = '<h3 class="stats-title">Tus emociones del día</h3>';
   html += '<div class="stats-grid">';
   
   datosGrafico.forEach(dato => {
-    const porcentaje = Math.round((dato.cantidad / totalRespuestas) * 100);
+    // Mostrar solo emoji y nombre, SIN porcentaje ni barra
     html += `
-      <div class="stat-item">
-        <div class="stat-bar-container">
-          <div class="stat-bar" style="width: ${porcentaje}%; background: ${dato.color}"></div>
-        </div>
-        <div class="stat-info">
-          <span class="stat-emoji">${dato.emoji}</span>
-          <span class="stat-nombre">${dato.emocion}</span>
-          <span class="stat-valor">${porcentaje}%</span>
-        </div>
+      <div class="stat-item-simple">
+        <span class="stat-emoji">${dato.emoji}</span>
+        <span class="stat-nombre">${dato.emocion}</span>
+        <span class="stat-cantidad">${dato.cantidad} ${dato.cantidad === 1 ? 'vez' : 'veces'}</span>
       </div>
     `;
   });
@@ -289,7 +284,7 @@ function mostrarEstadisticas() {
   estadisticas.innerHTML = html;
   estadisticas.style.animation = 'fadeIn 1s ease 0.7s backwards';
   
-  console.log('✅ Estadísticas mostradas');
+  console.log('✅ Estadísticas mostradas (sin porcentajes)');
 }
 
 /**

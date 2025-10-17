@@ -354,6 +354,39 @@
     gap: var(--spacing-md);
   }
   
+  /* Estilo simple sin barras de progreso */
+  .stat-item-simple {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: var(--border-radius-sm);
+    transition: transform 0.2s ease;
+  }
+  
+  .stat-item-simple:hover {
+    transform: translateX(5px);
+  }
+  
+  .stat-item-simple .stat-emoji {
+    font-size: 2rem;
+  }
+  
+  .stat-item-simple .stat-nombre {
+    flex: 1;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 1.1rem;
+  }
+  
+  .stat-item-simple .stat-cantidad {
+    font-weight: 700;
+    color: var(--text-medium);
+    font-size: 1rem;
+  }
+  
+  /* Mantener estilos antiguos por si el admin los usa */
   .stat-item {
     display: flex;
     flex-direction: column;
