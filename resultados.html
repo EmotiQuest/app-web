@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiQuest - Resultados</title>
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/resultado.css">
+</head>
+<body class="resultado-page">
+  
+  <!-- Header -->
+  <header class="resultado-header">
+    <div class="container">
+      <h1 class="resultado-title">🎨 EmotiQuest</h1>
+      <p class="resultado-subtitle">Tu mezcla emocional está lista</p>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    
+    <div class="resultado-container">
+      
+      <!-- Paso 1: Batidos individuales -->
+      <section id="seccion-batidos" class="seccion-resultado visible">
+        <h2 class="seccion-title">Tus emociones del día</h2>
+        <p class="seccion-descripcion">Cada color representa una emoción que sentiste</p>
+        
+        <div class="batidos-grid" id="batidos-grid">
+          <!-- Batidos generados dinámicamente -->
+        </div>
+        
+        <button id="btn-mezclar" class="btn btn-primary btn-lg">
+          🔄 Mezclar mis emociones
+        </button>
+      </section>
+
+      <!-- Paso 2: Licuadora mezclando -->
+      <section id="seccion-licuadora" class="seccion-resultado hidden">
+        <h2 class="seccion-title">Mezclando tus emociones...</h2>
+        
+        <div class="licuadora-container">
+          <div class="licuadora" id="licuadora">
+            <div class="licuadora-contenido" id="licuadora-contenido">
+              <!-- Batidos se vierten aquí -->
+            </div>
+            <div class="licuadora-tapa"></div>
+            <div class="licuadora-base"></div>
+          </div>
+        </div>
+        
+        <p class="licuadora-texto">Procesando tus respuestas...</p>
+      </section>
+
+      <!-- Paso 3: Avatar y resultado final -->
+      <section id="seccion-avatar" class="seccion-resultado hidden">
+        <h2 class="seccion-title">¡Tu resultado emocional!</h2>
+        
+        <div class="avatar-container">
+          <div class="avatar" id="avatar">
+            <!-- Avatar generado dinámicamente -->
+          </div>
+          <div class="emocion-badge" id="emocion-badge">
+            <!-- Badge de emoción predominante -->
+          </div>
+        </div>
+        
+        <div class="mensaje-final" id="mensaje-final">
+          <!-- Mensaje personalizado -->
+        </div>
+        
+        <div class="estadisticas" id="estadisticas">
+          <!-- Estadísticas de emociones -->
+        </div>
+        
+        <div class="resultado-controles">
+          <button id="btn-ver-reporte" class="btn btn-secondary">
+            📊 Ver reporte completo
+          </button>
+          <button id="btn-volver-inicio" class="btn btn-primary">
+            🏠 Volver al inicio
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>© 2025 EmotiQuest - Descubre tus emociones</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/storage.js"></script>
+  <script src="./js/emociones.js"></script>
+  <script src="./js/resultado.js"></script>
+
+</body>
+</html>
