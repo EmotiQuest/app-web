@@ -1,5 +1,5 @@
 /* ============================================
-   RESULTADO.CSS - Estilos de la página de resultados
+   RESULTADO.CSS - Resultados Estilo Canva
    ============================================ */
 
 /* ==================== HEADER ==================== */
@@ -7,17 +7,13 @@
     background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
     padding: 1.5rem 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(209, 128, 253, 0.1);
     text-align: center;
   }
   
   .resultado-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
     margin: 0 0 0.5rem 0;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-motivacion));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
   }
   
   .resultado-subtitle {
@@ -25,6 +21,7 @@
     color: var(--text-medium);
     margin: 0;
     font-weight: 400;
+    font-style: italic;
   }
   
   /* ==================== CONTENEDOR ==================== */
@@ -66,64 +63,79 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
     margin: var(--spacing-xl) 0;
     padding: var(--spacing-lg);
     background: rgba(255, 255, 255, 0.5);
-    border-radius: var(--border-radius-lg);
+    border-radius: 25px;
   }
   
+  /* ==================== FORMA DE BOTELLA REALISTA ==================== */
   .batido {
     width: 70px;
-    height: 120px;
-    border-radius: 15px 15px 20px 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2),
-                inset 0 -30px 40px rgba(255, 255, 255, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 140px;
     position: relative;
     animation: bounceIn 0.6s ease backwards;
-    overflow: hidden;
+    filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.2));
   }
   
+  /* Cuerpo de la botella */
   .batido::before {
     content: '';
     position: absolute;
-    top: -10px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 25px;
-    height: 25px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    animation: bubbleFloat 2s infinite ease-in-out;
+    width: 70px;
+    height: 110px;
+    background: currentColor;
+    border-radius: 10px 10px 20px 20px;
+    box-shadow: 
+      inset -8px 0 15px rgba(0, 0, 0, 0.15),
+      inset 8px 0 15px rgba(255, 255, 255, 0.4),
+      inset 0 -30px 40px rgba(255, 255, 255, 0.3);
   }
   
-  @keyframes bubbleFloat {
-    0%, 100% {
-      top: -10px;
-      opacity: 0;
-    }
-    50% {
-      top: 40%;
-      opacity: 1;
-    }
+  /* Cuello de la botella */
+  .batido::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 35px;
+    background: currentColor;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 
+      inset -3px 0 8px rgba(0, 0, 0, 0.1),
+      inset 3px 0 8px rgba(255, 255, 255, 0.4);
+    opacity: 0.9;
+  }
+  
+  /* Tapa de la botella */
+  .batido {
+    background: 
+      radial-gradient(
+        circle at 50% 2px,
+        #333 0%,
+        #333 14px,
+        transparent 14px
+      );
+    background-repeat: no-repeat;
+    background-position: center -3px;
   }
   
   .batido-emoji {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 2rem;
-    position: relative;
-    z-index: 1;
+    z-index: 2;
   }
   
-  .btn-lg {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    margin-top: var(--spacing-lg);
-  }
-  
-  /* ==================== LICUADORA ==================== */
+  /* ==================== LICUADORA REALISTA ==================== */
   .licuadora-container {
     display: flex;
     justify-content: center;
@@ -133,26 +145,54 @@
   }
   
   .licuadora {
-    width: 200px;
-    height: 300px;
+    width: 220px;
+    height: 320px;
     position: relative;
-    animation: fadeIn 0.8s ease;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
   }
   
+  /* Vaso de cristal */
   .licuadora-contenido {
-    width: 180px;
-    height: 220px;
-    background: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
-    border-radius: 20px 20px 30px 30px;
+    width: 200px;
+    height: 240px;
+    background: linear-gradient(
+      to bottom,
+      rgba(240, 248, 255, 0.9) 0%,
+      rgba(220, 235, 250, 0.95) 100%
+    );
+    border: 3px solid rgba(180, 200, 220, 0.6);
+    border-radius: 15px 15px 40px 40px;
     position: absolute;
-    top: 20px;
+    top: 30px;
     left: 10px;
     overflow: hidden;
-    box-shadow: inset 0 5px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+      inset 0 10px 30px rgba(255, 255, 255, 0.5),
+      inset 0 -10px 20px rgba(0, 0, 0, 0.05),
+      0 8px 25px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column-reverse;
   }
   
+  /* Reflejo en el cristal */
+  .licuadora-contenido::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 10px;
+    width: 40px;
+    height: 60%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+    border-radius: 20px;
+    transform: skewY(-5deg);
+    z-index: 10;
+  }
+  
+  /* Capas de líquido */
   .licuadora-capa {
     width: 100%;
     flex: 1;
@@ -169,49 +209,62 @@
     }
   }
   
+  /* Tapa metálica */
   .licuadora-tapa {
-    width: 200px;
-    height: 30px;
-    background: linear-gradient(to bottom, #555, #333);
+    width: 220px;
+    height: 40px;
+    background: linear-gradient(to bottom, #4a4a4a, #2a2a2a);
     border-radius: 50%;
     position: absolute;
     top: 0;
     left: 0;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 
+      0 4px 15px rgba(0, 0, 0, 0.4),
+      inset 0 2px 5px rgba(255, 255, 255, 0.2);
+    z-index: 2;
   }
   
+  /* Perilla superior */
   .licuadora-tapa::after {
     content: '';
-    width: 20px;
-    height: 40px;
-    background: #666;
-    border-radius: 10px;
+    width: 30px;
+    height: 50px;
+    background: linear-gradient(to bottom, #555, #333);
+    border-radius: 15px;
     position: absolute;
-    top: -30px;
+    top: -45px;
     left: 50%;
     transform: translateX(-50%);
+    box-shadow: 
+      0 4px 10px rgba(0, 0, 0, 0.3),
+      inset 0 2px 4px rgba(255, 255, 255, 0.3);
   }
   
+  /* Base de la licuadora */
   .licuadora-base {
-    width: 220px;
-    height: 80px;
-    background: linear-gradient(to bottom, #444, #222);
-    border-radius: 10px;
+    width: 240px;
+    height: 90px;
+    background: linear-gradient(to bottom, #3a3a3a, #1a1a1a);
+    border-radius: 15px;
     position: absolute;
     bottom: 0;
     left: -10px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   }
   
-  .licuadora-base::after {
-    content: '⚡';
-    font-size: 1.5rem;
+  /* Botón iluminado */
+  .licuadora-base::before {
+    content: '●';
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: var(--color-morado);
+    text-shadow: 0 0 15px var(--color-morado);
   }
   
+  /* Animación de mezcla */
   .licuadora.mezclando .licuadora-contenido {
     animation: shake 0.3s infinite;
   }
@@ -263,7 +316,7 @@
     width: 180px;
     height: 180px;
     border-radius: 50%;
-    border: 8px solid var(--color-primary);
+    border: 8px solid var(--color-morado);
     background: linear-gradient(135deg, #f8f9fa, #e9ecef);
     display: flex;
     align-items: center;
@@ -312,8 +365,8 @@
   .mensaje-final {
     background: white;
     padding: var(--spacing-lg);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
+    border-radius: 25px;
+    box-shadow: 0 6px 25px rgba(209, 128, 253, 0.25);
     margin: var(--spacing-xl) 0;
   }
   
@@ -332,12 +385,12 @@
     margin: 0;
   }
   
-  /* ==================== ESTADÍSTICAS ==================== */
+  /* ==================== ESTADÍSTICAS (SIN PORCENTAJES) ==================== */
   .estadisticas {
     background: white;
     padding: var(--spacing-lg);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
+    border-radius: 25px;
+    box-shadow: 0 6px 25px rgba(209, 128, 253, 0.25);
     margin: var(--spacing-xl) 0;
   }
   
@@ -351,22 +404,23 @@
   .stats-grid {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: 1rem;
   }
   
-  /* Estilo simple sin barras de progreso */
+  /* Estilo simple sin barras */
   .stat-item-simple {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     background: #f8f9fa;
-    border-radius: var(--border-radius-sm);
+    border-radius: 20px;
     transition: transform 0.2s ease;
   }
   
   .stat-item-simple:hover {
-    transform: translateX(5px);
+    transform: translateX(8px);
+    background: rgba(209, 128, 253, 0.05);
   }
   
   .stat-item-simple .stat-emoji {
@@ -378,65 +432,13 @@
     font-weight: 600;
     color: var(--text-dark);
     font-size: 1.1rem;
+    text-align: left;
   }
   
   .stat-item-simple .stat-cantidad {
     font-weight: 700;
     color: var(--text-medium);
     font-size: 1rem;
-  }
-  
-  /* Mantener estilos antiguos por si el admin los usa */
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .stat-bar-container {
-    width: 100%;
-    height: 30px;
-    background: #f0f0f0;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stat-bar {
-    height: 100%;
-    border-radius: 15px;
-    transition: width 1s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    animation: expandBar 1s ease;
-  }
-  
-  @keyframes expandBar {
-    from { width: 0 !important; }
-  }
-  
-  .stat-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 0.5rem;
-  }
-  
-  .stat-emoji {
-    font-size: 1.5rem;
-  }
-  
-  .stat-nombre {
-    flex: 1;
-    text-align: left;
-    font-weight: 600;
-    color: var(--text-dark);
-    margin-left: 0.5rem;
-  }
-  
-  .stat-valor {
-    font-weight: 700;
-    color: var(--text-dark);
-    font-size: 1.1rem;
   }
   
   /* ==================== CONTROLES ==================== */
@@ -475,15 +477,10 @@
     }
   }
   
-  @keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-  }
-  
   /* ==================== RESPONSIVE ==================== */
   @media (max-width: 768px) {
     .resultado-title {
-      font-size: 1.5rem;
+      font-size: 2rem;
     }
     
     .resultado-subtitle {
@@ -499,21 +496,32 @@
     }
     
     .batidos-grid {
-      gap: 0.8rem;
+      gap: 1rem;
       padding: var(--spacing-md);
     }
     
     .batido {
       width: 60px;
-      height: 100px;
+      height: 120px;
+    }
+    
+    .batido::before {
+      width: 60px;
+      height: 95px;
+    }
+    
+    .batido::after {
+      width: 24px;
+      height: 30px;
     }
     
     .batido-emoji {
       font-size: 1.5rem;
+      bottom: 20px;
     }
     
     .licuadora {
-      transform: scale(0.8);
+      transform: scale(0.85);
     }
     
     .avatar-circle {
@@ -549,6 +557,18 @@
     .resultado-controles button {
       width: 100%;
     }
+    
+    .stat-item-simple {
+      padding: 0.8rem 1rem;
+    }
+    
+    .stat-item-simple .stat-emoji {
+      font-size: 1.5rem;
+    }
+    
+    .stat-item-simple .stat-nombre {
+      font-size: 1rem;
+    }
   }
   
   @media (max-width: 480px) {
@@ -558,7 +578,22 @@
     
     .batido {
       width: 50px;
-      height: 90px;
+      height: 100px;
+    }
+    
+    .batido::before {
+      width: 50px;
+      height: 80px;
+    }
+    
+    .batido::after {
+      width: 20px;
+      height: 25px;
+    }
+    
+    .batido-emoji {
+      font-size: 1.2rem;
+      bottom: 15px;
     }
     
     .licuadora {
@@ -576,13 +611,5 @@
     
     .stats-title {
       font-size: 1.3rem;
-    }
-    
-    .stat-emoji {
-      font-size: 1.2rem;
-    }
-    
-    .stat-nombre {
-      font-size: 0.9rem;
     }
   }

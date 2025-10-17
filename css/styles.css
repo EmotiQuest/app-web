@@ -1,50 +1,39 @@
 /* ============================================
-   EMOTIQUEST - ESTILOS GLOBALES
+   EMOTIQUEST - ESTILOS COMPLETOS CANVA
+   Diseño 100% basado en Canva
    ============================================ */
 
-/* ==================== VARIABLES CSS ==================== */
+/* ==================== VARIABLES - PALETA CANVA ==================== */
 :root {
   /* Colores principales */
-  --color-primary: #007bff;
-  --color-primary-hover: #0056b3;
-  --color-secondary: #6c757d;
-  --color-secondary-hover: #545b62;
-  --color-danger: #dc3545;
-  --color-danger-hover: #a71d2a;
-  --color-success: #28a745;
-  --color-warning: #ffc107;
-  
-  /* Colores de emociones */
-  --color-alegria: #e1c03c;
-  --color-tristeza: #4860cb;
-  --color-enojo: #f44339;
-  --color-calma: #62e85e;
-  --color-nerviosismo: #FF9A76;
-  --color-desmotivacion: #6b698c;
-  --color-motivacion: #9746d5;
-  --color-inseguridad: #c434a0;
+  --color-amarillo: #fde895;
+  --color-amarillo-hover: #fcd65a;
+  --color-morado: #d180fd;
+  --color-morado-hover: #b857e8;
+  --color-morado-titulo: #9b59d6;
+  --color-amarillo-titulo: #f4d35e;
   
   /* Colores de fondo */
-  --bg-gradient-start: #ffdee9;
-  --bg-gradient-end: #b5fffc;
+  --color-lila-claro: #e6d5f5;
+  --color-crema: #fff9e6;
+  --bg-principal: #fef9f3;
   --bg-card: #ffffff;
-  --bg-overlay: rgba(0, 0, 0, 0.05);
   
   /* Textos */
   --text-dark: #2c3e50;
-  --text-medium: #555;
-  --text-light: #888;
-  --text-white: #ffffff;
+  --text-medium: #555555;
+  --text-light: #888888;
   
-  /* Sombras */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.2);
+  /* Sombras suaves */
+  --shadow-soft: 0 4px 15px rgba(209, 128, 253, 0.15);
+  --shadow-medium: 0 6px 25px rgba(209, 128, 253, 0.25);
+  --shadow-strong: 0 8px 30px rgba(209, 128, 253, 0.35);
   
-  /* Bordes */
-  --border-radius-sm: 0.5rem;
-  --border-radius-md: 1rem;
-  --border-radius-lg: 1.5rem;
+  /* Bordes redondeados */
+  --radius-pill: 50px;
+  --radius-round: 30px;
+  --radius-card: 25px;
+  --radius-small: 15px;
   
   /* Espaciados */
   --spacing-xs: 0.5rem;
@@ -52,11 +41,6 @@
   --spacing-md: 1.5rem;
   --spacing-lg: 2rem;
   --spacing-xl: 3rem;
-  
-  /* Transiciones */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
 }
 
 /* ==================== RESET ==================== */
@@ -64,6 +48,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Nunito", sans-serif;
 }
 
 html {
@@ -71,26 +56,79 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ==================== TIPOGRAFÍA ==================== */
+/* ==================== BODY Y FONDO ==================== */
 body {
-  font-family: "Nunito", sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   color: var(--text-dark);
-  background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+  background: linear-gradient(135deg, var(--bg-principal) 0%, #f5f0ff 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
 }
 
-/* Aplicar Nunito a TODOS los elementos */
-* {
-  font-family: "Nunito", sans-serif;
+/* Formas orgánicas de fondo (blobs) */
+body::before {
+  content: '';
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: var(--color-lila-claro);
+  border-radius: 50%;
+  top: -100px;
+  left: -100px;
+  z-index: -1;
+  opacity: 0.6;
+  filter: blur(60px);
 }
 
+body::after {
+  content: '';
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  background: var(--color-crema);
+  border-radius: 50%;
+  bottom: -80px;
+  right: -80px;
+  z-index: -1;
+  opacity: 0.6;
+  filter: blur(50px);
+}
+
+/* Blob adicional derecha */
+.container::before {
+  content: '';
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: var(--color-lila-claro);
+  border-radius: 50%;
+  top: 50%;
+  right: -150px;
+  transform: translateY(-50%);
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(40px);
+}
+
+/* Login centrado */
+body.login-page {
+  justify-content: center;
+  align-items: center;
+}
+
+body.login-page .main-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* ==================== TIPOGRAFÍA ==================== */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.3;
   margin-bottom: var(--spacing-sm);
 }
@@ -98,16 +136,60 @@ h1, h2, h3, h4, h5, h6 {
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.5rem; }
-h4 { font-size: 1.25rem; }
 
-p {
-  margin-bottom: var(--spacing-sm);
+/* ==================== TÍTULO EMOTIQUEST ==================== */
+.app-title,
+.quiz-title,
+.resultado-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
 }
 
-/* ==================== LAYOUT PRINCIPAL ==================== */
+/* Crear efecto bicolor con texto */
+.app-title {
+  background: linear-gradient(
+    to right,
+    var(--color-morado-titulo) 0%,
+    var(--color-morado-titulo) 49%,
+    var(--color-amarillo-titulo) 51%,
+    var(--color-amarillo-titulo) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.quiz-title,
+.resultado-title {
+  background: linear-gradient(
+    to right,
+    var(--color-morado-titulo) 0%,
+    var(--color-morado-titulo) 49%,
+    var(--color-amarillo-titulo) 51%,
+    var(--color-amarillo-titulo) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.app-subtitle,
+.resultado-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-medium);
+  font-weight: 400;
+  font-style: italic;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+/* ==================== LAYOUT ==================== */
 .container {
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto;
   padding: var(--spacing-md);
   flex: 1;
@@ -117,40 +199,27 @@ p {
 }
 
 /* ==================== CARDS ==================== */
-.card, .login-card {
+.card,
+.login-card,
+.question-card {
   background: var(--bg-card);
-  border-radius: var(--border-radius-lg);
-  padding: var(--spacing-lg);
-  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-card);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-medium);
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
+  text-align: center;
 }
 
-/* ==================== HEADER DE LOGIN ==================== */
+/* ==================== HEADER LOGIN ==================== */
 .login-header {
   text-align: center;
-  margin-bottom: var(--spacing-lg);
-}
-
-.app-title {
-  font-size: 3rem;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-motivacion));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: var(--spacing-xs);
-  animation: fadeInDown 0.6s ease;
-}
-
-.app-subtitle {
-  font-size: 1.1rem;
-  color: var(--text-medium);
-  font-weight: 300;
-  animation: fadeInUp 0.6s ease 0.2s backwards;
+  margin-bottom: var(--spacing-xl);
 }
 
 /* ==================== FORMULARIOS ==================== */
-.login-form, form {
+.login-form,
+form {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
@@ -160,14 +229,8 @@ p {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
-  position: relative;
-  animation: fadeInUp 0.5s ease backwards;
+  text-align: left;
 }
-
-.form-group:nth-child(1) { animation-delay: 0.3s; }
-.form-group:nth-child(2) { animation-delay: 0.4s; }
-.form-group:nth-child(3) { animation-delay: 0.5s; }
-.form-group:nth-child(4) { animation-delay: 0.6s; }
 
 .form-group label {
   font-weight: 600;
@@ -182,21 +245,25 @@ p {
   font-size: 1.2rem;
 }
 
-input, select, textarea {
-  padding: var(--spacing-sm);
-  border: 2px solid #e0e0e0;
-  border-radius: var(--border-radius-sm);
+input,
+select,
+textarea {
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--color-lila-claro);
+  border-radius: var(--radius-round);
   font-size: 1rem;
   font-family: inherit;
-  transition: all var(--transition-normal);
+  background: var(--bg-card);
+  transition: all 0.3s ease;
   outline: none;
-  background: #fafafa;
 }
 
-input:focus, select:focus, textarea:focus {
-  border-color: var(--color-primary);
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-morado);
   background: white;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(209, 128, 253, 0.1);
 }
 
 input::placeholder {
@@ -206,99 +273,161 @@ input::placeholder {
 /* Estados de error */
 .form-group.error input,
 .form-group.error select {
-  border-color: var(--color-danger);
+  border-color: #e74c3c;
   background: #fff5f5;
 }
 
 .field-error {
-  color: var(--color-danger);
+  color: #e74c3c;
   font-size: 0.85rem;
   font-weight: 500;
-  display: block;
-  margin-top: 0.25rem;
 }
 
 .error-message {
-  background: var(--color-danger);
+  background: #e74c3c;
   color: white;
   padding: var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--radius-small);
   text-align: center;
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
-  animation: slideDown 0.3s ease;
 }
 
-.error-message.hidden {
-  display: none;
-}
-
-/* ==================== BOTONES ==================== */
-button, .btn {
+/* ==================== BOTONES - ESTILO CANVA ==================== */
+button,
+.btn {
   cursor: pointer;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 2.5rem;
   border: none;
-  border-radius: var(--border-radius-sm);
-  font-size: 1rem;
+  border-radius: var(--radius-pill);
+  font-size: 1.2rem;
   font-weight: 600;
   font-family: inherit;
-  transition: all var(--transition-normal);
+  transition: all 0.3s ease;
   outline: none;
+  box-shadow: var(--shadow-soft);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 }
 
-.btn-primary {
-  background: var(--color-primary);
-  color: var(--text-white);
-  box-shadow: var(--shadow-sm);
+/* Botón amarillo (principal) */
+.btn-primary,
+button[type="submit"],
+#btn-siguiente,
+#btn-mezclar,
+#btn-volver-inicio {
+  background: var(--color-amarillo);
+  color: var(--text-dark);
 }
 
-.btn-primary:hover {
-  background: var(--color-primary-hover);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+.btn-primary:hover,
+button[type="submit"]:hover,
+#btn-siguiente:hover,
+#btn-mezclar:hover,
+#btn-volver-inicio:hover {
+  background: var(--color-amarillo-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
 }
 
-.btn-primary:active {
-  transform: translateY(0);
+/* Botón morado (secundario) */
+.btn-secondary,
+.btn-morado,
+#btn-anterior,
+#btn-ver-reporte,
+#btn-terminar {
+  background: var(--color-morado) !important;
+  color: white !important;
 }
 
-.btn-secondary {
-  background: var(--color-secondary);
-  color: var(--text-white);
+.btn-secondary:hover,
+.btn-morado:hover,
+#btn-anterior:hover,
+#btn-ver-reporte:hover,
+#btn-terminar:hover {
+  background: var(--color-morado-hover) !important;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-medium);
 }
 
-.btn-secondary:hover {
-  background: var(--color-secondary-hover);
-  transform: translateY(-2px);
-}
-
-.btn-danger {
-  background: var(--color-danger);
-  color: var(--text-white);
-}
-
-.btn-danger:hover {
-  background: var(--color-danger-hover);
-  transform: translateY(-2px);
-}
-
-button:disabled {
+/* Botón deshabilitado */
+button:disabled,
+.btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
 }
 
-/* ==================== FOOTER DEL LOGIN ==================== */
+.btn-lg {
+  padding: 1.2rem 3rem;
+  font-size: 1.3rem;
+}
+
+/* ==================== BOTONES DE OPCIONES ==================== */
+.option-btn {
+  background: var(--bg-card);
+  border: 3px solid var(--color-lila-claro);
+  border-radius: var(--radius-round);
+  padding: 1.2rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-soft);
+}
+
+.option-btn:hover {
+  border-color: var(--color-morado);
+  background: rgba(209, 128, 253, 0.05);
+  transform: translateX(8px);
+}
+
+.option-btn.selected {
+  background: var(--color-morado);
+  color: white;
+  border-color: var(--color-morado);
+  transform: scale(1.02);
+  box-shadow: var(--shadow-medium);
+}
+
+.option-btn.selected::after {
+  content: '✓';
+  position: absolute;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* ==================== AVATAR CIRCULAR ==================== */
+.user-avatar,
+.avatar-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--color-morado);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: var(--shadow-medium);
+  position: relative;
+}
+
+.user-avatar::before {
+  content: '👤';
+  font-size: 5rem;
+  color: var(--color-amarillo);
+}
+
+/* ==================== FOOTER ==================== */
 .login-footer {
   text-align: center;
-  margin-top: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
   padding-top: var(--spacing-md);
-  border-top: 1px solid #e0e0e0;
-  animation: fadeIn 0.8s ease 0.7s backwards;
+  border-top: 1px solid var(--color-lila-claro);
 }
 
 .login-footer p {
@@ -308,18 +437,16 @@ button:disabled {
 }
 
 .link-admin {
-  color: var(--color-primary);
+  color: var(--color-morado);
   text-decoration: none;
   font-weight: 600;
-  transition: color var(--transition-fast);
 }
 
 .link-admin:hover {
-  color: var(--color-primary-hover);
   text-decoration: underline;
+  color: var(--color-morado-hover);
 }
 
-/* ==================== FOOTER GLOBAL ==================== */
 .main-footer {
   text-align: center;
   padding: var(--spacing-md);
@@ -327,6 +454,33 @@ button:disabled {
   font-size: 0.85rem;
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
+}
+
+/* ==================== BARRA DE PROGRESO ==================== */
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: var(--color-lila-claro);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-sm);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill,
+#progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-morado), var(--color-amarillo));
+  transition: width 0.5s ease;
+  border-radius: 10px;
+}
+
+.progress-text {
+  text-align: center;
+  color: var(--text-medium);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
 }
 
 /* ==================== UTILIDADES ==================== */
@@ -342,22 +496,10 @@ button:disabled {
   text-align: center;
 }
 
-.mt-1 { margin-top: var(--spacing-sm); }
-.mt-2 { margin-top: var(--spacing-md); }
-.mt-3 { margin-top: var(--spacing-lg); }
-
-.mb-1 { margin-bottom: var(--spacing-sm); }
-.mb-2 { margin-bottom: var(--spacing-md); }
-.mb-3 { margin-bottom: var(--spacing-lg); }
-
 /* ==================== ANIMACIONES ==================== */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fadeInDown {
@@ -382,15 +524,9 @@ button:disabled {
   }
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 @keyframes shake {
@@ -399,31 +535,53 @@ button:disabled {
   75% { transform: translateX(10px); }
 }
 
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
-  :root {
-    font-size: 14px;
-  }
-  
   .container {
     padding: var(--spacing-sm);
   }
   
-  .card, .login-card {
-    padding: var(--spacing-md);
+  .card,
+  .login-card {
+    padding: var(--spacing-lg);
   }
   
-  .app-title {
+  .app-title,
+  .quiz-title,
+  .resultado-title {
     font-size: 2.5rem;
   }
   
-  h1 { font-size: 2rem; }
-  h2 { font-size: 1.75rem; }
-  h3 { font-size: 1.5rem; }
+  button,
+  .btn {
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .option-btn {
+    padding: 1rem;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .app-title {
+  .app-title,
+  .quiz-title,
+  .resultado-title {
     font-size: 2rem;
   }
   
@@ -431,8 +589,9 @@ button:disabled {
     font-size: 1rem;
   }
   
-  button, .btn {
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
+  button,
+  .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
   }
 }
