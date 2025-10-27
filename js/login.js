@@ -1,317 +1,258 @@
 // ============================================
-// LOGIN.JS - Sistema de inicio de sesión
+// EMOTIQUEST - LOGIN.JS (CORREGIDO)
 // ============================================
 
-/**
- * Inicializa el sistema de login cuando el DOM está listo
- */
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Inicializando página de login...');
+console.log('🔐 login.js cargado');
+
+// Variables globales
+const formularioLogin = document.getElementById('login-form');
+const errorMessageDiv = document.getElementById('error-message');
+
+// ==================== INICIALIZACIÓN ====================
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('📋 Página de login inicializada');
+  
+  // Verificar si hay sesión activa
+  verificarSesionActiva();
+  
+  // Event listener del formulario
+  if (formularioLogin) {
+    formularioLogin.addEventListener('submit', manejarLogin);
+    console.log('✅ Event listener agregado al formulario');
+  } else {
+    console.error('❌ No se encontró el formulario de login');
+  }
+});
+
+// ==================== VERIFICAR SESIÓN ACTIVA ====================
+function verificarSesionActiva() {
+  const sesionActual = obtenerSesionActual();
+  
+  if (sesionActual && !sesionActual.completada) {
+    console.log('⚠️ Hay una sesión activa sin completar');
     
-    // Verificar si ya hay una sesión activa
-    verificarSesionExistente();
+    const continuar = confirm(
+      'Tienes una sesión en progreso.\n\n' +
+      '¿Deseas continuar con esa sesión?'
+    );
     
-    // Configurar el formulario
-    configurarFormulario();
+    if (continuar) {
+      window.location.href = './cuestionario.html';
+    } else {
+      limpiarSesionActual();
+      console.log('🧹 Sesión anterior limpiada');
+    }
+  }
+}
+
+// ==================== MANEJAR LOGIN ====================
+function manejarLogin(event) {
+  event.preventDefault();
+  
+  console.log('📝 === PROCESANDO FORMULARIO DE LOGIN ===');
+  
+  // Limpiar errores previos
+  limpiarErrores();
+  
+  // Obtener datos del formulario
+  const nombre = document.getElementById('nombre').value.trim();
+  const genero = document.getElementById('genero').value;
+  const edad = document.getElementById('edad').value;
+  const grado = document.getElementById('grado').value;
+  
+  console.log('📊 Datos capturados:', { nombre, genero, edad, grado });
+  
+  // Validar datos
+  if (!validarDatos(nombre, genero, edad, grado)) {
+    console.error('❌ Validación fallida');
+    return;
+  }
+  
+  console.log('✅ Validación exitosa');
+  
+  // Crear usuario
+  const usuario = crearUsuario(nombre, genero, edad, grado);
+  console.log('👤 Usuario creado:', usuario);
+  
+  // Guardar usuario
+  const guardadoUsuario = guardarUsuarioActual(usuario);
+  
+  if (!guardadoUsuario) {
+    mostrarError('Error al guardar datos. Intenta nuevamente.');
+    console.error('❌ Error al guardar usuario');
+    return;
+  }
+  
+  console.log('✅ Usuario guardado en localStorage');
+  
+  // Crear sesión inicial
+  const sesionCreada = crearSesionInicial(usuario);
+  
+  if (!sesionCreada) {
+    mostrarError('Error al crear sesión. Intenta nuevamente.');
+    console.error('❌ Error al crear sesión');
+    return;
+  }
+  
+  console.log('✅ Sesión inicial creada');
+  console.log('🚀 Redirigiendo a cuestionario...');
+  
+  // Redirigir al cuestionario
+  setTimeout(() => {
+    window.location.href = './cuestionario.html';
+  }, 300);
+}
+
+// ==================== VALIDAR DATOS ====================
+function validarDatos(nombre, genero, edad, grado) {
+  let esValido = true;
+  
+  // Validar nombre
+  if (!nombre || nombre.length < 2) {
+    mostrarErrorCampo('nombre', 'El nombre debe tener al menos 2 caracteres');
+    esValido = false;
+  }
+  
+  // Validar género
+  if (!genero) {
+    mostrarErrorCampo('genero', 'Debes seleccionar un género');
+    esValido = false;
+  }
+  
+  // Validar edad
+  const edadNum = parseInt(edad);
+  if (!edad || edadNum < 5 || edadNum > 100) {
+    mostrarErrorCampo('edad', 'La edad debe estar entre 5 y 100 años');
+    esValido = false;
+  }
+  
+  // Validar grado
+  if (!grado) {
+    mostrarErrorCampo('grado', 'Debes seleccionar tu nivel de escolaridad');
+    esValido = false;
+  }
+  
+  return esValido;
+}
+
+// ==================== CREAR USUARIO ====================
+function crearUsuario(nombre, genero, edad, grado) {
+  const ahora = new Date();
+  const id = generarID();
+  
+  const usuario = {
+    id: id,
+    nombre: nombre,
+    genero: genero,
+    edad: parseInt(edad),
+    grado: grado,
+    fechaRegistro: ahora.toISOString().split('T')[0],
+    horaRegistro: ahora.toTimeString().split(' ')[0]
+  };
+  
+  return usuario;
+}
+
+// ==================== CREAR SESIÓN INICIAL ====================
+function crearSesionInicial(usuario) {
+  try {
+    const ahora = new Date();
     
-    // Agregar animación de entrada
-    aplicarAnimacionEntrada();
+    const sesion = {
+      id: usuario.id,
+      nombre: usuario.nombre,
+      genero: usuario.genero,
+      edad: usuario.edad,
+      grado: usuario.grado,
+      fecha: ahora.toISOString().split('T')[0],
+      hora: ahora.toTimeString().split(' ')[0].substring(0, 5),
+      respuestas: [],
+      completada: false,
+      emocionPredominante: null
+    };
+    
+    // Guardar sesión actual
+    const guardado = guardarSesionActual(sesion);
+    
+    if (guardado) {
+      console.log('✅ Sesión inicial guardada:', sesion.id);
+      return true;
+    } else {
+      console.error('❌ Error al guardar sesión inicial');
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ Error al crear sesión:', error);
+    return false;
+  }
+}
+
+// ==================== GENERAR ID ÚNICO ====================
+function generarID() {
+  const ahora = new Date();
+  const fecha = ahora.toISOString().split('T')[0].replace(/-/g, '');
+  const hora = ahora.toTimeString().split(' ')[0].replace(/:/g, '').substring(0, 4);
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+  
+  return `EMQ-${fecha}-${hora}-${random}`;
+}
+
+// ==================== MOSTRAR ERROR EN CAMPO ====================
+function mostrarErrorCampo(idCampo, mensaje) {
+  const campo = document.getElementById(idCampo);
+  if (!campo) return;
+  
+  const formGroup = campo.closest('.form-group');
+  if (!formGroup) return;
+  
+  // Agregar clase de error
+  formGroup.classList.add('error');
+  
+  // Crear mensaje de error si no existe
+  let errorMensaje = formGroup.querySelector('.field-error');
+  if (!errorMensaje) {
+    errorMensaje = document.createElement('span');
+    errorMensaje.className = 'field-error';
+    formGroup.appendChild(errorMensaje);
+  }
+  
+  errorMensaje.textContent = mensaje;
+  
+  // Hacer focus en el campo
+  campo.focus();
+}
+
+// ==================== MOSTRAR ERROR GENERAL ====================
+function mostrarError(mensaje) {
+  if (errorMessageDiv) {
+    errorMessageDiv.textContent = mensaje;
+    errorMessageDiv.classList.remove('hidden');
+    
+    // Auto-ocultar después de 5 segundos
+    setTimeout(() => {
+      errorMessageDiv.classList.add('hidden');
+    }, 5000);
+  } else {
+    alert(mensaje);
+  }
+}
+
+// ==================== LIMPIAR ERRORES ====================
+function limpiarErrores() {
+  // Limpiar errores de campos
+  const formGroups = document.querySelectorAll('.form-group.error');
+  formGroups.forEach(group => {
+    group.classList.remove('error');
+    const errorMsg = group.querySelector('.field-error');
+    if (errorMsg) {
+      errorMsg.remove();
+    }
   });
   
-  /**
-   * Verifica si ya existe una sesión activa
-   */
-  function verificarSesionExistente() {
-    if (window.EmotiQuestStorage && window.EmotiQuestStorage.haySesionActiva()) {
-      const sesion = window.EmotiQuestStorage.obtenerSesionActual();
-      
-      // Preguntar si quiere continuar o iniciar nueva sesión
-      const continuar = confirm(
-        `Ya existe una sesión iniciada como "${sesion.nombre}".\n\n` +
-        '¿Deseas continuar con esa sesión?\n\n' +
-        'OK = Continuar sesión\n' +
-        'Cancelar = Iniciar nueva sesión'
-      );
-      
-      if (continuar) {
-        // Redirigir al cuestionario
-        window.location.href = './cuestionario.html';
-      } else {
-        // Limpiar sesión anterior
-        window.EmotiQuestStorage.limpiarSesionActual();
-        window.EmotiQuestStorage.limpiarRespuestas();
-      }
-    }
+  // Limpiar error general
+  if (errorMessageDiv) {
+    errorMessageDiv.classList.add('hidden');
   }
-  
-  /**
-   * Configura los event listeners del formulario
-   */
-  function configurarFormulario() {
-    const formulario = document.getElementById('login-form');
-    
-    if (!formulario) {
-      console.error('❌ Formulario de login no encontrado');
-      return;
-    }
-    
-    // Event listener para el submit
-    formulario.addEventListener('submit', manejarSubmit);
-    
-    // Event listeners para validación en tiempo real
-    const campos = formulario.querySelectorAll('input, select');
-    campos.forEach(campo => {
-      campo.addEventListener('blur', validarCampo);
-      campo.addEventListener('input', function() {
-        // Limpiar error cuando el usuario empieza a escribir
-        limpiarError(this);
-      });
-    });
-  }
-  
-  /**
-   * Maneja el envío del formulario
-   * @param {Event} evento - Evento de submit
-   */
-  function manejarSubmit(evento) {
-    evento.preventDefault();
-    
-    console.log('📝 Procesando formulario de login...');
-    
-    // Obtener datos del formulario
-    const datos = obtenerDatosFormulario();
-    
-    // Validar todos los campos
-    if (!validarFormularioCompleto(datos)) {
-      console.log('❌ Validación fallida');
-      return;
-    }
-    
-    // Guardar sesión
-    if (window.EmotiQuestStorage) {
-      const guardado = window.EmotiQuestStorage.guardarSesionActual(datos);
-      
-      if (guardado) {
-        console.log('✅ Sesión guardada exitosamente');
-        
-        // Aplicar transición de salida
-        aplicarTransicionSalida();
-        
-        // Redirigir al cuestionario después de la animación
-        setTimeout(() => {
-          window.location.href = './cuestionario.html';
-        }, 600);
-      } else {
-        mostrarError('Error al guardar la sesión. Por favor, intenta de nuevo.');
-      }
-    } else {
-      console.error('❌ Storage no disponible');
-      mostrarError('Error del sistema. Por favor, recarga la página.');
-    }
-  }
-  
-  /**
-   * Obtiene los datos del formulario
-   * @returns {Object} Objeto con los datos del usuario
-   */
-  function obtenerDatosFormulario() {
-    return {
-      nombre: document.getElementById('nombre').value.trim(),
-      genero: document.getElementById('genero').value,
-      edad: parseInt(document.getElementById('edad').value),
-      grado: document.getElementById('grado').value  // Ya es un select, no necesita trim
-    };
-  }
-  
-  /**
-   * Valida el formulario completo
-   * @param {Object} datos - Datos a validar
-   * @returns {boolean} true si todo es válido
-   */
-  function validarFormularioCompleto(datos) {
-    let esValido = true;
-    
-    // Validar nombre
-    if (!datos.nombre || datos.nombre.length < 2) {
-      mostrarErrorCampo('nombre', 'Por favor, ingresa tu nombre (mínimo 2 caracteres)');
-      esValido = false;
-    }
-    
-    // Validar género
-    if (!datos.genero) {
-      mostrarErrorCampo('genero', 'Por favor, selecciona tu género');
-      esValido = false;
-    }
-    
-    // Validar edad
-    if (!datos.edad || datos.edad < 5 || datos.edad > 100) {
-      mostrarErrorCampo('edad', 'Por favor, ingresa una edad válida (entre 5 y 100 años)');
-      esValido = false;
-    }
-    
-    // Validar grado
-    if (!datos.grado) {
-      mostrarErrorCampo('grado', 'Por favor, selecciona tu grado escolar');
-      esValido = false;
-    }
-    
-    // Si hay errores, hacer scroll al primero
-    if (!esValido) {
-      const primerError = document.querySelector('.form-group.error');
-      if (primerError) {
-        primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-    
-    return esValido;
-  }
-  
-  /**
-   * Valida un campo individual cuando pierde el foco
-   * @param {Event} evento
-   */
-  function validarCampo(evento) {
-    const campo = evento.target;
-    const valor = campo.value.trim();
-    const id = campo.id;
-    
-    // Limpiar error anterior
-    limpiarError(campo);
-    
-    // Validaciones específicas
-    switch(id) {
-      case 'nombre':
-        if (!valor || valor.length < 2) {
-          mostrarErrorCampo(id, 'Nombre muy corto');
-        }
-        break;
-        
-      case 'genero':
-        if (!valor) {
-          mostrarErrorCampo(id, 'Selecciona una opción');
-        }
-        break;
-        
-      case 'edad':
-        const edad = parseInt(valor);
-        if (!edad || edad < 5 || edad > 100) {
-          mostrarErrorCampo(id, 'Edad no válida');
-        }
-        break;
-        
-      case 'grado':
-        if (!valor) {
-          mostrarErrorCampo(id, 'Selecciona tu grado');
-        }
-        break;
-    }
-  }
-  
-  /**
-   * Muestra un error en un campo específico
-   * @param {string} idCampo - ID del campo
-   * @param {string} mensaje - Mensaje de error
-   */
-  function mostrarErrorCampo(idCampo, mensaje) {
-    const campo = document.getElementById(idCampo);
-    if (!campo) return;
-    
-    const formGroup = campo.closest('.form-group');
-    if (!formGroup) return;
-    
-    // Agregar clase de error
-    formGroup.classList.add('error');
-    campo.classList.add('error');
-    
-    // Crear o actualizar mensaje de error
-    let errorSpan = formGroup.querySelector('.field-error');
-    if (!errorSpan) {
-      errorSpan = document.createElement('span');
-      errorSpan.className = 'field-error';
-      formGroup.appendChild(errorSpan);
-    }
-    errorSpan.textContent = mensaje;
-    
-    // Animar el error
-    errorSpan.style.animation = 'shake 0.3s';
-    setTimeout(() => {
-      errorSpan.style.animation = '';
-    }, 300);
-  }
-  
-  /**
-   * Limpia el error de un campo
-   * @param {HTMLElement} campo - Elemento del campo
-   */
-  function limpiarError(campo) {
-    const formGroup = campo.closest('.form-group');
-    if (!formGroup) return;
-    
-    formGroup.classList.remove('error');
-    campo.classList.remove('error');
-    
-    const errorSpan = formGroup.querySelector('.field-error');
-    if (errorSpan) {
-      errorSpan.remove();
-    }
-  }
-  
-  /**
-   * Muestra un mensaje de error general
-   * @param {string} mensaje - Mensaje a mostrar
-   */
-  function mostrarError(mensaje) {
-    const contenedorError = document.getElementById('error-message');
-    
-    if (contenedorError) {
-      contenedorError.textContent = mensaje;
-      contenedorError.classList.remove('hidden');
-      contenedorError.classList.add('visible');
-      
-      // Animar
-      contenedorError.style.animation = 'shake 0.5s';
-      
-      // Auto-ocultar después de 5 segundos
-      setTimeout(() => {
-        contenedorError.classList.remove('visible');
-        contenedorError.classList.add('hidden');
-      }, 5000);
-    } else {
-      // Fallback si no existe el contenedor
-      alert(mensaje);
-    }
-  }
-  
-  /**
-   * Aplica animación de entrada a la página
-   */
-  function aplicarAnimacionEntrada() {
-    const loginCard = document.querySelector('.login-card');
-    if (loginCard) {
-      loginCard.style.opacity = '0';
-      loginCard.style.transform = 'translateY(20px)';
-      
-      setTimeout(() => {
-        loginCard.style.transition = 'all 0.6s ease';
-        loginCard.style.opacity = '1';
-        loginCard.style.transform = 'translateY(0)';
-      }, 100);
-    }
-  }
-  
-  /**
-   * Aplica transición de salida antes de cambiar de página
-   */
-  function aplicarTransicionSalida() {
-    const loginCard = document.querySelector('.login-card');
-    if (loginCard) {
-      loginCard.style.transition = 'all 0.5s ease';
-      loginCard.style.opacity = '0';
-      loginCard.style.transform = 'scale(0.95)';
-    }
-    
-    document.body.style.transition = 'opacity 0.5s ease';
-    document.body.style.opacity = '0.7';
-  }
-  
-  console.log('✅ login.js cargado correctamente');
+}
+
+console.log('✅ login.js completamente cargado');
