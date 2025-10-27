@@ -1,5 +1,5 @@
 // ============================================
-// CUESTIONARIO.JS - Lógica del cuestionario
+// EMOTIQUEST - CUESTIONARIO.JS (CORREGIDO)
 // ============================================
 
 // Variables globales
@@ -15,14 +15,16 @@ const questionTitle = document.getElementById('question-title');
 const optionsGrid = document.getElementById('options-grid');
 const progressFill = document.getElementById('progress-fill');
 const progressText = document.getElementById('progress-text');
+const btnAnterior = document.getElementById('btn-anterior');
+const btnSiguiente = document.getElementById('btn-siguiente');
+const btnTerminar = document.getElementById('btn-terminar');
 
-// Elementos de emoción seleccionada (pueden no existir si usas el HTML viejo)
+// Elementos de emoción seleccionada
 let emocionSeleccionada = document.getElementById('emocion-seleccionada');
 let emocionNombre = document.getElementById('emocion-nombre');
 
-// Si no existen, crearlos dinámicamente
+// Si no existen, crearlos
 if (!emocionSeleccionada) {
-  console.log('⚠️ Creando elemento emocion-seleccionada dinámicamente');
   emocionSeleccionada = document.createElement('div');
   emocionSeleccionada.id = 'emocion-seleccionada';
   emocionSeleccionada.className = 'emocion-seleccionada hidden';
@@ -32,14 +34,8 @@ if (!emocionSeleccionada) {
   emocionNombre.className = 'emocion-nombre';
   
   emocionSeleccionada.appendChild(emocionNombre);
-  
-  // Insertar después del optionsGrid
   optionsGrid.parentNode.insertBefore(emocionSeleccionada, optionsGrid.nextSibling);
 }
-
-const btnAnterior = document.getElementById('btn-anterior');
-const btnSiguiente = document.getElementById('btn-siguiente');
-const btnTerminar = document.getElementById('btn-terminar');
 
 /**
  * Inicializa el cuestionario
@@ -47,7 +43,7 @@ const btnTerminar = document.getElementById('btn-terminar');
 document.addEventListener('DOMContentLoaded', async function() {
   console.log('🚀 Inicializando cuestionario...');
   
-  // Verificar que existe una sesión
+  // Verificar sesión
   if (!verificarSesion()) {
     return;
   }
@@ -61,23 +57,16 @@ document.addEventListener('DOMContentLoaded', async function() {
   // Mostrar primera pregunta
   mostrarPregunta();
   
-  // Aplicar animación de entrada
+  // Animación de entrada
   aplicarAnimacionEntrada();
 });
 
 /**
  * Verifica que existe una sesión activa
- * @returns {boolean}
  */
 function verificarSesion() {
-  if (!window.EmotiQuestStorage) {
-    console.error('❌ Storage no disponible');
-    alert('Error del sistema. Redirigiendo al inicio...');
-    window.location.href = './index.html';
-    return false;
-  }
-  
-  sesion = window.EmotiQuestStorage.obtenerSesionActual();
+  // Obtener sesión actual
+  sesion = obtenerSesionActual();
   
   if (!sesion) {
     alert('No hay sesión activa. Por favor, inicia sesión primero.');
@@ -95,7 +84,7 @@ function verificarSesion() {
 }
 
 /**
- * Carga las preguntas desde el archivo JSON
+ * Carga las preguntas desde JSON
  */
 async function cargarPreguntas() {
   try {
@@ -108,14 +97,10 @@ async function cargarPreguntas() {
     preguntas = await respuesta.json();
     console.log(`📋 ${preguntas.length} preguntas cargadas`);
     
-    // Filtrar preguntas según el día
+    // Filtrar y mezclar
     filtrarPreguntasPorDia();
     
-    // NO mezclar aquí porque filtrarPreguntasPorDia ya lo hace
-    // y coloca la pregunta 6 al final
-    
     console.log(`✅ ${preguntasFiltradas.length} preguntas disponibles`);
-    
   } catch (error) {
     console.error('❌ Error al cargar preguntas:', error);
     alert('Error al cargar las preguntas. Por favor, recarga la página.');
@@ -123,23 +108,20 @@ async function cargarPreguntas() {
 }
 
 /**
- * Filtra preguntas según el día de la semana
+ * Filtra preguntas según el día
  */
 function filtrarPreguntasPorDia() {
-  const hoy = new Date().getDay(); // 0 = domingo, 1 = lunes, ..., 5 = viernes, 6 = sábado
+  const hoy = new Date().getDay();
   
-  // Separar pregunta 6 (final) del resto
   let preguntaFinal = null;
   let preguntasNormales = [];
   
   preguntas.forEach(pregunta => {
-    // La pregunta con id 6 siempre va al final
     if (pregunta.id === 6) {
       preguntaFinal = pregunta;
       return;
     }
     
-    // Filtrar el resto según condición
     if (pregunta.condicion === 'siempre') {
       preguntasNormales.push(pregunta);
     } else if (pregunta.condicion === 'lunes' && hoy === 1) {
@@ -149,34 +131,17 @@ function filtrarPreguntasPorDia() {
     }
   });
   
-  // Mezclar solo las preguntas normales
   preguntasNormales = mezclarArray(preguntasNormales);
   
-  // Agregar pregunta final al último
   if (preguntaFinal) {
     preguntasNormales.push(preguntaFinal);
   }
   
   preguntasFiltradas = preguntasNormales;
-  
-  console.log(`🗓️ Día: ${obtenerNombreDia(hoy)}, Preguntas filtradas: ${preguntasFiltradas.length}`);
-  console.log('📌 Pregunta final (ID 6) colocada al último');
 }
 
 /**
- * Obtiene el nombre del día
- * @param {number} dia - Número del día (0-6)
- * @returns {string}
- */
-function obtenerNombreDia(dia) {
-  const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-  return dias[dia];
-}
-
-/**
- * Mezcla aleatoriamente un array
- * @param {Array} array
- * @returns {Array}
+ * Mezcla array aleatoriamente
  */
 function mezclarArray(array) {
   const copia = [...array];
@@ -191,70 +156,57 @@ function mezclarArray(array) {
  * Muestra la pregunta actual
  */
 function mostrarPregunta() {
-  console.log('🔵 === INICIO mostrarPregunta() ===');
-  
   if (indiceActual >= preguntasFiltradas.length) {
     console.log('✅ Todas las preguntas respondidas');
     return;
   }
   
   const pregunta = preguntasFiltradas[indiceActual];
-  console.log('📋 Pregunta actual:', pregunta);
   
-  // Actualizar título de la pregunta
+  // Actualizar título
   questionTitle.textContent = pregunta.pregunta;
-  console.log('✅ Título actualizado');
   
-  // Limpiar opciones anteriores
+  // Limpiar opciones
   optionsGrid.innerHTML = '';
-  console.log('✅ Grid limpiado');
   
-  // Verificar que SistemaEmociones existe
+  // Verificar SistemaEmociones
   if (!window.SistemaEmociones) {
-    console.error('❌ SistemaEmociones NO EXISTE!');
+    console.error('❌ SistemaEmociones NO disponible');
     return;
   }
-  console.log('✅ SistemaEmociones disponible');
   
-  // Crear botellas de opciones
-  console.log(`🔄 Creando ${pregunta.opciones.length} botellas...`);
-  
+  // Crear botellas
   pregunta.opciones.forEach((opcion, index) => {
-    console.log(`  Opción ${index + 1}:`, opcion);
-    
     const color = window.SistemaEmociones.obtenerColor(opcion.emocion);
     const emoji = window.SistemaEmociones.obtenerEmoji(opcion.emocion);
     
-    console.log(`    Color: ${color}, Emoji: ${emoji}`);
-    
-    // Contenedor de la botella
     const botellaContainer = document.createElement('div');
     botellaContainer.className = 'botella-option';
     botellaContainer.dataset.emocion = opcion.emocion;
     botellaContainer.dataset.texto = opcion.texto;
     
-    // Si ya hay respuesta guardada, marcarla
+    // Si ya hay respuesta, marcarla
     if (respuestas[indiceActual] && respuestas[indiceActual].texto === opcion.texto) {
       botellaContainer.classList.add('selected');
-      console.log(`    ✓ Marcada como seleccionada`);
     }
     
-    // Crear la botella
     const botella = document.createElement('div');
     botella.className = 'botella';
     botella.style.background = color;
-    console.log(`    Botella creada con color: ${color}`);
     
-    // Tapa de la botella
     const tapa = document.createElement('div');
     tapa.className = 'tapa-botella';
+
+    // NUEVO: Crear reflejo brillante para efecto 3D
+    const reflejo = document.createElement('div');
+    reflejo.className = 'reflejo-botella';
     
-    // Emoji de la emoción
     const emojiSpan = document.createElement('span');
     emojiSpan.className = 'botella-emoji';
     emojiSpan.textContent = emoji;
     
     botella.appendChild(tapa);
+     botella.appendChild(reflejo); // Agregar reflejo antes del emoji
     botella.appendChild(emojiSpan);
     botellaContainer.appendChild(botella);
     
@@ -262,12 +214,9 @@ function mostrarPregunta() {
     botellaContainer.addEventListener('click', () => seleccionarOpcion(opcion, botellaContainer));
     
     optionsGrid.appendChild(botellaContainer);
-    console.log(`  ✅ Botella ${index + 1} agregada al DOM`);
   });
   
-  console.log(`✅ Total de botellas en el DOM: ${optionsGrid.children.length}`);
-  
-  // Actualizar barra de progreso
+  // Actualizar progreso
   actualizarProgreso();
   
   // Actualizar controles
@@ -275,15 +224,10 @@ function mostrarPregunta() {
   
   // Ocultar nombre de emoción
   emocionSeleccionada.classList.add('hidden');
-  
-  console.log(`✅ Pregunta ${indiceActual + 1}/${preguntasFiltradas.length} mostrada`);
-  console.log('🔵 === FIN mostrarPregunta() ===');
 }
 
 /**
- * Maneja la selección de una opción
- * @param {Object} opcion - Opción seleccionada
- * @param {HTMLElement} botellaContainer - Contenedor de la botella clickeada
+ * Selecciona una opción
  */
 function seleccionarOpcion(opcion, botellaContainer) {
   // Remover selección anterior
@@ -302,56 +246,31 @@ function seleccionarOpcion(opcion, botellaContainer) {
     emocion: opcion.emocion
   };
   
-  // Habilitar botón siguiente/terminar
+  // Guardar en sesión
+  sesion.respuestas = respuestas;
+  guardarSesionActual(sesion);
+  
+  // Habilitar botones
   btnSiguiente.disabled = false;
   btnTerminar.disabled = false;
   
-  // Mostrar nombre de la emoción
+  // Mostrar nombre de emoción
   mostrarNombreEmocion(opcion.emocion);
   
-  console.log(`✅ Respuesta seleccionada: ${opcion.texto} (${opcion.emocion})`);
+  console.log(`✅ Respuesta ${indiceActual + 1}:`, opcion.texto, `(${opcion.emocion})`);
 }
 
 /**
- * Muestra el nombre de la emoción seleccionada
- * @param {string} emocion - Nombre de la emoción
+ * Muestra el nombre de la emoción
  */
 function mostrarNombreEmocion(emocion) {
-  console.log('🎭 Mostrando nombre de emoción:', emocion);
-  
-  if (!window.SistemaEmociones) {
-    console.error('❌ SistemaEmociones no disponible');
-    return;
-  }
-  
   const emocionData = window.SistemaEmociones.obtenerEmocion(emocion);
-  console.log('📊 Datos de emoción:', emocionData);
-  
-  if (!emocionData) {
-    console.error('❌ No se encontró la emoción:', emocion);
-    return;
-  }
-  
   const emoji = window.SistemaEmociones.obtenerEmoji(emocion);
-  
-  if (!emocionNombre || !emocionSeleccionada) {
-    console.error('❌ Elementos del DOM no encontrados');
-    console.log('emocionNombre:', emocionNombre);
-    console.log('emocionSeleccionada:', emocionSeleccionada);
-    return;
-  }
   
   emocionNombre.textContent = `${emoji} ${emocionData.nombre}`;
   emocionSeleccionada.classList.remove('hidden');
   emocionSeleccionada.style.animation = 'fadeInUp 0.5s ease';
-  
-  console.log('✅ Nombre de emoción mostrado:', `${emoji} ${emocionData.nombre}`);
 }
-
-/**
- * Muestra el preview del batido seleccionado (FUNCIÓN ELIMINADA - Ya no se usa)
- */
-// function mostrarBatidoPreview(emocion) { ... }
 
 /**
  * Actualiza la barra de progreso
@@ -366,7 +285,7 @@ function actualizarProgreso() {
 }
 
 /**
- * Actualiza los controles de navegación
+ * Actualiza los controles
  */
 function actualizarControles() {
   // Botón anterior
@@ -377,9 +296,9 @@ function actualizarControles() {
   }
   
   // Botones siguiente/terminar
-  const esUltimaPregunta = indiceActual === preguntasFiltradas.length - 1;
+  const esUltima = indiceActual === preguntasFiltradas.length - 1;
   
-  if (esUltimaPregunta) {
+  if (esUltima) {
     btnSiguiente.classList.add('hidden');
     btnTerminar.classList.remove('hidden');
   } else {
@@ -391,15 +310,12 @@ function actualizarControles() {
   const hayRespuesta = respuestas[indiceActual] !== undefined;
   btnSiguiente.disabled = !hayRespuesta;
   btnTerminar.disabled = !hayRespuesta;
-  
-  console.log('✅ Controles actualizados');
 }
 
 /**
- * Configura los event listeners de los controles
+ * Configura los controles
  */
 function configurarControles() {
-  // Botón anterior
   btnAnterior.addEventListener('click', () => {
     if (indiceActual > 0) {
       indiceActual--;
@@ -407,10 +323,9 @@ function configurarControles() {
     }
   });
   
-  // Botón siguiente
   btnSiguiente.addEventListener('click', () => {
     if (!respuestas[indiceActual]) {
-      alert('Por favor, selecciona una opción antes de continuar.');
+      alert('Por favor, selecciona una opción.');
       return;
     }
     
@@ -420,10 +335,9 @@ function configurarControles() {
     }
   });
   
-  // Botón terminar
   btnTerminar.addEventListener('click', () => {
     if (!respuestas[indiceActual]) {
-      alert('Por favor, selecciona una opción antes de finalizar.');
+      alert('Por favor, selecciona una opción.');
       return;
     }
     
@@ -432,12 +346,12 @@ function configurarControles() {
 }
 
 /**
- * Finaliza el cuestionario y guarda los resultados
+ * Finaliza el cuestionario
  */
 function finalizarCuestionario() {
   console.log('🎉 Finalizando cuestionario...');
   
-  // Verificar que todas las preguntas fueron respondidas
+  // Verificar respuestas
   const preguntasRespondidas = respuestas.filter(r => r !== undefined).length;
   
   if (preguntasRespondidas < preguntasFiltradas.length) {
@@ -451,34 +365,17 @@ function finalizarCuestionario() {
     }
   }
   
-  // Guardar respuestas en storage
-  if (window.EmotiQuestStorage) {
-    window.EmotiQuestStorage.guardarRespuestas(respuestas);
-  }
+  // Actualizar sesión con respuestas finales
+  sesion.respuestas = respuestas.filter(r => r !== undefined);
+  sesion.totalRespuestas = sesion.respuestas.length;
   
-  // Calcular emociones
-  if (window.SistemaEmociones) {
-    const conteo = window.SistemaEmociones.contarEmociones(respuestas);
-    const emocionPredominante = window.SistemaEmociones.calcularPredominante(conteo);
-    
-    // Guardar en historial
-    if (window.EmotiQuestStorage) {
-      const datosCompletos = {
-        ...sesion,
-        respuestas: respuestas,
-        conteoEmociones: conteo,
-        emocionPredominante: emocionPredominante,
-        totalRespuestas: preguntasRespondidas
-      };
-      
-      window.EmotiQuestStorage.guardarEnHistorial(datosCompletos);
-    }
-    
-    console.log('📊 Emoción predominante:', emocionPredominante);
-    console.log('📊 Conteo:', conteo);
-  }
+  // Guardar sesión actualizada
+  guardarSesionActual(sesion);
   
-  // Aplicar transición de salida
+  console.log('✅ Sesión actualizada con', sesion.respuestas.length, 'respuestas');
+  console.log('📊 Respuestas:', sesion.respuestas);
+  
+  // Transición
   aplicarTransicionSalida();
   
   // Redirigir a resultados
@@ -488,35 +385,32 @@ function finalizarCuestionario() {
 }
 
 /**
- * Aplica animación de entrada a la página
+ * Animación de entrada
  */
 function aplicarAnimacionEntrada() {
-  const quizContainer = document.querySelector('.quiz-container');
-  if (quizContainer) {
-    quizContainer.style.opacity = '0';
-    quizContainer.style.transform = 'translateY(20px)';
+  const container = document.querySelector('.quiz-container');
+  if (container) {
+    container.style.opacity = '0';
+    container.style.transform = 'translateY(20px)';
     
     setTimeout(() => {
-      quizContainer.style.transition = 'all 0.6s ease';
-      quizContainer.style.opacity = '1';
-      quizContainer.style.transform = 'translateY(0)';
+      container.style.transition = 'all 0.6s ease';
+      container.style.opacity = '1';
+      container.style.transform = 'translateY(0)';
     }, 100);
   }
 }
 
 /**
- * Aplica transición de salida antes de cambiar de página
+ * Transición de salida
  */
 function aplicarTransicionSalida() {
-  const quizContainer = document.querySelector('.quiz-container');
-  if (quizContainer) {
-    quizContainer.style.transition = 'all 0.5s ease';
-    quizContainer.style.opacity = '0';
-    quizContainer.style.transform = 'scale(0.95)';
+  const container = document.querySelector('.quiz-container');
+  if (container) {
+    container.style.transition = 'all 0.5s ease';
+    container.style.opacity = '0';
+    container.style.transform = 'scale(0.95)';
   }
-  
-  document.body.style.transition = 'opacity 0.5s ease';
-  document.body.style.opacity = '0.7';
 }
 
-console.log('✅ cuestionario.js cargado correctamente');
+console.log('✅ cuestionario.js cargado');

@@ -1,5 +1,6 @@
 /* ============================================
    QUIZ.CSS - Cuestionario Estilo Canva
+   Versión con Botellas 3D Mejoradas
    ============================================ */
 
 /* ==================== HEADER DEL QUIZ ==================== */
@@ -64,7 +65,7 @@
   font-weight: 600;
 }
 
-/* ==================== OPCIONES DE RESPUESTA (BOTELLAS) ==================== */
+/* ==================== OPCIONES DE RESPUESTA (BOTELLAS 3D MEJORADAS) ==================== */
 .options-grid {
   display: flex;
   justify-content: center;
@@ -125,75 +126,107 @@
   }
 }
 
-/* Botella en el cuestionario */
+/* ==================== BOTELLA 3D MEJORADA ==================== */
 .botella {
-  width: 70px;
-  height: 140px;
+  width: 90px;
+  height: 160px;
   position: relative;
-  filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
   background: transparent;
   display: block;
 }
 
-/* Cuerpo de la botella */
+/* Cuerpo de la botella con borde grueso 3D */
 .botella::before {
   content: '';
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 70px;
-  height: 110px;
+  width: 80px;
+  height: 120px;
   background: inherit;
-  border-radius: 10px 10px 20px 20px;
+  /* Borde grueso de 6px para efecto 3D más pronunciado */
+  border: 6px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px 12px 25px 25px;
   box-shadow: 
-    inset -8px 0 15px rgba(0, 0, 0, 0.15),
-    inset 8px 0 15px rgba(255, 255, 255, 0.4),
-    inset 0 -30px 40px rgba(255, 255, 255, 0.3);
+    /* Sombras internas más fuertes para profundidad */
+    inset -12px 0 20px rgba(0, 0, 0, 0.25),
+    inset 12px 0 20px rgba(255, 255, 255, 0.5),
+    inset 0 -40px 50px rgba(255, 255, 255, 0.4),
+    inset 0 40px 30px rgba(0, 0, 0, 0.1),
+    /* Sombra externa más prominente */
+    0 4px 15px rgba(0, 0, 0, 0.25);
   z-index: 1;
 }
 
-/* Cuello de la botella */
+/* Cuello de la botella con borde visible */
 .botella::after {
   content: '';
   position: absolute;
   top: 5px;
   left: 50%;
   transform: translateX(-50%);
-  width: 28px;
-  height: 30px;
+  width: 32px;
+  height: 35px;
   background: inherit;
-  border-radius: 4px 4px 0 0;
+  /* Borde de 4px para el cuello */
+  border: 4px solid rgba(0, 0, 0, 0.2);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
   box-shadow: 
-    inset -3px 0 8px rgba(0, 0, 0, 0.1),
-    inset 3px 0 8px rgba(255, 255, 255, 0.4);
-  opacity: 0.9;
+    inset -4px 0 10px rgba(0, 0, 0, 0.15),
+    inset 4px 0 10px rgba(255, 255, 255, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
   z-index: 1;
 }
 
-/* Tapa de la botella */
+/* Tapa de la botella más prominente */
 .botella .tapa-botella {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 32px;
-  height: 8px;
-  background: #333;
+  width: 38px;
+  height: 10px;
+  background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
   border-radius: 50% 50% 0 0;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 3px rgba(255, 255, 255, 0.3);
   z-index: 10;
+  border: 2px solid #000;
+}
+
+/* Reflejo brillante en el cuerpo de la botella */
+.botella .reflejo-botella {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  width: 15px;
+  height: 60px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  border-radius: 10px;
+  transform: skewY(-3deg);
+  z-index: 5;
+  pointer-events: none;
 }
 
 /* Emoji dentro de la botella */
 .botella-emoji {
   position: absolute;
-  bottom: 25px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 2.2rem;
-  z-index: 5;
+  z-index: 6;
   pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 /* ==================== NOMBRE DE EMOCIÓN SELECCIONADA ==================== */
@@ -225,6 +258,18 @@
 .quiz-controls button {
   flex: 1;
   min-width: 120px;
+}
+
+/* ==================== ANIMACIONES ==================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==================== RESPONSIVE ==================== */
@@ -260,28 +305,31 @@
   }
   
   .botella {
-    width: 60px;
-    height: 120px;
+    width: 75px;
+    height: 135px;
   }
   
   .botella::before {
-    width: 60px;
-    height: 95px;
+    width: 68px;
+    height: 102px;
+    border-width: 5px;
   }
   
   .botella::after {
-    width: 24px;
-    height: 28px;
+    width: 28px;
+    height: 30px;
+    border-width: 3px;
+    top: 4px;
   }
   
   .botella .tapa-botella {
-    width: 28px;
-    height: 7px;
+    width: 32px;
+    height: 9px;
   }
   
   .botella-emoji {
     font-size: 1.8rem;
-    bottom: 20px;
+    bottom: 22px;
   }
   
   .emocion-nombre {
@@ -307,28 +355,31 @@
   }
   
   .botella {
-    width: 50px;
-    height: 100px;
+    width: 65px;
+    height: 120px;
   }
   
   .botella::before {
-    width: 50px;
-    height: 80px;
+    width: 58px;
+    height: 90px;
+    border-width: 4px;
   }
   
   .botella::after {
-    width: 20px;
-    height: 25px;
+    width: 24px;
+    height: 28px;
+    border-width: 3px;
+    top: 3px;
   }
   
   .botella .tapa-botella {
-    width: 24px;
-    height: 6px;
+    width: 28px;
+    height: 8px;
   }
   
   .botella-emoji {
     font-size: 1.5rem;
-    bottom: 15px;
+    bottom: 18px;
   }
   
   .emocion-nombre {

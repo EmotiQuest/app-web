@@ -1,7 +1,6 @@
 // ============================================
 // RESULTADO.JS - Lógica de resultados
 // ============================================
-
 // Variables globales
 let sesion = null;
 let respuestas = [];
@@ -25,64 +24,169 @@ const btnVerReporte = document.getElementById('btn-ver-reporte');
 const btnVolverInicio = document.getElementById('btn-volver-inicio');
 
 /**
- * Inicializa la página de resultados
+ * Inicializa la página
  */
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('🎉 Inicializando página de resultados...');
+  console.log('🎉 === PÁGINA DE RESULTADOS INICIADA ===');
   
-  // Verificar datos necesarios
+  // 1. Verificar datos
   if (!verificarDatos()) {
     return;
   }
   
-  // Calcular emociones
+  // 2. Calcular resultados
   calcularResultados();
   
-  // Mostrar batidos iniciales
+  // 3. GUARDAR SESIÓN INMEDIATAMENTE
+  guardarSesionInmediatamente();
+  
+  // 4. Mostrar batidos
   mostrarBatidos();
   
-  // Configurar controles
+  // 5. Configurar controles
   configurarControles();
   
-  // Aplicar animación de entrada
+  // 6. Animación
   aplicarAnimacionEntrada();
+console.log('✅ === INICIALIZACIÓN COMPLETA ===');
 });
 
 /**
- * Verifica que existan los datos necesarios
- * @returns {boolean}
+ * Verifica que existan datos
  */
 function verificarDatos() {
-  if (!window.EmotiQuestStorage || !window.SistemaEmociones) {
-    console.error('❌ Sistemas no disponibles');
-    alert('Error del sistema. Redirigiendo al inicio...');
+  console.log('🔍 Verificando datos...');
+  
+  // Verificar SistemaEmociones
+  if (!window.SistemaEmociones) {
+    console.error('❌ SistemaEmociones no disponible');
+    alert('Error del sistema. Redirigiendo...');
     window.location.href = './index.html';
     return false;
   }
   
-  sesion = window.EmotiQuestStorage.obtenerSesionActual();
-  respuestas = window.EmotiQuestStorage.obtenerRespuestas();
+  // Obtener sesión actual
+  sesion = obtenerSesionActual();
   
-  if (!sesion || !respuestas || respuestas.length === 0) {
-    alert('No hay datos de respuestas. Por favor, completa el cuestionario primero.');
+  if (!sesion) {
+    console.error('❌ No hay sesión actual');
+    alert('No hay datos de sesión. Por favor, completa el cuestionario primero.');
     window.location.href = './index.html';
     return false;
   }
   
-  console.log('✅ Datos verificados:', respuestas.length, 'respuestas');
+  console.log('📋 Sesión cargada:', sesion.id);
+  
+  // Obtener respuestas
+  respuestas = sesion.respuestas || [];
+  
+  if (respuestas.length === 0) {
+    console.error('❌ No hay respuestas');
+    alert('No hay respuestas. Por favor, completa el cuestionario primero.');
+    window.location.href = './cuestionario.html';
+    return false;
+  }
+  
+  console.log('✅ Respuestas:', respuestas.length);
   return true;
 }
 
 /**
- * Calcula los resultados de las emociones
+ * Calcula los resultados
  */
 function calcularResultados() {
-  conteoEmociones = window.SistemaEmociones.contarEmociones(respuestas);
-  emocionPredominante = window.SistemaEmociones.calcularPredominante(conteoEmociones);
+  console.log('📊 Calculando resultados...');
   
-  console.log('📊 Conteo de emociones:', conteoEmociones);
+  // Contar emociones
+  conteoEmociones = {};
+  respuestas.forEach(respuesta => {
+    const emocion = respuesta.emocion;
+    conteoEmociones[emocion] = (conteoEmociones[emocion] || 0) + 1;
+  });
+  
+  console.log('📊 Conteo:', conteoEmociones);
+  
+  // Calcular predominante
+  let maxConteo = 0;
+  let emocionMax = null;
+  
+  for (const [emocion, conteo] of Object.entries(conteoEmociones)) {
+    if (conteo > maxConteo) {
+      maxConteo = conteo;
+      emocionMax = emocion;
+    }
+  }
+  
+  emocionPredominante = emocionMax;
+  
   console.log('🎯 Emoción predominante:', emocionPredominante);
+  
+  // Actualizar sesión
+  sesion.emocionPredominante = emocionPredominante;
+  sesion.distribucionEmociones = conteoEmociones;
+  sesion.completada = true;
+  sesion.fechaCompletado = new Date().toISOString();
 }
+
+/**
+ * GUARDA LA SESIÓN INMEDIATAMENTE
+ * ESTA ES LA FUNCIÓN MÁS IMPORTANTE
+ */
+function guardarSesionInmediatamente() {
+  console.log('💾 === GUARDANDO SESIÓN ===');
+  console.log('📋 Sesión a guardar:', sesion);
+  
+  try {
+    // Validar datos mínimos
+    if (!sesion.id) {
+      console.error('❌ Falta ID de sesión');
+      return false;
+    }
+    
+    if (!sesion.emocionPredominante) {
+      console.error('❌ Falta emoción predominante');
+      return false;
+    }
+    
+    // GUARDAR CON LA FUNCIÓN GLOBAL
+    const guardado = guardarSesionCompletada(sesion);
+    
+    if (guardado) {
+      console.log('✅ ========================================');
+      console.log('✅ SESIÓN GUARDADA EXITOSAMENTE');
+      console.log('✅ ========================================');
+      console.log('📊 ID:', sesion.id);
+      console.log('😊 Emoción:', sesion.emocionPredominante);
+      console.log('📝 Respuestas:', sesion.respuestas.length);
+      console.log('📅 Fecha:', sesion.fecha);
+      
+      // VERIFICAR QUE SE GUARDÓ
+      const todasSesiones = obtenerTodasLasSesiones();
+      console.log('📈 TOTAL DE SESIONES EN LOCALSTORAGE:', todasSesiones.length);
+      
+      // Buscar esta sesión específica
+      const sesionGuardada = todasSesiones.find(s => s.id === sesion.id);
+      if (sesionGuardada) {
+        console.log('✅ VERIFICACIÓN: Sesión encontrada en localStorage');
+      } else {
+        console.error('❌ VERIFICACIÓN FALLIDA: Sesión NO encontrada');
+      }
+      
+      return true;
+    } else {
+      console.error('❌ ========================================');
+      console.error('❌ ERROR AL GUARDAR SESIÓN');
+      console.error('❌ ========================================');
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ ========================================');
+    console.error('❌ ERROR CRÍTICO:', error);
+    console.error('❌ ========================================');
+    return false;
+  }
+}
+
 
 /**
  * Muestra los batidos individuales
@@ -101,73 +205,71 @@ function mostrarBatidos() {
     batido.style.background = color; // Color de la emoción
     batido.style.animationDelay = `${index * 0.1}s`;
     
-    // Crear tapa de la botella
+   // Crear tapa de la botella
     const tapa = document.createElement('div');
     tapa.className = 'tapa-botella';
     
+    // Crear reflejo brillante para efecto 3D
+    const reflejo = document.createElement('div');
+    reflejo.className = 'reflejo-botella';
     // Crear emoji
     const emojiSpan = document.createElement('span');
     emojiSpan.className = 'batido-emoji';
     emojiSpan.textContent = emoji;
     
+     // Agregar elementos en orden correcto
     batido.appendChild(tapa);
+    batido.appendChild(reflejo);
     batido.appendChild(emojiSpan);
     batidosGrid.appendChild(batido);
   });
   
   console.log('✅ Batidos mostrados:', respuestas.length);
 }
-
-/**
- * Configura los controles de navegación
- */
+//Configura los controles
 function configurarControles() {
   btnMezclar.addEventListener('click', iniciarMezcla);
-  btnVerReporte.addEventListener('click', () => {
-    window.location.href = './admin.html';
-  });
+  
+  if (btnVerReporte) {
+    btnVerReporte.addEventListener('click', () => {
+      window.location.href = './admin.html';
+    });
+  }
+  
   btnVolverInicio.addEventListener('click', () => {
-    // Limpiar sesión actual
-    if (window.EmotiQuestStorage) {
-      window.EmotiQuestStorage.limpiarSesionActual();
-      window.EmotiQuestStorage.limpiarRespuestas();
-    }
+    // Limpiar sesión actual (ya está guardada)
+    limpiarSesionActual();
     window.location.href = './index.html';
   });
 }
 
 /**
- * Inicia el proceso de mezcla
+ * Inicia la mezcla
  */
 function iniciarMezcla() {
   console.log('🔄 Iniciando mezcla...');
   
-  // Transición a licuadora
   cambiarSeccion(seccionBatidos, seccionLicuadora);
   
-  // Animar batidos cayendo a la licuadora
   setTimeout(() => {
     animarBatidosALicuadora();
   }, 500);
   
-  // Activar licuadora
   setTimeout(() => {
     activarLicuadora();
   }, 2000);
   
-  // Mostrar resultado final
   setTimeout(() => {
     mostrarResultadoFinal();
   }, 5000);
 }
 
 /**
- * Anima los batidos cayendo a la licuadora
+ * Anima batidos cayendo
  */
 function animarBatidosALicuadora() {
   licuadoraContenido.innerHTML = '';
   
-  // Agregar colores de las emociones
   Object.entries(conteoEmociones).forEach(([emocion, cantidad], index) => {
     const color = window.SistemaEmociones.obtenerColor(emocion);
     
@@ -179,66 +281,49 @@ function animarBatidosALicuadora() {
       licuadoraContenido.appendChild(capa);
     }
   });
-  
-  console.log('✅ Batidos vertidos en licuadora');
 }
 
 /**
- * Activa la animación de la licuadora
+ * Activa licuadora
  */
 function activarLicuadora() {
   const licuadora = document.getElementById('licuadora');
-  licuadora.classList.add('mezclando');
-  
-  console.log('🌀 Licuadora activada');
+  if (licuadora) {
+    licuadora.classList.add('mezclando');
+  }
 }
 
 /**
- * Muestra el resultado final con avatar
+ * Muestra resultado final
  */
 function mostrarResultadoFinal() {
-  console.log('🎭 Mostrando resultado final...');
-  
-  // Transición a avatar
   cambiarSeccion(seccionLicuadora, seccionAvatar);
   
-  // Generar avatar
   generarAvatar();
-  
-  // Mostrar badge de emoción
   mostrarBadgeEmocion();
-  
-  // Mostrar mensaje personalizado
   mostrarMensajeFinal();
-  
-  // Mostrar estadísticas
   mostrarEstadisticas();
 }
 
 /**
- * Genera el avatar según género y emoción
+ * Genera avatar
  */
 function generarAvatar() {
   const genero = sesion.genero;
   const emoji = window.SistemaEmociones.obtenerEmoji(emocionPredominante);
   const color = window.SistemaEmociones.obtenerColor(emocionPredominante);
   
-  // Crear avatar simple con emoji gigante
   avatar.innerHTML = `
     <div class="avatar-circle" style="border-color: ${color}">
       <span class="avatar-emoji">${emoji}</span>
     </div>
     <div class="avatar-label">${genero === 'masculino' ? '👦' : genero === 'femenino' ? '👧' : '🧑'}</div>
   `;
-  
-  // Animar entrada
   avatar.style.animation = 'zoomIn 0.8s ease';
-  
-  console.log('✅ Avatar generado');
 }
 
 /**
- * Muestra el badge de emoción predominante
+ * Muestra badge
  */
 function mostrarBadgeEmocion() {
   const emocion = window.SistemaEmociones.obtenerEmocion(emocionPredominante);
@@ -250,42 +335,36 @@ function mostrarBadgeEmocion() {
   `;
   emocionBadge.style.background = color;
   emocionBadge.style.animation = 'slideInDown 0.6s ease 0.3s backwards';
-  
-  console.log('✅ Badge mostrado');
 }
 
 /**
- * Muestra el mensaje personalizado
+ * Muestra mensaje
  */
 function mostrarMensajeFinal() {
-  const mensaje = window.SistemaEmociones.generarMensajeFinal(conteoEmociones);
+  const emocion = window.SistemaEmociones.obtenerEmocion(emocionPredominante);
   
   mensajeFinal.innerHTML = `
-    <p class="mensaje-principal">${mensaje}</p>
+    <p class="mensaje-principal">${emocion.mensaje}</p>
     <p class="mensaje-secundario">¡Gracias por compartir tus emociones, ${sesion.nombre}!</p>
   `;
   mensajeFinal.style.animation = 'fadeIn 0.8s ease 0.5s backwards';
-  
-  console.log('✅ Mensaje mostrado');
 }
 
 /**
- * Muestra las estadísticas de emociones (SIN PORCENTAJES)
+ * Muestra estadísticas
  */
 function mostrarEstadisticas() {
-  const totalRespuestas = respuestas.length;
-  const datosGrafico = window.SistemaEmociones.generarDatosGrafico(conteoEmociones);
-  
   let html = '<h3 class="stats-title">Tus emociones del día</h3>';
   html += '<div class="stats-grid">';
   
-  datosGrafico.forEach(dato => {
-    // Mostrar solo emoji y nombre, SIN porcentaje ni barra
+  Object.entries(conteoEmociones).forEach(([emocionKey, cantidad]) => {
+    const emocion = window.SistemaEmociones.obtenerEmocion(emocionKey);
+    
     html += `
       <div class="stat-item-simple">
-        <span class="stat-emoji">${dato.emoji}</span>
-        <span class="stat-nombre">${dato.emocion}</span>
-        <span class="stat-cantidad">${dato.cantidad} ${dato.cantidad === 1 ? 'vez' : 'veces'}</span>
+        <span class="stat-emoji">${emocion.emoji}</span>
+        <span class="stat-nombre">${emocion.nombre}</span>
+        <span class="stat-cantidad">${cantidad} ${cantidad === 1 ? 'vez' : 'veces'}</span>
       </div>
     `;
   });
@@ -293,24 +372,18 @@ function mostrarEstadisticas() {
   html += '</div>';
   estadisticas.innerHTML = html;
   estadisticas.style.animation = 'fadeIn 1s ease 0.7s backwards';
-  
-  console.log('✅ Estadísticas mostradas (sin porcentajes)');
 }
 
 /**
- * Cambia entre secciones con animación
- * @param {HTMLElement} saliente - Sección a ocultar
- * @param {HTMLElement} entrante - Sección a mostrar
+ * Cambia entre secciones
  */
 function cambiarSeccion(saliente, entrante) {
-  // Ocultar sección actual
   saliente.style.animation = 'fadeOut 0.5s ease';
   
   setTimeout(() => {
     saliente.classList.remove('visible');
     saliente.classList.add('hidden');
     
-    // Mostrar nueva sección
     entrante.classList.remove('hidden');
     entrante.classList.add('visible');
     entrante.style.animation = 'fadeIn 0.5s ease';
@@ -318,7 +391,7 @@ function cambiarSeccion(saliente, entrante) {
 }
 
 /**
- * Aplica animación de entrada a la página
+ * Animación de entrada
  */
 function aplicarAnimacionEntrada() {
   const container = document.querySelector('.resultado-container');
@@ -334,4 +407,11 @@ function aplicarAnimacionEntrada() {
   }
 }
 
-console.log('✅ resultado.js cargado correctamente');
+// VERIFICACIÓN AUTOMÁTICA
+setTimeout(() => {
+  console.log('=== VERIFICACIÓN AUTOMÁTICA ===');
+  console.log('Sesión actual:', sesion);
+  console.log('Todas las sesiones:', obtenerTodasLasSesiones());
+}, 3000);
+
+console.log('✅ resultado.js cargado');

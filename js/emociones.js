@@ -9,7 +9,7 @@
 const EMOCIONES = {
   alegria: {
     nombre: 'Alegría',
-    color: '#e1c03c',
+    color: '#e1c83cff',
     emoji: '😊',
     gesto: 'sonrisa',
     mensajes: [
@@ -20,7 +20,7 @@ const EMOCIONES = {
   },
   tristeza: {
     nombre: 'Tristeza',
-    color: '#4860cb',
+    color: '#3e54aeff',
     emoji: '😢',
     gesto: 'puchero',
     mensajes: [
@@ -31,7 +31,7 @@ const EMOCIONES = {
   },
   enojo: {
     nombre: 'Enojo',
-    color: '#f44339',
+    color: '#ee2c22ff',
     emoji: '😠',
     gesto: 'ceño',
     mensajes: [
@@ -42,7 +42,7 @@ const EMOCIONES = {
   },
   calma: {
     nombre: 'Calma',
-    color: '#62e85e',
+    color: '#4ee249ff',
     emoji: '😌',
     gesto: 'respiro',
     mensajes: [
@@ -53,7 +53,7 @@ const EMOCIONES = {
   },
   miedo: {
     nombre: 'Miedo',
-    color: '#9746d5',
+    color: '#943ad8ff',
     emoji: '😨',
     gesto: 'temblor',
     mensajes: [
@@ -64,7 +64,7 @@ const EMOCIONES = {
   },
   nerviosismo: {
     nombre: 'Nerviosismo',
-    color: '#FF9A76',
+    color: '#f06e3eff',
     emoji: '😰',
     gesto: 'nervios',
     mensajes: [
@@ -86,7 +86,7 @@ const EMOCIONES = {
   },
   motivacion: {
     nombre: 'Motivación',
-    color: '#9746d5',
+    color: '#38d5c6ff',
     emoji: '🤩',
     gesto: 'entusiasmo',
     mensajes: [

@@ -70,32 +70,38 @@
     border-radius: 25px;
   }
   
-  /* ==================== FORMA DE BOTELLA REALISTA ==================== */
+  /* ==================== FORMA DE BOTELLA EN 3D  ==================== */
   .batido {
-    width: 70px;
-    height: 140px;
+    width: 90px;
+    height: 160px;
     position: relative;
     animation: bounceIn 0.6s ease backwards;
-    filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
     background: transparent; /* Sin fondo */
   }
   
-  /* Cuerpo de la botella (hereda el color del background inline) */
-  .batido::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 70px;
-    height: 110px;
-    background: inherit; /* Hereda el color del elemento padre */
-    border-radius: 10px 10px 20px 20px;
-    box-shadow: 
-      inset -8px 0 15px rgba(0, 0, 0, 0.15),
-      inset 8px 0 15px rgba(255, 255, 255, 0.4),
-      inset 0 -30px 40px rgba(255, 255, 255, 0.3);
-  }
+  /* Cuerpo de la botella con borde grueso 3D */
+.batido::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 120px;
+  background: inherit;
+  /* Borde grueso de 6px para efecto 3D más pronunciado */
+  border: 6px solid rgba(0, 0, 0, 0.2);
+  border-radius: 12px 12px 25px 25px;
+  box-shadow: 
+    /* Sombras internas más fuertes para profundidad */
+    inset -12px 0 20px rgba(0, 0, 0, 0.25),
+    inset 12px 0 20px rgba(255, 255, 255, 0.5),
+    inset 0 -40px 50px rgba(255, 255, 255, 0.4),
+    inset 0 40px 30px rgba(0, 0, 0, 0.1),
+    /* Sombra externa más prominente */
+    0 4px 15px rgba(0, 0, 0, 0.25);
+}
   
   /* Cuello de la botella */
   .batido::after {
@@ -104,29 +110,55 @@
     top: 5px;
     left: 50%;
     transform: translateX(-50%);
-    width: 28px;
-    height: 30px;
+    width: 32px;
+    height: 35px;
     background: inherit; /* Hereda el color del elemento padre */
-    border-radius: 4px 4px 0 0;
-    box-shadow: 
-      inset -3px 0 8px rgba(0, 0, 0, 0.1),
-      inset 3px 0 8px rgba(255, 255, 255, 0.4);
-    opacity: 0.9;
+   /* Borde de 4px para el cuello */
+  border: 4px solid rgba(0, 0, 0, 0.2);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 
+    inset -4px 0 10px rgba(0, 0, 0, 0.15),
+    inset 4px 0 10px rgba(255, 255, 255, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
   }
   
-  /* Tapa de la botella (círculo negro) */
-  .batido .tapa-botella {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 32px;
-    height: 8px;
-    background: #333;
-    border-radius: 50% 50% 0 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 10;
+  /* Tapa de la botella más prominente */
+.batido .tapa-botella {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38px;
+  height: 10px;
+  background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+  border-radius: 50% 50% 0 0;
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 3px rgba(255, 255, 255, 0.3);
+  z-index: 10;
+  border: 2px solid #000;
   }
+
+  /* Reflejo brillante en el cuerpo de la botella */
+.batido .reflejo-botella {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  width: 15px;
+  height: 60px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  border-radius: 10px;
+  transform: skewY(-3deg);
+  z-index: 5;
+  pointer-events: none;
+}
+  /* Emoji centrado en la botella */
   
   .batido-emoji {
     position: absolute;
@@ -458,172 +490,190 @@
   
   /* ==================== ANIMACIONES ADICIONALES ==================== */
   @keyframes zoomIn {
-    from {
-      opacity: 0;
-      transform: scale(0.3);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.3);
   }
-  
-  @keyframes slideInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
   
   /* ==================== RESPONSIVE ==================== */
   @media (max-width: 768px) {
-    .resultado-title {
-      font-size: 2rem;
-    }
-    
-    .resultado-subtitle {
-      font-size: 1rem;
-    }
-    
-    .seccion-title {
-      font-size: 1.5rem;
-    }
-    
-    .seccion-descripcion {
-      font-size: 1rem;
-    }
-    
-    .batidos-grid {
-      gap: 1rem;
-      padding: var(--spacing-md);
-    }
-    
-    .batido {
-      width: 60px;
-      height: 120px;
-    }
-    
-    .batido::before {
-      width: 60px;
-      height: 95px;
-    }
-    
-    .batido::after {
-      width: 24px;
-      height: 28px;
-      top: 3px;
-    }
-    
-    .batido .tapa-botella {
-      width: 28px;
-      height: 7px;
-    }
-    
-    .batido-emoji {
-      font-size: 1.5rem;
-      bottom: 20px;
-    }
-    
-    .licuadora {
-      transform: scale(0.85);
-    }
-    
-    .avatar-circle {
-      width: 150px;
-      height: 150px;
-    }
-    
-    .avatar-emoji {
-      font-size: 4rem;
-    }
-    
-    .emocion-badge {
-      font-size: 1.1rem;
-      padding: 0.8rem 1.5rem;
-    }
-    
-    .badge-emoji {
-      font-size: 1.5rem;
-    }
-    
-    .mensaje-principal {
-      font-size: 1.1rem;
-    }
-    
-    .mensaje-secundario {
-      font-size: 1rem;
-    }
-    
-    .resultado-controles {
-      flex-direction: column;
-    }
-    
-    .resultado-controles button {
-      width: 100%;
-    }
-    
-    .stat-item-simple {
-      padding: 0.8rem 1rem;
-    }
-    
-    .stat-item-simple .stat-emoji {
-      font-size: 1.5rem;
-    }
-    
-    .stat-item-simple .stat-nombre {
-      font-size: 1rem;
-    }
+  .resultado-title {
+    font-size: 2rem;
   }
   
-  @media (max-width: 480px) {
-    .resultado-container {
-      padding: var(--spacing-md);
-    }
-    
-    .batido {
-      width: 50px;
-      height: 100px;
-    }
-    
-    .batido::before {
-      width: 50px;
-      height: 80px;
-    }
-    
-    .batido::after {
-      width: 20px;
-      height: 25px;
-      top: 2px;
-    }
-    
-    .batido .tapa-botella {
-      width: 24px;
-      height: 6px;
-    }
-    
-    .batido-emoji {
-      font-size: 1.2rem;
-      bottom: 15px;
-    }
-    
-    .licuadora {
-      transform: scale(0.7);
-    }
-    
-    .avatar-circle {
-      width: 120px;
-      height: 120px;
-    }
-    
-    .avatar-emoji {
-      font-size: 3rem;
-    }
-    
-    .stats-title {
-      font-size: 1.3rem;
-    }
+  .resultado-subtitle {
+    font-size: 1rem;
   }
+  
+  .seccion-title {
+    font-size: 1.5rem;
+  }
+  
+  .seccion-descripcion {
+    font-size: 1rem;
+  }
+  
+  .batidos-grid {
+    gap: 1rem;
+    padding: var(--spacing-md);
+  }
+  
+  .batido {
+    width: 75px;
+    height: 135px;
+  }
+  
+  .batido::before {
+    width: 68px;
+    height: 102px;
+    border-width: 5px;
+  }
+  
+  .batido::after {
+    width: 28px;
+    height: 30px;
+    top: 4px;
+    border-width: 3px;
+  }
+  
+  .batido .tapa-botella {
+    width: 32px;
+    height: 9px;
+  }
+  
+  .batido-emoji {
+    font-size: 1.8rem;
+    bottom: 22px;
+  }
+  
+  .licuadora {
+    transform: scale(0.85);
+  }
+  
+  .avatar-circle {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .avatar-emoji {
+    font-size: 4rem;
+  }
+  
+  .emocion-badge {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .badge-emoji {
+    font-size: 1.5rem;
+  }
+  
+  .mensaje-principal {
+    font-size: 1.1rem;
+  }
+  
+  .mensaje-secundario {
+    font-size: 1rem;
+  }
+  
+  .resultado-controles {
+    flex-direction: column;
+  }
+  
+  .resultado-controles button {
+    width: 100%;
+  }
+  
+  .stat-item-simple {
+    padding: 0.8rem 1rem;
+  }
+  
+  .stat-item-simple .stat-emoji {
+    font-size: 1.5rem;
+  }
+  
+  .stat-item-simple .stat-nombre {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .resultado-container {
+    padding: var(--spacing-md);
+  }
+  
+  .batido {
+    width: 65px;
+    height: 120px;
+  }
+  
+  .batido::before {
+    width: 58px;
+    height: 90px;
+    border-width: 4px;
+  }
+  
+  .batido::after {
+    width: 24px;
+    height: 28px;
+    top: 3px;
+    border-width: 3px;
+  }
+  
+  .batido .tapa-botella {
+    width: 28px;
+    height: 8px;
+  }
+  
+  .batido-emoji {
+    font-size: 1.5rem;
+    bottom: 18px;
+  }
+  
+  .licuadora {
+    transform: scale(0.7);
+  }
+  
+  .avatar-circle {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .avatar-emoji {
+    font-size: 3rem;
+  }
+  
+  .stats-title {
+    font-size: 1.3rem;
+  }
+}
