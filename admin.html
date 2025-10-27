@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiQuest - Panel de Administrador</title>
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/admin.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="admin-page">
+
+  <!-- Header del Admin -->
+  <header class="admin-header">
+    <div class="admin-header-content">
+      <div class="admin-branding">
+        <h1 class="admin-title">Emoti<span class="title-quest">Quest</span></h1>
+        <p class="admin-subtitle">Panel de Administrador</p>
+      </div>
+      
+      <div class="admin-actions">
+        <button id="btn-exportar" class="btn btn-secondary" title="Exportar datos a JSON">
+          📥 Exportar Datos
+        </button>
+        <button id="btn-importar" class="btn btn-primary" title="Importar datos desde JSON">
+          📤 Importar Datos
+        </button>
+        <input type="file" id="file-input" accept=".json" style="display: none;">
+        <a href="./index.html" class="btn btn-volver">🏠 Volver al Inicio</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenedor Principal -->
+  <main class="admin-container">
+
+    <!-- Mensaje de Bienvenida / Estado -->
+    <section class="admin-welcome" id="admin-welcome">
+      <div class="welcome-card">
+        <h2>👋 Bienvenido al Panel de Control</h2>
+        <p id="welcome-message">Cargando estadísticas...</p>
+      </div>
+    </section>
+
+    <!-- Estadísticas Generales -->
+    <section class="admin-stats" id="admin-stats">
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-content">
+          <h3 id="stat-total">0</h3>
+          <p>Sesiones Totales</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📊</div>
+        <div class="stat-content">
+          <h3 id="stat-hoy">0</h3>
+          <p>Sesiones Hoy</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">😊</div>
+        <div class="stat-content">
+          <h3 id="stat-emocion">-</h3>
+          <p>Emoción Predominante</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">📅</div>
+        <div class="stat-content">
+          <h3 id="stat-promedio">0</h3>
+          <p>Edad Promedio</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gráfico de Distribución de Emociones -->
+    <section class="admin-chart-section">
+      <div class="chart-card">
+        <div class="chart-header">
+          <h2>📊 Distribución de Emociones</h2>
+          <p>Visualización de todas las emociones registradas</p>
+        </div>
+        
+        <div class="chart-container" id="chart-container">
+          <!-- El gráfico se genera dinámicamente con JavaScript -->
+          <div class="chart-bars" id="chart-bars">
+            <!-- Barras generadas dinámicamente -->
+          </div>
+          <div class="chart-legend" id="chart-legend">
+            <!-- Leyenda generada dinámicamente -->
+          </div>
+        </div>
+
+        <div class="chart-empty" id="chart-empty" style="display: none;">
+          <p>📭 No hay datos para mostrar</p>
+          <p class="text-muted">Las sesiones aparecerán aquí cuando los usuarios completen el cuestionario</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="admin-filters">
+      <div class="filters-card">
+        <h3>🔍 Filtros de Búsqueda</h3>
+        <div class="filters-grid">
+          
+          <div class="filter-group">
+            <label for="filter-fecha">Fecha:</label>
+            <input type="date" id="filter-fecha" class="filter-input">
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-emocion">Emoción:</label>
+            <select id="filter-emocion" class="filter-input">
+              <option value="">Todas</option>
+              <option value="alegria">Alegría</option>
+              <option value="tristeza">Tristeza</option>
+              <option value="enojo">Enojo</option>
+              <option value="miedo">Miedo</option>
+              <option value="calma">Calma</option>
+              <option value="sorpresa">Sorpresa</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-edad">Edad:</label>
+            <input type="number" id="filter-edad" class="filter-input" placeholder="Ej: 15">
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-genero">Género:</label>
+            <select id="filter-genero" class="filter-input">
+              <option value="">Todos</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="filter-actions">
+            <button id="btn-aplicar-filtros" class="btn btn-primary">Aplicar Filtros</button>
+            <button id="btn-limpiar-filtros" class="btn btn-secondary">Limpiar</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabla de Sesiones -->
+    <section class="admin-table-section">
+      <div class="table-card">
+        <div class="table-header">
+          <h2>📋 Registro de Sesiones</h2>
+          <p id="table-count">Total: 0 sesiones</p>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="admin-table" id="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Edad</th>
+                <th>Género</th>
+                <th>Grado</th>
+                <th>Emoción Predominante</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="table-body">
+              <!-- Filas generadas dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-empty" id="table-empty" style="display: none;">
+          <p>📭 No hay sesiones registradas</p>
+          <p class="text-muted">Los datos aparecerán aquí cuando los usuarios completen el cuestionario</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modal de Detalles (opcional) -->
+    <div class="modal" id="modal-detalles" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>📊 Detalles de la Sesión</h2>
+          <button class="modal-close" id="modal-close">✕</button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <!-- Contenido dinámico -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>&copy; 2025 EmotiQuest - Panel de Administrador | Datos privados y seguros</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/storage.js"></script>
+  <script src="./js/emociones.js"></script>
+  <script src="./js/admin.js"></script>
+
+</body>
+</html>

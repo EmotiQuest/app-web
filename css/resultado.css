@@ -77,9 +77,10 @@
     position: relative;
     animation: bounceIn 0.6s ease backwards;
     filter: drop-shadow(0 6px 15px rgba(0, 0, 0, 0.2));
+    background: transparent; /* Sin fondo */
   }
   
-  /* Cuerpo de la botella */
+  /* Cuerpo de la botella (hereda el color del background inline) */
   .batido::before {
     content: '';
     position: absolute;
@@ -88,7 +89,7 @@
     transform: translateX(-50%);
     width: 70px;
     height: 110px;
-    background: currentColor;
+    background: inherit; /* Hereda el color del elemento padre */
     border-radius: 10px 10px 20px 20px;
     box-shadow: 
       inset -8px 0 15px rgba(0, 0, 0, 0.15),
@@ -100,12 +101,12 @@
   .batido::after {
     content: '';
     position: absolute;
-    top: 0;
+    top: 5px;
     left: 50%;
     transform: translateX(-50%);
     width: 28px;
-    height: 35px;
-    background: currentColor;
+    height: 30px;
+    background: inherit; /* Hereda el color del elemento padre */
     border-radius: 4px 4px 0 0;
     box-shadow: 
       inset -3px 0 8px rgba(0, 0, 0, 0.1),
@@ -113,17 +114,18 @@
     opacity: 0.9;
   }
   
-  /* Tapa de la botella */
-  .batido {
-    background: 
-      radial-gradient(
-        circle at 50% 2px,
-        #333 0%,
-        #333 14px,
-        transparent 14px
-      );
-    background-repeat: no-repeat;
-    background-position: center -3px;
+  /* Tapa de la botella (círculo negro) */
+  .batido .tapa-botella {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 8px;
+    background: #333;
+    border-radius: 50% 50% 0 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 10;
   }
   
   .batido-emoji {
@@ -512,7 +514,13 @@
     
     .batido::after {
       width: 24px;
-      height: 30px;
+      height: 28px;
+      top: 3px;
+    }
+    
+    .batido .tapa-botella {
+      width: 28px;
+      height: 7px;
     }
     
     .batido-emoji {
@@ -589,6 +597,12 @@
     .batido::after {
       width: 20px;
       height: 25px;
+      top: 2px;
+    }
+    
+    .batido .tapa-botella {
+      width: 24px;
+      height: 6px;
     }
     
     .batido-emoji {

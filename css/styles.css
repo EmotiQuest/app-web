@@ -1,6 +1,6 @@
 /* ============================================
    EMOTIQUEST - ESTILOS COMPLETOS CANVA
-   Diseño 100% basado en Canva
+   Diseño v3.0 - 2024 cambios despues de feedback
    ============================================ */
 
 /* ==================== VARIABLES - PALETA CANVA ==================== */
@@ -549,6 +549,126 @@ button:disabled,
   }
 }
 
+/* ============================================
+   BOTONES FLOTANTES - Cuestionario y Resultados
+   ============================================ */
+
+/* Contenedor de botones flotantes */
+.botones-flotantes {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  pointer-events: none; /* Permite hacer clic solo en los botones */
+  z-index: 1000;
+}
+
+/* Botón de perfil - Inferior Izquierda */
+.boton-perfil {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, var(--color-amarillo) 0%, var(--color-amarillo-hover) 100%);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  max-width: 200px;
+  z-index: 1001;
+}
+
+.boton-perfil:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+}
+
+.boton-perfil:active {
+  transform: translateY(-1px);
+}
+
+/* Avatar dentro del botón de perfil */
+.boton-perfil__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-morado) 0%, var(--color-morado-hover) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 2px solid #fff;
+}
+
+.boton-perfil__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Icono SVG del avatar (por defecto) */
+.boton-perfil__avatar svg {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
+}
+
+/* Nombre del estudiante */
+.boton-perfil__nombre {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+}
+
+/* Botón de Ruta - Inferior Derecha */
+.boton-ruta {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--color-morado) 0%, var(--color-morado-hover) 100%);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(160, 108, 213, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  z-index: 1001;
+}
+
+.boton-ruta:hover {
+  transform: translateY(-3px) rotate(10deg);
+  box-shadow: 0 6px 20px rgba(160, 108, 213, 0.6);
+}
+
+.boton-ruta:active {
+  transform: translateY(-1px) rotate(5deg);
+}
+
+/* Icono del botón ruta */
+.boton-ruta svg {
+  width: 28px;
+  height: 28px;
+  fill: #fff;
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
   .container {
@@ -576,6 +696,38 @@ button:disabled,
     padding: 1rem;
     font-size: 1rem;
   }
+
+  /* Botones flotantes responsive */
+  .boton-perfil {
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    gap: 10px;
+    font-size: 0.9rem;
+    max-width: 160px;
+  }
+
+  .boton-perfil__avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .boton-perfil__avatar svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .boton-ruta {
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .boton-ruta svg {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -593,5 +745,41 @@ button:disabled,
   .btn {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
+  }
+
+  /* Botones flotantes móviles */
+  .boton-perfil {
+    bottom: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    gap: 8px;
+    font-size: 0.85rem;
+    max-width: 140px;
+  }
+
+  .boton-perfil__avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .boton-ruta {
+    bottom: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* ==================== ACCESIBILIDAD ==================== */
+*:focus {
+  outline: 2px solid var(--color-morado);
+  outline-offset: 2px;
+}
+
+/* ==================== IMPRESIÓN ==================== */
+@media print {
+  .boton-perfil,
+  .boton-ruta {
+    display: none;
   }
 }

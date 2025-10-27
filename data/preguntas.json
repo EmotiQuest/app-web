@@ -8,7 +8,11 @@
       { "texto": "Amargo", "emocion": "tristeza" },
       { "texto": "Picante", "emocion": "enojo" },
       { "texto": "Suave", "emocion": "calma" },
-      { "texto": "Ácido", "emocion": "miedo" }
+      { "texto": "Ácido", "emocion": "miedo" },
+      { "texto": "Efervescente", "emocion": "nerviosismo" },
+      { "texto": "Insípido", "emocion": "desmotivacion" },
+      { "texto": "Energético", "emocion": "motivacion" },
+      { "texto": "Agridulce", "emocion": "inseguridad" }
     ]
   },
   {
@@ -16,11 +20,15 @@
     "pregunta": "¿Qué sabor (emoción) sentiste durante tu fin de semana?",
     "condicion": "lunes",
     "opciones": [
-      { "texto": "Dulce", "emocion": "alegria" },
-      { "texto": "Amargo", "emocion": "tristeza" },
-      { "texto": "Picante", "emocion": "enojo" },
-      { "texto": "Refrescante", "emocion": "calma" },
-      { "texto": "Ácido", "emocion": "miedo" }
+      { "texto": "Dulce como un helado de alegría", "emocion": "alegria" },
+      { "texto": "Amargo como el café sin azúcar", "emocion": "tristeza" },
+      { "texto": "Picante como una salsa intensa", "emocion": "enojo" },
+      { "texto": "Refrescante como una bebida fría", "emocion": "calma" },
+      { "texto": "Ácido como un limón sorpresivo", "emocion": "miedo" },
+      { "texto": "Burbujeante como una gaseosa agitada", "emocion": "nerviosismo" },
+      { "texto": "Desabrido, sin chispa", "emocion": "desmotivacion" },
+      { "texto": "Dulce y chispeante, como un batido de energía", "emocion": "motivacion" },
+      { "texto": "Agridulce, sin saber bien qué sentir", "emocion": "inseguridad" }
     ]
   },
   {
@@ -28,11 +36,15 @@
     "pregunta": "Si tu semana fuera un sabor relacionado con cómo te sentiste, ¿cuál sería?",
     "condicion": "viernes",
     "opciones": [
-      { "texto": "Dulce", "emocion": "alegria" },
-      { "texto": "Amargo", "emocion": "tristeza" },
-      { "texto": "Picante", "emocion": "enojo" },
-      { "texto": "Suave", "emocion": "calma" },
-      { "texto": "Ácido", "emocion": "miedo" }
+      { "texto": "Dulce y ligero, llena de alegría", "emocion": "alegria" },
+      { "texto": "Amargo, con un toque de nostalgia", "emocion": "tristeza" },
+      { "texto": "Picante, algo explosiva", "emocion": "enojo" },
+      { "texto": "Suave y equilibrada", "emocion": "calma" },
+      { "texto": "Ácida, con momentos tensos", "emocion": "miedo" },
+      { "texto": "Espumosa, como los nervios antes de algo nuevo", "emocion": "nerviosismo" },
+      { "texto": "Sosa, sin mucha energía", "emocion": "desmotivacion" },
+      { "texto": "Dulce y fuerte, llena de motivación", "emocion": "motivacion" },
+      { "texto": "Agridulce, con dudas mezcladas", "emocion": "inseguridad" }
     ]
   },
   {
@@ -40,11 +52,15 @@
     "pregunta": "¿Qué sientes al pensar en tu familia el día de hoy?",
     "condicion": "siempre",
     "opciones": [
-      { "texto": "Agradecido", "emocion": "alegria" },
-      { "texto": "Distante", "emocion": "tristeza" },
-      { "texto": "Molesto", "emocion": "enojo" },
-      { "texto": "Tranquilo", "emocion": "calma" },
-      { "texto": "Inseguro", "emocion": "miedo" }
+      { "texto": "Agradecimiento y alegría", "emocion": "alegria" },
+      { "texto": "Nostalgia y tristeza", "emocion": "tristeza" },
+      { "texto": "Frustración o enojo", "emocion": "enojo" },
+      { "texto": "Tranquilidad y calma", "emocion": "calma" },
+      { "texto": "Inquietud o miedo", "emocion": "miedo" },
+      { "texto": "Tensión por algo que preocupa", "emocion": "nerviosismo" },
+      { "texto": "Desánimo o desconexión", "emocion": "desmotivacion" },
+      { "texto": "Orgullo y motivación", "emocion": "motivacion" },
+      { "texto": "Duda o inseguridad sobre su apoyo", "emocion": "inseguridad" }
     ]
   },
   {
@@ -52,11 +68,15 @@
     "pregunta": "¿Cómo te sientes con tus compañeros de clase?",
     "condicion": "siempre",
     "opciones": [
-      { "texto": "Contento", "emocion": "alegria" },
-      { "texto": "Solo", "emocion": "tristeza" },
-      { "texto": "Irritado", "emocion": "enojo" },
-      { "texto": "Cómodo", "emocion": "calma" },
-      { "texto": "Tenso", "emocion": "miedo" }
+      { "texto": "Contento de compartir con ellos", "emocion": "alegria" },
+      { "texto": "Un poco solo o triste", "emocion": "tristeza" },
+      { "texto": "Molesto por algún conflicto", "emocion": "enojo" },
+      { "texto": "Tranquilo y relajado con el grupo", "emocion": "calma" },
+      { "texto": "Con temor o timidez", "emocion": "miedo" },
+      { "texto": "Nervioso al interactuar", "emocion": "nerviosismo" },
+      { "texto": "Poco motivado a participar", "emocion": "desmotivacion" },
+      { "texto": "Entusiasmado por aprender juntos", "emocion": "motivacion" },
+      { "texto": "Inseguro sobre si encajas", "emocion": "inseguridad" }
     ]
   },
   {
@@ -64,11 +84,15 @@
     "pregunta": "Al terminar esta experiencia, ¿qué emoción define cómo te sientes ahora?",
     "condicion": "siempre",
     "opciones": [
-      { "texto": "Feliz", "emocion": "alegria" },
-      { "texto": "Triste", "emocion": "tristeza" },
-      { "texto": "Molesto", "emocion": "enojo" },
-      { "texto": "Relajado", "emocion": "calma" },
-      { "texto": "Nervioso", "emocion": "miedo" }
+      { "texto": "Feliz y satisfecho", "emocion": "alegria" },
+      { "texto": "Un poco triste por terminar", "emocion": "tristeza" },
+      { "texto": "Molesto o frustrado", "emocion": "enojo" },
+      { "texto": "Relajado y en paz", "emocion": "calma" },
+      { "texto": "Inquieto o asustado por algo", "emocion": "miedo" },
+      { "texto": "Nervioso pero optimista", "emocion": "nerviosismo" },
+      { "texto": "Cansado o desmotivado", "emocion": "desmotivacion" },
+      { "texto": "Inspirado y motivado", "emocion": "motivacion" },
+      { "texto": "Con dudas o inseguridad", "emocion": "inseguridad" }
     ]
   }
 ]

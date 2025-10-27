@@ -98,10 +98,20 @@ function mostrarBatidos() {
     
     const batido = document.createElement('div');
     batido.className = 'batido';
-    batido.style.background = color;
+    batido.style.background = color; // Color de la emoción
     batido.style.animationDelay = `${index * 0.1}s`;
-    batido.innerHTML = `<span class="batido-emoji">${emoji}</span>`;
     
+    // Crear tapa de la botella
+    const tapa = document.createElement('div');
+    tapa.className = 'tapa-botella';
+    
+    // Crear emoji
+    const emojiSpan = document.createElement('span');
+    emojiSpan.className = 'batido-emoji';
+    emojiSpan.textContent = emoji;
+    
+    batido.appendChild(tapa);
+    batido.appendChild(emojiSpan);
     batidosGrid.appendChild(batido);
   });
   

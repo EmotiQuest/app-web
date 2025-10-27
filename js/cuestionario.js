@@ -15,9 +15,28 @@ const questionTitle = document.getElementById('question-title');
 const optionsGrid = document.getElementById('options-grid');
 const progressFill = document.getElementById('progress-fill');
 const progressText = document.getElementById('progress-text');
-const batidoPreview = document.getElementById('batido-preview');
-const batidoCup = document.getElementById('batido-cup');
-const batidoLabel = document.getElementById('batido-label');
+
+// Elementos de emoción seleccionada (pueden no existir si usas el HTML viejo)
+let emocionSeleccionada = document.getElementById('emocion-seleccionada');
+let emocionNombre = document.getElementById('emocion-nombre');
+
+// Si no existen, crearlos dinámicamente
+if (!emocionSeleccionada) {
+  console.log('⚠️ Creando elemento emocion-seleccionada dinámicamente');
+  emocionSeleccionada = document.createElement('div');
+  emocionSeleccionada.id = 'emocion-seleccionada';
+  emocionSeleccionada.className = 'emocion-seleccionada hidden';
+  
+  emocionNombre = document.createElement('p');
+  emocionNombre.id = 'emocion-nombre';
+  emocionNombre.className = 'emocion-nombre';
+  
+  emocionSeleccionada.appendChild(emocionNombre);
+  
+  // Insertar después del optionsGrid
+  optionsGrid.parentNode.insertBefore(emocionSeleccionada, optionsGrid.nextSibling);
+}
+
 const btnAnterior = document.getElementById('btn-anterior');
 const btnSiguiente = document.getElementById('btn-siguiente');
 const btnTerminar = document.getElementById('btn-terminar');
@@ -172,37 +191,81 @@ function mezclarArray(array) {
  * Muestra la pregunta actual
  */
 function mostrarPregunta() {
+  console.log('🔵 === INICIO mostrarPregunta() ===');
+  
   if (indiceActual >= preguntasFiltradas.length) {
     console.log('✅ Todas las preguntas respondidas');
     return;
   }
   
   const pregunta = preguntasFiltradas[indiceActual];
+  console.log('📋 Pregunta actual:', pregunta);
   
   // Actualizar título de la pregunta
   questionTitle.textContent = pregunta.pregunta;
+  console.log('✅ Título actualizado');
   
   // Limpiar opciones anteriores
   optionsGrid.innerHTML = '';
+  console.log('✅ Grid limpiado');
   
-  // Crear botones de opciones
+  // Verificar que SistemaEmociones existe
+  if (!window.SistemaEmociones) {
+    console.error('❌ SistemaEmociones NO EXISTE!');
+    return;
+  }
+  console.log('✅ SistemaEmociones disponible');
+  
+  // Crear botellas de opciones
+  console.log(`🔄 Creando ${pregunta.opciones.length} botellas...`);
+  
   pregunta.opciones.forEach((opcion, index) => {
-    const boton = document.createElement('button');
-    boton.className = 'option-btn';
-    boton.textContent = opcion.texto;
-    boton.dataset.emocion = opcion.emocion;
-    boton.dataset.index = index;
+    console.log(`  Opción ${index + 1}:`, opcion);
     
-    // Evento click
-    boton.addEventListener('click', () => seleccionarOpcion(opcion, boton));
+    const color = window.SistemaEmociones.obtenerColor(opcion.emocion);
+    const emoji = window.SistemaEmociones.obtenerEmoji(opcion.emocion);
+    
+    console.log(`    Color: ${color}, Emoji: ${emoji}`);
+    
+    // Contenedor de la botella
+    const botellaContainer = document.createElement('div');
+    botellaContainer.className = 'botella-option';
+    botellaContainer.dataset.emocion = opcion.emocion;
+    botellaContainer.dataset.texto = opcion.texto;
     
     // Si ya hay respuesta guardada, marcarla
     if (respuestas[indiceActual] && respuestas[indiceActual].texto === opcion.texto) {
-      boton.classList.add('selected');
+      botellaContainer.classList.add('selected');
+      console.log(`    ✓ Marcada como seleccionada`);
     }
     
-    optionsGrid.appendChild(boton);
+    // Crear la botella
+    const botella = document.createElement('div');
+    botella.className = 'botella';
+    botella.style.background = color;
+    console.log(`    Botella creada con color: ${color}`);
+    
+    // Tapa de la botella
+    const tapa = document.createElement('div');
+    tapa.className = 'tapa-botella';
+    
+    // Emoji de la emoción
+    const emojiSpan = document.createElement('span');
+    emojiSpan.className = 'botella-emoji';
+    emojiSpan.textContent = emoji;
+    
+    botella.appendChild(tapa);
+    botella.appendChild(emojiSpan);
+    botellaContainer.appendChild(botella);
+    
+    // Evento click
+    botellaContainer.addEventListener('click', () => seleccionarOpcion(opcion, botellaContainer));
+    
+    optionsGrid.appendChild(botellaContainer);
+    console.log(`  ✅ Botella ${index + 1} agregada al DOM`);
   });
+  
+  console.log(`✅ Total de botellas en el DOM: ${optionsGrid.children.length}`);
   
   // Actualizar barra de progreso
   actualizarProgreso();
@@ -210,25 +273,26 @@ function mostrarPregunta() {
   // Actualizar controles
   actualizarControles();
   
-  // Ocultar preview del batido
-  batidoPreview.classList.add('hidden');
+  // Ocultar nombre de emoción
+  emocionSeleccionada.classList.add('hidden');
   
-  console.log(`❓ Mostrando pregunta ${indiceActual + 1}/${preguntasFiltradas.length}`);
+  console.log(`✅ Pregunta ${indiceActual + 1}/${preguntasFiltradas.length} mostrada`);
+  console.log('🔵 === FIN mostrarPregunta() ===');
 }
 
 /**
  * Maneja la selección de una opción
  * @param {Object} opcion - Opción seleccionada
- * @param {HTMLElement} boton - Botón clickeado
+ * @param {HTMLElement} botellaContainer - Contenedor de la botella clickeada
  */
-function seleccionarOpcion(opcion, boton) {
+function seleccionarOpcion(opcion, botellaContainer) {
   // Remover selección anterior
-  document.querySelectorAll('.option-btn').forEach(btn => {
+  document.querySelectorAll('.botella-option').forEach(btn => {
     btn.classList.remove('selected');
   });
   
   // Marcar nueva selección
-  boton.classList.add('selected');
+  botellaContainer.classList.add('selected');
   
   // Guardar respuesta
   respuestas[indiceActual] = {
@@ -242,32 +306,52 @@ function seleccionarOpcion(opcion, boton) {
   btnSiguiente.disabled = false;
   btnTerminar.disabled = false;
   
-  // NO MOSTRAR preview del batido (comentado)
-  // mostrarBatidoPreview(opcion.emocion);
+  // Mostrar nombre de la emoción
+  mostrarNombreEmocion(opcion.emocion);
   
   console.log(`✅ Respuesta seleccionada: ${opcion.texto} (${opcion.emocion})`);
 }
 
 /**
- * Muestra el preview del batido seleccionado
+ * Muestra el nombre de la emoción seleccionada
  * @param {string} emocion - Nombre de la emoción
  */
-function mostrarBatidoPreview(emocion) {
-  if (!window.SistemaEmociones) return;
+function mostrarNombreEmocion(emocion) {
+  console.log('🎭 Mostrando nombre de emoción:', emocion);
   
-  const color = window.SistemaEmociones.obtenerColor(emocion);
+  if (!window.SistemaEmociones) {
+    console.error('❌ SistemaEmociones no disponible');
+    return;
+  }
+  
+  const emocionData = window.SistemaEmociones.obtenerEmocion(emocion);
+  console.log('📊 Datos de emoción:', emocionData);
+  
+  if (!emocionData) {
+    console.error('❌ No se encontró la emoción:', emocion);
+    return;
+  }
+  
   const emoji = window.SistemaEmociones.obtenerEmoji(emocion);
   
-  batidoCup.style.background = color;
-  batidoLabel.textContent = `${emoji} ¡Respuesta registrada!`;
+  if (!emocionNombre || !emocionSeleccionada) {
+    console.error('❌ Elementos del DOM no encontrados');
+    console.log('emocionNombre:', emocionNombre);
+    console.log('emocionSeleccionada:', emocionSeleccionada);
+    return;
+  }
   
-  batidoPreview.classList.remove('hidden');
-  batidoPreview.style.animation = 'bounceIn 0.5s ease';
+  emocionNombre.textContent = `${emoji} ${emocionData.nombre}`;
+  emocionSeleccionada.classList.remove('hidden');
+  emocionSeleccionada.style.animation = 'fadeInUp 0.5s ease';
   
-  setTimeout(() => {
-    batidoPreview.style.animation = '';
-  }, 500);
+  console.log('✅ Nombre de emoción mostrado:', `${emoji} ${emocionData.nombre}`);
 }
+
+/**
+ * Muestra el preview del batido seleccionado (FUNCIÓN ELIMINADA - Ya no se usa)
+ */
+// function mostrarBatidoPreview(emocion) { ... }
 
 /**
  * Actualiza la barra de progreso
@@ -307,6 +391,8 @@ function actualizarControles() {
   const hayRespuesta = respuestas[indiceActual] !== undefined;
   btnSiguiente.disabled = !hayRespuesta;
   btnTerminar.disabled = !hayRespuesta;
+  
+  console.log('✅ Controles actualizados');
 }
 
 /**
