@@ -4,6 +4,7 @@
  * ============================================
  * Manejo de los botones de perfil y ruta
  * presentes en cuestionario y resultados
+ * MODIFICADO: Ahora carga avatares personalizados
  */
 
 (function() {
@@ -20,8 +21,8 @@
     cargarNombreEstudiante();
     configurarEventos();
     
-    // TODO: Cargar avatar personalizado cuando esté implementado
-    // cargarAvatarPersonalizado();
+    // Cargar avatar personalizado
+    cargarAvatarPersonalizado();
   }
 
   // ============================================
@@ -54,9 +55,7 @@
   }
 
   /**
-   * TODO: FUNCIÓN A IMPLEMENTAR
    * Carga el avatar personalizado del estudiante
-   * Esta función se activará cuando envíes las imágenes predeterminadas
    */
   function cargarAvatarPersonalizado() {
     try {
@@ -69,14 +68,44 @@
       
       if (!avatarElemento) return;
 
-      // TODO: Implementar lógica de avatares predeterminados
-      // Ejemplo de implementación futura:
-      /*
-      const rutaAvatar = obtenerRutaAvatar(sesion.genero, sesion.avatarId);
-      avatarElemento.innerHTML = `
-        <img src="${rutaAvatar}" alt="Avatar de ${sesion.nombre}">
-      `;
-      */
+      // Verificar si el usuario tiene avatar personalizado
+      if (sesion.avatar) {
+        console.log('✅ Avatar personalizado encontrado:', sesion.avatar);
+        
+        // Limpiar contenido actual
+        avatarElemento.innerHTML = '';
+        
+        // Si tiene ruta de imagen, usar imagen
+        if (sesion.avatar.ruta) {
+          const img = document.createElement('img');
+          img.src = sesion.avatar.ruta;
+          img.alt = 'Avatar de ' + sesion.nombre;
+          img.style.cssText = 'width: 100%; height: 100%; object-fit: cover;';
+          
+          // Si la imagen falla, usar emoji
+          img.onerror = function() {
+            console.warn('⚠️ Imagen de avatar no encontrada, usando emoji');
+            avatarElemento.innerHTML = `
+              <span style="font-size: 1.8rem;">${sesion.avatar.emoji || '😊'}</span>
+            `;
+          };
+          
+          avatarElemento.appendChild(img);
+        } 
+        // Si solo tiene emoji, usar emoji
+        else if (sesion.avatar.emoji) {
+          avatarElemento.innerHTML = `
+            <span style="font-size: 1.8rem;">${sesion.avatar.emoji}</span>
+          `;
+        }
+        // Si no tiene nada, dejar el SVG por defecto
+        else {
+          console.warn('⚠️ Avatar sin ruta ni emoji, usando SVG por defecto');
+        }
+        
+      } else {
+        console.log('ℹ️ Usuario sin avatar personalizado, usando SVG por defecto');
+      }
       
     } catch (error) {
       console.error('Error al cargar avatar:', error);
@@ -100,7 +129,13 @@
       const sesionActual = localStorage.getItem('emotiquest_sesion_actual');
       if (sesionActual) {
         const sesion = JSON.parse(sesionActual);
-        alert(`Perfil de ${sesion.nombre}\nEdad: ${sesion.edad}\nGrado: ${sesion.grado}`);
+        
+        let avatarInfo = 'Sin avatar';
+        if (sesion.avatar) {
+          avatarInfo = sesion.avatar.emoji || 'Avatar personalizado';
+        }
+        
+        alert(`Perfil de ${sesion.nombre}\nEdad: ${sesion.edad}\nGrado: ${sesion.grado}\nAvatar: ${avatarInfo}`);
       }
     } catch (error) {
       console.error('Error:', error);

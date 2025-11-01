@@ -1,6 +1,7 @@
 // ============================================
 // LOGIN.JS - Lógica del formulario de login
 // COMPATIBLE CON GITHUB PAGES
+// MODIFICADO: Redirige a avatar-selection.html
 // ============================================
 
 console.log('🚀 login.js cargado');
@@ -100,8 +101,8 @@ function manejarEnvio(e) {
       throw new Error('No se pudo verificar la sesión guardada');
     }
     
-    // Redirigir
-    redirigirACuestionario();
+    // Redirigir (ahora a avatar-selection o cuestionario según género)
+    redirigirSegunGenero();
     
   } catch (error) {
     console.error('❌ Error al guardar sesión:', error);
@@ -152,11 +153,20 @@ function validarDatos(datos) {
 }
 
 /**
- * Redirige a la página del cuestionario
- * OPTIMIZADO PARA GITHUB PAGES
+ * Redirige según el género seleccionado
+ * - Si género es "pnd" (prefiero no decirlo) → cuestionario.html
+ * - Si género es "masculino" o "femenino" → avatar-selection.html
  */
-function redirigirACuestionario() {
-  console.log('🚀 Iniciando redirección...');
+function redirigirSegunGenero() {
+  console.log('🚀 Iniciando redirección según género...');
+  
+  const sesion = obtenerSesionActual();
+  
+  if (!sesion) {
+    console.error('❌ No se pudo obtener sesión');
+    alert('Error al obtener sesión. Intenta de nuevo.');
+    return;
+  }
   
   // Detectar si estamos en GitHub Pages
   const hostname = window.location.hostname;
@@ -164,23 +174,46 @@ function redirigirACuestionario() {
   
   console.log('🌐 Hostname:', hostname);
   console.log('🌐 ¿Es GitHub Pages?', esGitHubPages);
+  console.log('👤 Género del usuario:', sesion.genero);
+  
+  // Determinar página destino
+  let paginaDestino;
+  
+  if (sesion.genero === 'pnd') {
+    // Si prefiere no decirlo, ir directo al cuestionario
+    paginaDestino = 'cuestionario.html';
+    console.log('⏩ Usuario prefirió no especificar género, ir a cuestionario');
+    
+    // Asignar avatar neutro
+    sesion.avatar = {
+      id: 'avatar-neutro',
+      ruta: null,
+      emoji: '😊'
+    };
+    guardarSesionActual(sesion);
+    
+  } else {
+    // Si especificó masculino o femenino, ir a selección de avatar
+    paginaDestino = 'avatar-selection.html';
+    console.log('👤 Usuario especificó género, ir a selección de avatar');
+  }
   
   // Construir URL correcta
-  let urlCuestionario;
+  let urlDestino;
   
   if (esGitHubPages) {
     // En GitHub Pages: usar pathname completo
     const pathParts = window.location.pathname.split('/');
     pathParts.pop(); // Remover index.html o página actual
     const basePath = pathParts.join('/') || '';
-    urlCuestionario = `${basePath}/cuestionario.html`;
+    urlDestino = `${basePath}/${paginaDestino}`;
   } else {
     // En local: usar ruta relativa simple
-    urlCuestionario = './cuestionario.html';
+    urlDestino = `./${paginaDestino}`;
   }
   
-  console.log('🎯 URL destino:', urlCuestionario);
-  console.log('🎯 URL completa:', window.location.origin + urlCuestionario);
+  console.log('🎯 URL destino:', urlDestino);
+  console.log('🎯 URL completa:', window.location.origin + urlDestino);
   
   // Mostrar mensaje visual
   mostrarMensajeRedireccion();
@@ -188,7 +221,7 @@ function redirigirACuestionario() {
   // Redirigir después de un momento
   setTimeout(() => {
     console.log('🔄 Redirigiendo con window.location.href');
-    window.location.href = urlCuestionario;
+    window.location.href = urlDestino;
   }, 800);
 }
 

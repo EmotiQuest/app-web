@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiQuest - Elige tu Avatar</title>
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/avatar-selection.css">
+</head>
+<body class="avatar-selection-page">
+  
+  <!-- Header -->
+  <header class="avatar-header">
+    <div class="container">
+      <div class="app-logo">
+        <img src="./images/logo/emotiquest-logo.png" alt="EmotiQuest Logo" class="logo-image">
+      </div>
+      <h1 class="app-title">EmotiQuest</h1>
+      <p class="app-subtitle">Elige tu avatar</p>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    
+    <div class="avatar-selection-card">
+      
+      <!-- Saludo personalizado -->
+      <div class="avatar-greeting">
+        <h2 id="greeting-name">¡Hola, [Nombre]!</h2>
+        <p>Elige el avatar que más te represente</p>
+      </div>
+
+      <!-- Grid de avatares -->
+      <div class="avatars-grid" id="avatars-grid">
+        <!-- Avatares generados dinámicamente por JavaScript -->
+      </div>
+
+      <!-- Avatar seleccionado -->
+      <div class="selected-avatar-preview hidden" id="selected-preview">
+        <div class="preview-circle">
+          <img src="" alt="Avatar seleccionado" id="preview-image">
+        </div>
+        <p class="preview-text">Avatar seleccionado</p>
+      </div>
+
+      <!-- Botones de control -->
+      <div class="avatar-controls">
+        <button id="btn-volver" class="btn btn-secondary">
+          ← Volver
+        </button>
+        
+        <button id="btn-continuar" class="btn btn-primary" disabled>
+          Continuar al cuestionario →
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>© 2025 EmotiQuest - Descubre tus emociones</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/storage.js"></script>
+  <script src="./js/avatar-selection.js"></script>
+
+</body>
+</html>

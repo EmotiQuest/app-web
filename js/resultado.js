@@ -1,5 +1,6 @@
 // ============================================
 // RESULTADO.JS - Lógica de resultados
+// MODIFICADO: Soporta avatares personalizados
 // ============================================
 // Variables globales
 let sesion = null;
@@ -48,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // 6. Animación
   aplicarAnimacionEntrada();
-console.log('✅ === INICIALIZACIÓN COMPLETA ===');
+  console.log('✅ === INICIALIZACIÓN COMPLETA ===');
 });
 
 /**
@@ -306,21 +307,67 @@ function mostrarResultadoFinal() {
 }
 
 /**
- * Genera avatar
+ * Genera avatar con soporte para avatares personalizados
+ * El avatar personalizado REEMPLAZA el emoji de género (👦 👧 🧑)
+ * NO reemplaza el emoji de emoción (😊 😢 😠)
  */
 function generarAvatar() {
-  const genero = sesion.genero;
-  const emoji = window.SistemaEmociones.obtenerEmoji(emocionPredominante);
+  const emojiEmocion = window.SistemaEmociones.obtenerEmoji(emocionPredominante);
   const color = window.SistemaEmociones.obtenerColor(emocionPredominante);
   
-  avatar.innerHTML = `
+  // Siempre mostrar el emoji de emoción en el círculo principal
+  let avatarHTML = `
     <div class="avatar-circle" style="border-color: ${color}">
-      <span class="avatar-emoji">${emoji}</span>
+      <span class="avatar-emoji">${emojiEmocion}</span>
     </div>
-    <div class="avatar-label">${genero === 'masculino' ? '👦' : genero === 'femenino' ? '👧' : '🧑'}</div>
   `;
+  
+  // Verificar si el usuario tiene avatar personalizado
+  if (sesion.avatar) {
+    console.log('🎨 Usando avatar personalizado:', sesion.avatar);
+    
+    // El avatar personalizado va en la etiqueta (debajo del círculo)
+    if (sesion.avatar.ruta) {
+      // Si tiene ruta de imagen, usar imagen en la etiqueta
+      avatarHTML += `
+        <div class="avatar-label" style="display: flex; align-items: center; gap: 0.5rem;">
+          <div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 2px solid ${color};">
+            <img src="${sesion.avatar.ruta}" 
+                 alt="Avatar" 
+                 style="width: 100%; height: 100%; object-fit: cover;" 
+                 onerror="this.outerHTML='<span style=\\'font-size: 2rem;\\'>${sesion.avatar.emoji || '😊'}</span>'">
+          </div>
+        </div>
+      `;
+    } 
+    // Si solo tiene emoji, usar emoji en la etiqueta
+    else if (sesion.avatar.emoji) {
+      avatarHTML += `
+        <div class="avatar-label" style="font-size: 2rem;">
+          ${sesion.avatar.emoji}
+        </div>
+      `;
+    }
+    // Fallback: usar emoji de género predeterminado
+    else {
+      const generoEmoji = sesion.genero === 'masculino' ? '👦' : sesion.genero === 'femenino' ? '👧' : '🧑';
+      avatarHTML += `<div class="avatar-label">${generoEmoji}</div>`;
+    }
+    
+  } else {
+    // Fallback: usar emoji de género predeterminado (comportamiento original)
+    console.log('ℹ️ Usuario sin avatar personalizado, usando emoji de género por defecto');
+    
+    const genero = sesion.genero;
+    const generoEmoji = genero === 'masculino' ? '👦' : genero === 'femenino' ? '👧' : '🧑';
+    
+    avatarHTML += `<div class="avatar-label">${generoEmoji}</div>`;
+  }
+  
+  avatar.innerHTML = avatarHTML;
   avatar.style.animation = 'zoomIn 0.8s ease';
-}
+} 
+
 
 /**
  * Muestra badge
@@ -344,7 +391,7 @@ function mostrarMensajeFinal() {
   const emocion = window.SistemaEmociones.obtenerEmocion(emocionPredominante);
   
   mensajeFinal.innerHTML = `
-    <p class="mensaje-principal">${emocion.mensaje}</p>
+    <p class="mensaje-principal">${emocion.mensajes[0]}</p>
     <p class="mensaje-secundario">¡Gracias por compartir tus emociones, ${sesion.nombre}!</p>
   `;
   mensajeFinal.style.animation = 'fadeIn 0.8s ease 0.5s backwards';
