@@ -137,6 +137,27 @@ h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.5rem; }
 
+/* ==================== LOGO ==================== */
+.app-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  animation: fadeInDown 0.6s ease;
+}
+
+.logo-image {
+  width: 144px;
+  height: auto;
+  max-width: 100%;
+  filter: drop-shadow(0 4px 15px rgba(209, 128, 253, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
 /* ==================== TÍTULO EMOTIQUEST ==================== */
 .app-title,
 .quiz-title,
@@ -663,12 +684,15 @@ button:disabled,
 }
 
 /* Icono del botón ruta */
-.boton-ruta svg {
-  width: 28px;
-  height: 28px;
-  fill: #fff;
+.ruta-icono {
+  font-size: 1.5rem;
+  line-height: 1;
 }
 
+.ruta-texto {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
   .container {
@@ -680,6 +704,10 @@ button:disabled,
     padding: var(--spacing-lg);
   }
   
+  .logo-image {
+    width: 112px;
+  }
+
   .app-title,
   .quiz-title,
   .resultado-title {
@@ -724,13 +752,19 @@ button:disabled,
     height: 50px;
   }
 
-  .boton-ruta svg {
-    width: 24px;
-    height: 24px;
+  
+  .ruta-icono {
+    font-size: 1.3rem;
   }
+
+ 
 }
 
 @media (max-width: 480px) {
+ .logo-image {
+    width: 96px;
+  }
+
   .app-title,
   .quiz-title,
   .resultado-title {
@@ -767,6 +801,9 @@ button:disabled,
     right: 10px;
     width: 45px;
     height: 45px;
+  }
+  .ruta-icono {
+    font-size: 1.2rem;
   }
 }
 
