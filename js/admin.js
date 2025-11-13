@@ -1,5 +1,5 @@
 // ============================================
-// EMOTIQUEST - ADMIN.JS
+// EMOTIQUEST - ADMIN.JS (VERSIÓN CORREGIDA)
 // Lógica completa del Dashboard de Administrador
 // ============================================
 
@@ -21,23 +21,34 @@ document.addEventListener('DOMContentLoaded', () => {
   actualizarDashboard();
 });
 
-// ==================== CARGAR DATOS ====================
+// ==================== CARGAR DATOS (TAREA 1 - CORREGIDA) ====================
 function cargarDatos() {
   try {
     // Cargar sesiones desde localStorage
     const sesionesJSON = localStorage.getItem('emotiquest_sesiones');
     
+    console.log('🔍 DEBUG - localStorage raw:', sesionesJSON ? 'Contiene datos' : 'Vacío'); // DEBUG
+    
     if (sesionesJSON) {
       todasLasSesiones = JSON.parse(sesionesJSON);
       sesionesFiltradas = [...todasLasSesiones]; // Copia para filtros
       console.log(`✅ ${todasLasSesiones.length} sesiones cargadas`);
+      console.log('📊 DEBUG - Sesiones:', todasLasSesiones); // DEBUG
+      
+      // Verificar estructura de cada sesión
+      if (todasLasSesiones.length > 0) {
+        console.log('📋 DEBUG - Primera sesión:', todasLasSesiones[0]); // DEBUG
+        console.log('📅 DEBUG - Fecha primera sesión:', todasLasSesiones[0].fecha); // DEBUG
+        console.log('😊 DEBUG - Emoción primera sesión:', todasLasSesiones[0].emocionPredominante); // DEBUG
+      }
     } else {
+      console.log('📭 No hay sesiones en localStorage');
       todasLasSesiones = [];
       sesionesFiltradas = [];
-      console.log('📭 No hay sesiones guardadas');
     }
   } catch (error) {
     console.error('❌ Error al cargar datos:', error);
+    console.error('Stack:', error.stack); // DEBUG
     todasLasSesiones = [];
     sesionesFiltradas = [];
   }
@@ -105,49 +116,86 @@ function actualizarMensajeBienvenida() {
   }
 }
 
-// ==================== ESTADÍSTICAS GENERALES ====================
+// ==================== ESTADÍSTICAS GENERALES (TAREA 2 - CORREGIDA) ====================
 function actualizarEstadisticas() {
   const total = todasLasSesiones.length;
   
-  // Total de sesiones
+  // 1. Total de sesiones
   document.getElementById('stat-total').textContent = total;
+  console.log('📊 DEBUG - Total sesiones:', total); // DEBUG
   
-  // Sesiones de hoy
-  const hoy = new Date().toISOString().split('T')[0];
-  const sesionesHoy = todasLasSesiones.filter(s => s.fecha === hoy).length;
+  // 2. Sesiones de hoy (usando fecha local)
+  const hoy = new Date();
+  const fechaLocal = hoy.getFullYear() + '-' +
+    String(hoy.getMonth() + 1).padStart(2, '0') + '-' +
+    String(hoy.getDate()).padStart(2, '0');
+  console.log('📅 DEBUG - Fecha de hoy (local):', fechaLocal); // DEBUG
+  
+  const sesionesHoy = todasLasSesiones.filter(s => {
+    console.log('🔍 DEBUG - Comparando:', s.fecha, 'con', fechaLocal); // DEBUG
+    return s.fecha === fechaLocal;
+  }).length;
+  
   document.getElementById('stat-hoy').textContent = sesionesHoy;
+  console.log('📊 DEBUG - Sesiones hoy:', sesionesHoy); // DEBUG
   
-  // Emoción predominante global
+  // 3. Emoción predominante global
   if (total > 0) {
     const emocionPredominante = calcularEmocionPredominante(todasLasSesiones);
-    const emocionData = EMOCIONES[emocionPredominante];
-    document.getElementById('stat-emocion').textContent = 
-      `${emocionData.emoji} ${emocionData.nombre}`;
+    console.log('😊 DEBUG - Emoción predominante:', emocionPredominante); // DEBUG
+    
+    if (emocionPredominante) {
+      const emocionData = EMOCIONES[emocionPredominante];
+      if (emocionData) {
+        document.getElementById('stat-emocion').textContent = 
+          `${emocionData.emoji} ${emocionData.nombre}`;
+      } else {
+        console.error('❌ No se encontró data para emoción:', emocionPredominante); // DEBUG
+        document.getElementById('stat-emocion').textContent = '-';
+      }
+    } else {
+      document.getElementById('stat-emocion').textContent = '-';
+    }
   } else {
     document.getElementById('stat-emocion').textContent = '-';
   }
   
-  // Edad promedio
+  // 4. Edad promedio
   if (total > 0) {
-    const sumaEdades = todasLasSesiones.reduce((sum, s) => sum + parseInt(s.edad || 0), 0);
+    const sumaEdades = todasLasSesiones.reduce((sum, s) => {
+      const edad = parseInt(s.edad) || 0;
+      console.log('🔢 DEBUG - Edad de sesión:', s.id, '=', edad); // DEBUG
+      return sum + edad;
+    }, 0);
+    
     const promedioEdad = Math.round(sumaEdades / total);
+    console.log('📊 DEBUG - Suma edades:', sumaEdades, '/ Total:', total, '= Promedio:', promedioEdad); // DEBUG
     document.getElementById('stat-promedio').textContent = promedioEdad;
   } else {
     document.getElementById('stat-promedio').textContent = '0';
   }
 }
 
-// ==================== CALCULAR EMOCIÓN PREDOMINANTE ====================
+// ==================== CALCULAR EMOCIÓN PREDOMINANTE (TAREA 3 - CORREGIDA) ====================
 function calcularEmocionPredominante(sesiones) {
   if (sesiones.length === 0) return null;
   
   const conteo = {};
   
-  sesiones.forEach(sesion => {
+  console.log('🔍 DEBUG - Calculando emoción predominante global...'); // DEBUG
+  
+  sesiones.forEach((sesion, index) => {
     const emocion = sesion.emocionPredominante;
-    conteo[emocion] = (conteo[emocion] || 0) + 1;
+    console.log(`📋 DEBUG - Sesión ${index + 1}:`, sesion.id, '- Emoción:', emocion); // DEBUG
+    
+    if (emocion) {
+      conteo[emocion] = (conteo[emocion] || 0) + 1;
+    }
   });
   
+  console.log('📊 DEBUG - Conteo de emociones:', conteo); // DEBUG
+  
+  // Encontrar la emoción con mayor conteo
   let maxEmocion = null;
   let maxConteo = 0;
   
@@ -158,26 +206,34 @@ function calcularEmocionPredominante(sesiones) {
     }
   }
   
+  console.log('🎯 DEBUG - Emoción predominante:', maxEmocion, 'con', maxConteo, 'apariciones'); // DEBUG
+  
   return maxEmocion;
 }
 
-// ==================== GENERAR GRÁFICO DE BARRAS ====================
+// ==================== GENERAR GRÁFICO DE BARRAS (TAREA 4 - CORREGIDA) ====================
 function generarGrafico() {
   const chartBars = document.getElementById('chart-bars');
   const chartLegend = document.getElementById('chart-legend');
   const chartEmpty = document.getElementById('chart-empty');
   const chartContainer = document.getElementById('chart-container');
   
+  console.log('📊 DEBUG - Generando gráfico...'); // DEBUG
+  console.log('📊 DEBUG - Sesiones filtradas:', sesionesFiltradas.length); // DEBUG
+  
   // Limpiar contenido previo
   chartBars.innerHTML = '';
   chartLegend.innerHTML = '';
   
+  // Verificar si hay datos
   if (sesionesFiltradas.length === 0) {
+    console.log('⚠️ DEBUG - No hay datos para graficar'); // DEBUG
     chartContainer.style.display = 'none';
     chartEmpty.style.display = 'block';
     return;
   }
   
+  console.log('✅ DEBUG - Hay datos, mostrando gráfico'); // DEBUG
   chartContainer.style.display = 'flex';
   chartEmpty.style.display = 'none';
   
@@ -186,19 +242,40 @@ function generarGrafico() {
   
   sesionesFiltradas.forEach(sesion => {
     const emocion = sesion.emocionPredominante;
-    conteoEmociones[emocion] = (conteoEmociones[emocion] || 0) + 1;
+    console.log('🔢 DEBUG - Contando emoción:', emocion, 'de sesión', sesion.id); // DEBUG
+    
+    if (emocion) {
+      conteoEmociones[emocion] = (conteoEmociones[emocion] || 0) + 1;
+    }
   });
   
-  // Obtener el valor máximo para calcular altura relativa
-  const maxValor = Math.max(...Object.values(conteoEmociones), 1);
+  console.log('📊 DEBUG - Distribución de emociones:', conteoEmociones); // DEBUG
+  
+  // Verificar que EMOCIONES está disponible
+  if (typeof EMOCIONES === 'undefined') {
+    console.error('❌ DEBUG - EMOCIONES no está definido'); // DEBUG
+    return;
+  }
+  
+  console.log('✅ DEBUG - EMOCIONES está disponible'); // DEBUG
+  
+  // ESCALA FIJA: 0-15
+  const ESCALA_MAXIMA = 15;
+  console.log('📈 DEBUG - Escala máxima:', ESCALA_MAXIMA); // DEBUG
   
   // Generar una barra por cada emoción encontrada
   Object.entries(conteoEmociones).forEach(([emocionKey, cantidad]) => {
     const emocionData = EMOCIONES[emocionKey];
-    if (!emocionData) return; // Saltar si no existe en EMOCIONES
     
-    // Calcular altura de la barra (porcentaje del máximo)
-    const alturaPorcentaje = (cantidad / maxValor) * 100;
+    if (!emocionData) {
+      console.warn('⚠️ DEBUG - No se encontró data para emoción:', emocionKey); // DEBUG
+      return; // Saltar si no existe en EMOCIONES
+    }
+    
+    console.log('📊 DEBUG - Creando barra para:', emocionKey, 'con', cantidad, 'apariciones'); // DEBUG
+    
+    // Calcular altura basada en escala 0-15
+    const alturaPorcentaje = (cantidad / ESCALA_MAXIMA) * 100;
     
     // Crear elemento de barra
     const barElement = document.createElement('div');
@@ -207,15 +284,14 @@ function generarGrafico() {
     barElement.innerHTML = `
       <div class="bar-column" 
            style="height: ${alturaPorcentaje}%; 
-                  --bar-color: ${emocionData.color}; 
-                  --bar-color-light: ${emocionData.color}dd;"
+                  background: ${emocionData.color}; 
+                  box-shadow: 0 -4px 15px ${emocionData.color}40;"
            data-emocion="${emocionKey}"
            data-cantidad="${cantidad}">
         <div class="bar-value">${cantidad}</div>
       </div>
       <div class="bar-label">
         <div class="bar-emoji">${emocionData.emoji}</div>
-        ${emocionData.nombre}
       </div>
     `;
     
@@ -226,10 +302,12 @@ function generarGrafico() {
     legendItem.className = 'legend-item';
     legendItem.innerHTML = `
       <div class="legend-color" style="background: ${emocionData.color};"></div>
-      <span class="legend-text">${emocionData.emoji} ${emocionData.nombre}: ${cantidad}</span>
+      <span class="legend-text">${emocionData.emoji} ${emocionData.nombre}</span>
     `;
     chartLegend.appendChild(legendItem);
   });
+  
+  console.log('✅ DEBUG - Gráfico generado exitosamente'); // DEBUG
   
   // Agregar tooltips interactivos (hover)
   const barColumns = chartBars.querySelectorAll('.bar-column');
@@ -544,4 +622,5 @@ function importarDatos(event) {
 window.verDetalles = verDetalles;
 
 // ==================== LOG FINAL ====================
-console.log('✅ admin.js cargado completamente');
+console.log('✅ admin.js (VERSIÓN CORREGIDA) cargado completamente');
+console.log('📊 Total sesiones al cargar:', todasLasSesiones.length);

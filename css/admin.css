@@ -2,6 +2,7 @@
    EMOTIQUEST - ADMIN DASHBOARD CSS
    Diseño profesional basado en paleta Canva
    HEADER REDUCIDO 35%
+   GRÁFICO CORREGIDO CON ESCALA 0-15
    ============================================ */
 
 /* ==================== VARIABLES ADMIN ==================== */
@@ -38,32 +39,32 @@ body.admin-page {
 .admin-header-content {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0.65rem 1.3rem; /* Reducido de 1rem 2rem */
+  padding: 0.65rem 1.3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.65rem; /* Reducido de 1rem */
+  gap: 0.65rem;
 }
 
 .admin-branding {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem; /* Reducido de 0.25rem */
+  gap: 0.15rem;
 }
 
 .admin-branding .app-logo {
   margin: 0;
-  margin-bottom: 0.3rem; /* Reducido */
+  margin-bottom: 0.3rem;
 }
 
 .admin-branding .logo-image {
-  width: 58px; /* Reducido de 90px (35% menos = ~58px) */
+  width: 58px;
   height: auto;
 }
 
 .admin-title {
-  font-size: 1.3rem; /* Reducido de 2rem */
+  font-size: 1.3rem;
   font-weight: 800;
   color: var(--color-morado-titulo);
   margin: 0;
@@ -75,7 +76,7 @@ body.admin-page {
 }
 
 .admin-subtitle {
-  font-size: 0.62rem; /* Reducido de 0.95rem */
+  font-size: 0.62rem;
   color: var(--text-medium);
   font-weight: 500;
   margin: 0;
@@ -83,13 +84,13 @@ body.admin-page {
 
 .admin-actions {
   display: flex;
-  gap: 0.5rem; /* Reducido de 0.75rem */
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .admin-actions .btn {
-  padding: 0.5rem 1rem; /* Reducido de padding normal */
-  font-size: 0.85rem; /* Reducido */
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
 }
 
 .btn-volver {
@@ -171,7 +172,7 @@ body.admin-page {
   margin: 0;
 }
 
-/* ==================== GRÁFICO DE BARRAS VERTICALES ==================== */
+/* ==================== GRÁFICO DE BARRAS VERTICALES (CORREGIDO) ==================== */
 .admin-chart-section {
   margin-bottom: 2rem;
 }
@@ -210,9 +211,9 @@ body.admin-page {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  height: 350px;
-  gap: 1rem;
-  padding: 1rem;
+  height: 400px; /* Altura fija para escala 0-15 */
+  gap: 1.5rem;
+  padding: 1.5rem;
   background: linear-gradient(to bottom, 
     rgba(209, 128, 253, 0.05) 0%, 
     rgba(209, 128, 253, 0.02) 100%);
@@ -220,7 +221,7 @@ body.admin-page {
   position: relative;
 }
 
-/* Líneas horizontales de referencia (opcional) */
+/* Líneas horizontales de referencia */
 .chart-bars::before {
   content: '';
   position: absolute;
@@ -242,7 +243,8 @@ body.admin-page {
 /* Cada barra individual */
 .chart-bar {
   flex: 1;
-  max-width: 120px;
+  max-width: 100px;
+  min-width: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -251,51 +253,52 @@ body.admin-page {
   z-index: 2;
 }
 
-/* Columna de la barra */
+/* Columna de la barra - CRÍTICO */
 .bar-column {
   width: 100%;
-  background: linear-gradient(to top, var(--bar-color, var(--color-morado)), var(--bar-color-light, var(--color-morado-hover)));
+  min-height: 20px; /* Altura mínima visible incluso con valor 1 */
   border-radius: var(--radius-small) var(--radius-small) 0 0;
   position: relative;
   transition: all 0.4s ease;
-  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
 .bar-column:hover {
   transform: scaleY(1.05);
-  filter: brightness(1.1);
-  box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.15);
+  filter: brightness(1.15);
 }
 
 /* Valor encima de la barra */
 .bar-value {
   position: absolute;
-  top: -35px;
+  top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: var(--text-dark);
   background: white;
-  padding: 0.25rem 0.75rem;
+  padding: 0.25rem 0.65rem;
   border-radius: 20px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   white-space: nowrap;
+  z-index: 10;
 }
 
 /* Etiqueta debajo de la barra */
 .bar-label {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-dark);
   text-align: center;
   word-break: break-word;
+  max-width: 100%;
 }
 
 .bar-emoji {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 0.25rem;
+  display: block;
 }
 
 /* Leyenda del gráfico */
@@ -318,7 +321,7 @@ body.admin-page {
   width: 20px;
   height: 20px;
   border-radius: 5px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .legend-text {
@@ -480,7 +483,6 @@ body.admin-page {
   color: var(--text-dark);
 }
 
-/* Columna de emoción con color */
 .emotion-badge {
   display: inline-block;
   padding: 0.5rem 1rem;
@@ -490,7 +492,6 @@ body.admin-page {
   text-transform: capitalize;
 }
 
-/* Botones de acciones en la tabla */
 .table-actions {
   display: flex;
   gap: 0.5rem;
@@ -630,19 +631,19 @@ body.admin-page {
   .admin-header-content {
     flex-direction: column;
     align-items: stretch;
-    padding: 0.5rem 1rem; /* Aún más reducido en móvil */
+    padding: 0.5rem 1rem;
   }
 
   .admin-branding .logo-image {
-    width: 45px; /* Más pequeño en móvil */
+    width: 45px;
   }
 
   .admin-title {
-    font-size: 1.1rem; /* Más pequeño en móvil */
+    font-size: 1.1rem;
   }
 
   .admin-subtitle {
-    font-size: 0.55rem; /* Más pequeño en móvil */
+    font-size: 0.55rem;
   }
 
   .admin-actions {
@@ -654,14 +655,28 @@ body.admin-page {
   }
 
   .chart-bars {
-    height: 250px;
-    gap: 0.5rem;
+    height: 300px;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .chart-bar {
+    max-width: 70px;
+    min-width: 45px;
   }
 
   .bar-value {
-    font-size: 1rem;
-    top: -30px;
+    font-size: 0.95rem;
+    top: -25px;
     padding: 0.2rem 0.5rem;
+  }
+
+  .bar-emoji {
+    font-size: 1.4rem;
+  }
+
+  .bar-label {
+    font-size: 0.75rem;
   }
 
   .filters-grid {
@@ -712,11 +727,7 @@ body.admin-page {
     font-size: 1.4rem;
   }
 
-  .bar-label {
-    font-size: 0.8rem;
-  }
-
-  .bar-emoji {
-    font-size: 1.2rem;
+  .chart-bars {
+    height: 250px;
   }
 }

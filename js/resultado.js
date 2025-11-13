@@ -1,6 +1,6 @@
 // ============================================
-// RESULTADO.JS - Lógica de resultados
-// MODIFICADO: Soporta avatares personalizados
+// RESULTADO.JS - Lógica de resultados (VERSIÓN CORREGIDA)
+// MODIFICADO: Soporta avatares personalizados y guardado correcto
 // ============================================
 // Variables globales
 let sesion = null;
@@ -130,7 +130,7 @@ function calcularResultados() {
 }
 
 /**
- * GUARDA LA SESIÓN INMEDIATAMENTE
+ * GUARDA LA SESIÓN INMEDIATAMENTE (TAREA 5 - CORREGIDA)
  * ESTA ES LA FUNCIÓN MÁS IMPORTANTE
  */
 function guardarSesionInmediatamente() {
@@ -149,6 +149,17 @@ function guardarSesionInmediatamente() {
       return false;
     }
     
+    // CRÍTICO: Asegurar que la fecha está en formato correcto (hora local)
+const ahora = new Date();
+sesion.fecha = ahora.getFullYear() + '-' +
+  String(ahora.getMonth() + 1).padStart(2, '0') + '-' +
+  String(ahora.getDate()).padStart(2, '0'); // YYYY-MM-DD local
+sesion.hora = String(ahora.getHours()).padStart(2, '0') + ':' +
+  String(ahora.getMinutes()).padStart(2, '0'); // HH:MM local
+    
+    console.log('📅 DEBUG - Fecha guardada:', sesion.fecha); // DEBUG
+    console.log('🕐 DEBUG - Hora guardada:', sesion.hora); // DEBUG
+    
     // GUARDAR CON LA FUNCIÓN GLOBAL
     const guardado = guardarSesionCompletada(sesion);
     
@@ -160,6 +171,7 @@ function guardarSesionInmediatamente() {
       console.log('😊 Emoción:', sesion.emocionPredominante);
       console.log('📝 Respuestas:', sesion.respuestas.length);
       console.log('📅 Fecha:', sesion.fecha);
+      console.log('🕐 Hora:', sesion.hora);
       
       // VERIFICAR QUE SE GUARDÓ
       const todasSesiones = obtenerTodasLasSesiones();
@@ -169,6 +181,7 @@ function guardarSesionInmediatamente() {
       const sesionGuardada = todasSesiones.find(s => s.id === sesion.id);
       if (sesionGuardada) {
         console.log('✅ VERIFICACIÓN: Sesión encontrada en localStorage');
+        console.log('📅 VERIFICACIÓN: Fecha en localStorage:', sesionGuardada.fecha);
       } else {
         console.error('❌ VERIFICACIÓN FALLIDA: Sesión NO encontrada');
       }
@@ -183,6 +196,7 @@ function guardarSesionInmediatamente() {
   } catch (error) {
     console.error('❌ ========================================');
     console.error('❌ ERROR CRÍTICO:', error);
+    console.error('Stack:', error.stack); // DEBUG
     console.error('❌ ========================================');
     return false;
   }
@@ -458,7 +472,15 @@ function aplicarAnimacionEntrada() {
 setTimeout(() => {
   console.log('=== VERIFICACIÓN AUTOMÁTICA ===');
   console.log('Sesión actual:', sesion);
-  console.log('Todas las sesiones:', obtenerTodasLasSesiones());
+  
+  const todasSesiones = obtenerTodasLasSesiones();
+  console.log('Todas las sesiones:', todasSesiones);
+  console.log('Total de sesiones guardadas:', todasSesiones.length);
+  
+  // Verificar fecha de hoy
+  const hoy = new Date().toISOString().split('T')[0];
+  const sesionesHoy = todasSesiones.filter(s => s.fecha === hoy);
+  console.log('Sesiones de hoy (' + hoy + '):', sesionesHoy.length);
 }, 3000);
 
-console.log('✅ resultado.js cargado');
+console.log('✅ resultado.js (VERSIÓN CORREGIDA) cargado');

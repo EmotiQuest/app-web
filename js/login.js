@@ -1,7 +1,7 @@
 // ============================================
-// LOGIN.JS - Lógica del formulario de login
+// LOGIN.JS - Lógica del formulario de login (CORREGIDO)
 // COMPATIBLE CON GITHUB PAGES
-// MODIFICADO: Redirige a avatar-selection.html
+// MODIFICADO: Redirige a avatar-selection.html + Genera ID de sesión
 // ============================================
 
 console.log('🚀 login.js cargado');
@@ -83,6 +83,27 @@ function manejarEnvio(e) {
   
   console.log('✅ Validación exitosa');
   
+  // ========================================
+  // CRÍTICO: Generar ID único para la sesión
+  // ========================================
+  const timestamp = Date.now();
+  const ahora = new Date();
+  const fecha = ahora.getFullYear() + 
+    String(ahora.getMonth() + 1).padStart(2, '0') + 
+    String(ahora.getDate()).padStart(2, '0');
+  const hora = String(ahora.getHours()).padStart(2, '0') + 
+    String(ahora.getMinutes()).padStart(2, '0');
+  const random = Math.floor(Math.random() * 1000);
+  
+  datos.id = `EMQ-${fecha}-${hora}-${random}`;
+  datos.timestamp = timestamp;
+  datos.fechaCreacion = ahora.toISOString();
+  datos.respuestas = []; // Inicializar array de respuestas vacío
+  
+  console.log('🆔 ID de sesión generado:', datos.id);
+  console.log('📅 Timestamp:', timestamp);
+  console.log('📋 Datos completos:', datos);
+  
   // Guardar en localStorage
   try {
     const exito = window.EmotiQuestStorage.guardarSesionActual(datos);
@@ -91,14 +112,19 @@ function manejarEnvio(e) {
       throw new Error('guardarSesionActual retornó false');
     }
     
-    console.log('✅ Sesión guardada correctamente');
+    console.log('✅ Sesión guardada correctamente con ID:', datos.id);
     
     // Verificar que se guardó
     const sesionGuardada = window.EmotiQuestStorage.obtenerSesionActual();
-    console.log('🔍 Verificación:', sesionGuardada);
+    console.log('🔍 Verificación - Sesión guardada:', sesionGuardada);
+    console.log('🔍 Verificación - ID guardado:', sesionGuardada?.id);
     
     if (!sesionGuardada) {
       throw new Error('No se pudo verificar la sesión guardada');
+    }
+    
+    if (!sesionGuardada.id) {
+      throw new Error('La sesión guardada no tiene ID');
     }
     
     // Redirigir (ahora a avatar-selection o cuestionario según género)
@@ -143,7 +169,7 @@ function validarDatos(datos) {
   
   // Validar grado
   if (!datos.grado) {
-    mostrarError('Por favor, selecciona tu grado escolar.');
+    mostrarError('Por favor, selecciona tu nivel de escolaridad.');
     gradoInput.focus();
     return false;
   }
@@ -323,4 +349,4 @@ function limpiarErrores() {
   });
 }
 
-console.log('✅ login.js configurado correctamente');
+console.log('✅ login.js (VERSIÓN CORREGIDA) configurado correctamente');
