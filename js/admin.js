@@ -266,8 +266,7 @@ function generarGrafico() {
   // Generar una barra por cada emoción encontrada
   Object.entries(conteoEmociones).forEach(([emocionKey, cantidad]) => {
     const emocionData = EMOCIONES[emocionKey];
-    
-    if (!emocionData) {
+    if (!emocionData){
       console.warn('⚠️ DEBUG - No se encontró data para emoción:', emocionKey); // DEBUG
       return; // Saltar si no existe en EMOCIONES
     }
@@ -275,10 +274,10 @@ function generarGrafico() {
     console.log('📊 DEBUG - Creando barra para:', emocionKey, 'con', cantidad, 'apariciones'); // DEBUG
     
     // Calcular altura basada en escala 0-15
-    const alturaPorcentaje = (cantidad / ESCALA_MAXIMA) * 100;
+    const alturaPorcentaje = Math.min((cantidad / ESCALA_MAXIMA) * 100, 100);
     
     // Crear elemento de barra
-    const barElement = document.createElement('div');
+   const barElement = document.createElement('div');
     barElement.className = 'chart-bar';
     
     barElement.innerHTML = `
@@ -310,7 +309,7 @@ function generarGrafico() {
   console.log('✅ DEBUG - Gráfico generado exitosamente'); // DEBUG
   
   // Agregar tooltips interactivos (hover)
-  const barColumns = chartBars.querySelectorAll('.bar-column');
+ const barColumns = chartBars.querySelectorAll('.bar-column');
   barColumns.forEach(bar => {
     bar.addEventListener('mouseenter', () => {
       bar.style.filter = 'brightness(1.2)';

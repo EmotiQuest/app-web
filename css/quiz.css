@@ -23,17 +23,17 @@
 
 .quiz-header .app-logo {
   margin: 0;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .quiz-header .logo-image {
-  width: 50px;
+  width: 58px;
   height: auto;
   filter: drop-shadow(0 2px 8px rgba(209, 128, 253, 0.2));
 }
 
 .quiz-title {
-  font-size: 1.5rem;
+  font-size: 1.625rem;
   line-height: 1.2;
   margin: 0;
 }
