@@ -7,7 +7,7 @@
 .quiz-header {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
-  padding: 0.5rem 0;
+  padding: 0.35rem 0;
   box-shadow: 0 2px 10px rgba(209, 128, 253, 0.1);
   position: sticky;
   top: 0;
@@ -23,6 +23,7 @@
 
 .quiz-header .app-logo {
   margin: 0;
+  margin-bottom: 0.3rem;
 }
 
 .quiz-header .logo-image {
@@ -33,13 +34,15 @@
 
 .quiz-title {
   font-size: 1.5rem;
+  line-height: 1.2;
   margin: 0;
 }
 
 .user-greeting {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   color: var(--text-dark);
   margin: 0;
+  line-height: 1.2;
   font-weight: 700;
 }
 
@@ -290,8 +293,11 @@
     text-align: center;
   }
   
+  .logo-image {
+    width: 45px;
+  }
   .quiz-title {
-    font-size: 1.5rem;
+    font-size: 1.625rem;
   }
   
   .user-greeting {
@@ -348,6 +354,16 @@
 }
 
 @media (max-width: 480px) {
+.logo-image {
+    width: 37.5px;
+  }
+  .quiz-title {
+    font-size: 1.3rem;
+  }
+  .user-greeting {
+    font-size: 0.585rem;
+  }
+
   .quiz-container {
     padding: var(--spacing-sm);
   }
