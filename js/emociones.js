@@ -13,9 +13,10 @@ const EMOCIONES = {
     emoji: '😊',
     gesto: 'sonrisa',
     mensajes: [
-      '¡Tu día estuvo lleno de momentos felices!',
-      'La alegría es tu compañera principal.',
-      'Tu energía positiva brilla con fuerza.'
+
+      'Tu energía mueve montañas',
+      'Tienes una energía que ilumina todo a tu alrededor',
+      'Tu alegría ilumina el día; deja que esa energía positiva te acompañe y contagie a quienes te rodean.'
     ]
   },
   tristeza: {
@@ -24,9 +25,9 @@ const EMOCIONES = {
     emoji: '😢',
     gesto: 'puchero',
     mensajes: [
-      'Has tenido momentos de melancolía.',
-      'Es normal sentir tristeza a veces.',
-      'Recuerda que mañana puede ser mejor.'
+      'Hoy está bien no sentirse bien',
+      'No tener claridad también es un paso hacia encontrarte',
+      'Permítete sentir; incluso la tristeza trae consigo un pequeño acto de sanación.'
     ]
   },
   enojo: {
@@ -35,9 +36,9 @@ const EMOCIONES = {
     emoji: '😠',
     gesto: 'ceño',
     mensajes: [
-      'Has experimentado frustración hoy.',
       'El enojo es válido, aprende de él.',
-      'Respira profundo y busca calma.'
+      'Deja que tu enojo se transforme en energía que crea, no que destruye',
+      'Esa intensidad que sientes no es carga, es poder: condúcela con sabiduría y te hará más fuerte'
     ]
   },
   calma: {
@@ -46,9 +47,10 @@ const EMOCIONES = {
     emoji: '😌',
     gesto: 'respiro',
     mensajes: [
-      'La tranquilidad te acompaña.',
-      'Has mantenido la serenidad.',
-      'Tu paz interior se nota.'
+      
+      'Tu paz interior es más fuerte que cualquier tormenta.',
+      'Hacer una pausa también es seguir, solo con más calma',
+      'Esa calma interior te da luz para avanzar. Respira, fluye y confía en ti.'
     ]
   },
   miedo: {
@@ -57,9 +59,9 @@ const EMOCIONES = {
     emoji: '😨',
     gesto: 'temblor',
     mensajes: [
-      'Hay inquietudes en tu mente.',
-      'Es valiente reconocer tus miedos.',
-      'No estás solo, pide apoyo si lo necesitas.'
+      'Lo que sientes es real, pero no manda sobre ti.',
+      'Puedes avanzar incluso con miedo; cada paso cuenta.',
+    'El miedo no es un freno, es una señal. Escúchalo sin dejar que decida por ti; dentro de ti hay más fuerza de la que imaginas.'
     ]
   },
   nerviosismo: {
@@ -68,9 +70,10 @@ const EMOCIONES = {
     emoji: '😰',
     gesto: 'nervios',
     mensajes: [
-      'Los nervios han estado presentes.',
-      'La ansiedad es temporal, respira.',
-      'Paso a paso lograrás calmarte.'
+      
+      'Respira profundo, estás haciendo lo mejor que puedes',
+      'Detente un momento y respira; vas bien, incluso si no lo parece',
+      'Reconocer tu ansiedad es un gesto valiente; recuerda que no te define. Poco a poco, todo se equilibra'
     ]
   },
   desmotivacion: {
@@ -79,9 +82,10 @@ const EMOCIONES = {
     emoji: '😔',
     gesto: 'desanimo',
     mensajes: [
-      'Te has sentido sin energía.',
-      'Busca algo que te inspire de nuevo.',
-      'Es temporal, volverás a motivarte.'
+    
+      'Hacer una pausa también es seguir, solo con más calma',
+      'A veces la desmotivación solo te susurra que es momento de cambiar el ritmo.',
+      'La desmotivación no siempre es pérdida; a veces es el inicio de un nuevo rumbo'
     ]
   },
   motivacion: {
@@ -90,9 +94,10 @@ const EMOCIONES = {
     emoji: '🤩',
     gesto: 'entusiasmo',
     mensajes: [
-      '¡Tu motivación es contagiosa!',
-      'Estás listo para lograr tus metas.',
-      'Tu energía es imparable.'
+     
+      'Tu energía mueve montañas',
+      'Tienes una energía que ilumina todo a tu alrededor',
+      'Que la chispa que hoy te mueve también ilumine a quienes te rodean'
     ]
   },
   inseguridad: {
@@ -101,12 +106,13 @@ const EMOCIONES = {
     emoji: '😕',
     gesto: 'duda',
     mensajes: [
-      'Has dudado de ti mismo.',
-      'Eres más capaz de lo que crees.',
-      'Confía en tu potencial.'
+      'No tener claridad también es un paso hacia encontrarte',
+      'Sentir de todo es normal, cada emoción tiene su razón',
+      'Entre dudas también hay claridad; cada una te acerca un poco más a ti.'
     ]
   }
 };
+
 
 /**
  * Clase para manejar el sistema de emociones

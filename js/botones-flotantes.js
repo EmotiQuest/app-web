@@ -112,35 +112,32 @@
     }
   }
 
+ 
   /**
-   * Maneja el clic en el botón de perfil
-   */
-  function manejarClicPerfil() {
-    // TODO: Definir acción al hacer clic
-    // Opciones posibles:
-    // - Mostrar modal con información del usuario
-    // - Ir a página de perfil
-    // - Mostrar resumen de emociones del día
+ * Maneja el clic en el botón de perfil
+ * REDIRIGE A LA PÁGINA DE PERFIL
+ */
+function manejarClicPerfil() {
+  console.log('🎨 Clic en botón de perfil - Redirigiendo...');
+  
+  try {
+    // Verificar que hay sesión activa
+    const sesionActual = localStorage.getItem('emotiquest_sesion_actual');
     
-    console.log('Clic en botón de perfil');
-    
-    // Ejemplo: Mostrar alerta con datos del usuario (temporal)
-    try {
-      const sesionActual = localStorage.getItem('emotiquest_sesion_actual');
-      if (sesionActual) {
-        const sesion = JSON.parse(sesionActual);
-        
-        let avatarInfo = 'Sin avatar';
-        if (sesion.avatar) {
-          avatarInfo = sesion.avatar.emoji || 'Avatar personalizado';
-        }
-        
-        alert(`Perfil de ${sesion.nombre}\nEdad: ${sesion.edad}\nGrado: ${sesion.grado}\nAvatar: ${avatarInfo}`);
-      }
-    } catch (error) {
-      console.error('Error:', error);
+    if (!sesionActual) {
+      alert('No hay sesión activa. Por favor, inicia sesión primero.');
+      window.location.href = './index.html';
+      return;
     }
+
+    // Redirigir a página de perfil
+    window.location.href = './perfil.html';
+    
+  } catch (error) {
+    console.error('❌ Error al ir al perfil:', error);
+    alert('Error al cargar el perfil. Intenta de nuevo.');
   }
+}
 
   // ============================================
   // BOTÓN DE RUTA
@@ -150,14 +147,10 @@
    * Maneja el clic en el botón de ruta
    */
   function manejarClicRuta() {
-    // TODO: Implementar navegación a la página de rutas de bienestar
+    console.log('Clic en botón de ruta - Redirigiendo a rutas.html');
     
-    console.log('Clic en botón de ruta');
-    
-    // Ejemplo temporal: redirigir a una página de rutas
-    // window.location.href = './rutas-bienestar.html';
-    
-    alert('Próximamente: Rutas de Bienestar\nAquí encontrarás recursos para tu bienestar emocional.');
+    // Redirigir a la página de rutas
+    window.location.href = './rutas.html';
   }
 
   // ============================================
