@@ -21,8 +21,10 @@ const AVATARES = {
   femenino: [
     { id: 'avatar-f1', ruta: './images/avatars/femenino/1.png', emoji: '👧' },
     { id: 'avatar-f2', ruta: './images/avatars/femenino/2.png', emoji: '👩' },
-    { id: 'avatar-f3', ruta: './images/avatars/femenino/f3.png', emoji: '👩‍🦰' },
-    { id: 'avatar-f4', ruta: './images/avatars/femenino/f4.png', emoji: '👩‍🦱' },
+    { id: 'avatar-f3', ruta: './images/avatars/femenino/3.png', emoji: '👩‍🦰' },
+    { id: 'avatar-f4', ruta: './images/avatars/femenino/4.png', emoji: '👩‍🦱' },
+    { id: 'avatar-f5', ruta: './images/avatars/femenino/5.png', emoji: '👩‍🦳' },
+    { id: 'avatar-f6', ruta: './images/avatars/femenino/6.png', emoji: '👩‍🦲' },
   ]
 };
 
