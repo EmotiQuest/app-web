@@ -21,8 +21,8 @@ EmotiQuest es una aplicación web interactiva 100% local y portable que permite 
 
 ### Opción 1: Abrir Directamente
 
-1. Descarga o clona el repositorio
-2. Abre `index.html` en tu navegador
+1. Ingresa al link de la página
+2. Abre github pages en tu navegador
 3. ¡Listo! No necesitas instalar nada
 
 ### Opción 2: Con Live Server (Recomendado para desarrollo)
@@ -33,7 +33,7 @@ EmotiQuest es una aplicación web interactiva 100% local y portable que permite 
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📂 Estructura Principal del Proyecto 
 
 ```
 EmotiQuest/
@@ -60,10 +60,8 @@ EmotiQuest/
 ├── data/
 │   └── preguntas.json      ← Banco de preguntas
 │
-├── assets/
-│   ├── avatars/            ← Imágenes de avatares
-│   ├── batidos/            ← Imágenes de batidos
-│   └── licuadora/          ← Imagen de licuadora
+├── avatars/            ← Imágenes de avatares
+│   
 │
 ├── .gitignore
 └── README.md
@@ -102,7 +100,7 @@ EmotiQuest/
 
 ## 🎭 Sistema de Emociones
 
-| Emoción | Color | Emoji | Mensaje |
+| Emoción | Color | Emoji | Mensaje por defecto |
 |---------|-------|-------|---------|
 | Alegría | #e1c03c | 😊 | "¡Tu día estuvo lleno de momentos felices!" |
 | Tristeza | #4860cb | 😢 | "Has tenido momentos de melancolía." |
