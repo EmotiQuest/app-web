@@ -14,7 +14,7 @@ const AVATARES = {
   masculino: [
     { id: 'avatar-m1', ruta: './images/avatars/masculino/1.png', emoji: '👦' },
     { id: 'avatar-m2', ruta: './images/avatars/masculino/2.png', emoji: '🧑' },
-    { id: 'avatar-m3', ruta: './images/avatars/masculino/3.png', emoji: '👨' },
+
     { id: 'avatar-m4', ruta: './images/avatars/masculino/4.png', emoji: '🧔' },
     { id: 'avatar-m5', ruta: './images/avatars/masculino/5.png', emoji: '👨🏽‍🦱' },
     { id: 'avatar-m6', ruta: './images/avatars/masculino/6.png', emoji: '👨🏿' },
