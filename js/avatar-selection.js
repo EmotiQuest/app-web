@@ -16,15 +16,19 @@ const AVATARES = {
     { id: 'avatar-m2', ruta: './images/avatars/masculino/2.png', emoji: '🧑' },
     { id: 'avatar-m3', ruta: './images/avatars/masculino/3.png', emoji: '👨' },
     { id: 'avatar-m4', ruta: './images/avatars/masculino/4.png', emoji: '🧔' },
+    { id: 'avatar-m5', ruta: './images/avatars/masculino/5.png', emoji: '👨🏽‍🦱' },
+    { id: 'avatar-m6', ruta: './images/avatars/masculino/6.png', emoji: '👨🏿' },
+    { id: 'avatar-m7', ruta: './images/avatars/masculino/7.png', emoji: '👨🏻‍🦰' },
+    { id: 'avatar-m8', ruta: './images/avatars/masculino/8.png', emoji: '👨🏼‍🦱' },
     
   ],
   femenino: [
     { id: 'avatar-f1', ruta: './images/avatars/femenino/1.png', emoji: '👧' },
     { id: 'avatar-f2', ruta: './images/avatars/femenino/2.png', emoji: '👩' },
-    { id: 'avatar-f3', ruta: './images/avatars/femenino/3.png', emoji: '👩‍🦰' },
-    { id: 'avatar-f4', ruta: './images/avatars/femenino/4.png', emoji: '👩‍🦱' },
-    { id: 'avatar-f5', ruta: './images/avatars/femenino/5.png', emoji: '👩‍🦳' },
-    { id: 'avatar-f6', ruta: './images/avatars/femenino/6.png', emoji: '👩‍🦲' },
+    { id: 'avatar-f3', ruta: './images/avatars/femenino/3.png', emoji: '👩🏼‍🦰' },
+    { id: 'avatar-f4', ruta: './images/avatars/femenino/4.png', emoji: '👩🏻‍🦱' },
+    { id: 'avatar-f5', ruta: './images/avatars/femenino/5.png', emoji: '👩🏽' },
+    { id: 'avatar-f6', ruta: './images/avatars/femenino/6.png', emoji: '👧🏿' },
   ]
 };
 
