@@ -253,7 +253,7 @@ function volverAlLogin() {
   }
 }
 
-// ==================== CONTINUAR AL CUESTIONARIO ====================
+// ==================== CONTINUAR A INSTRUCCIONES ====================
 
 /**
  * Guarda el avatar seleccionado y continúa al cuestionario
@@ -305,7 +305,7 @@ function mostrarAnimacionTransicion() {
 // ==================== REDIRIGIR A CUESTIONARIO ====================
 
 /**
- * Redirige a la página del cuestionario
+ * Redirige a la página de instrucciones
  */
 function redirigirACuestionario() {
   console.log('🚀 Redirigiendo a cuestionario...');
@@ -320,9 +320,9 @@ function redirigirACuestionario() {
     const pathParts = window.location.pathname.split('/');
     pathParts.pop();
     const basePath = pathParts.join('/') || '';
-    urlCuestionario = `${basePath}/cuestionario.html`;
+    urlCuestionario = `${basePath}/instrucciones.html`;
   } else {
-    urlCuestionario = './cuestionario.html';
+    urlCuestionario = './instrucciones.html';
   }
   
   console.log('🎯 URL destino:', urlCuestionario);

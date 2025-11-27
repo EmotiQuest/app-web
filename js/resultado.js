@@ -1,6 +1,6 @@
 // ============================================
 // RESULTADO.JS - Lógica de resultados (VERSIÓN CORREGIDA)
-// MODIFICADO: Soporta avatares personalizados y guardado correcto
+// MODIFICADO: boton calificacion
 // ============================================
 // Variables globales
 let sesion = null;
@@ -21,6 +21,7 @@ const mensajeFinal = document.getElementById('mensaje-final');
 const estadisticas = document.getElementById('estadisticas');
 
 const btnMezclar = document.getElementById('btn-mezclar');
+const btnCalificar = document.getElementById('btn-calificar'); // NUEVO
 const btnVerReporte = document.getElementById('btn-ver-reporte');
 const btnVolverInicio = document.getElementById('btn-volver-inicio');
 
@@ -244,7 +245,13 @@ function mostrarBatidos() {
 //Configura los controles
 function configurarControles() {
   btnMezclar.addEventListener('click', iniciarMezcla);
-  
+  // NUEVO: Botón de calificación
+  if (btnCalificar) {
+    btnCalificar.addEventListener('click', () => {
+      console.log('⭐ Redirigiendo a calificación...');
+      window.location.href = './calificacion.html';
+    });
+  }
   if (btnVerReporte) {
     btnVerReporte.addEventListener('click', () => {
       window.location.href = './admin.html';
@@ -483,4 +490,4 @@ setTimeout(() => {
   console.log('Sesiones de hoy (' + hoy + '):', sesionesHoy.length);
 }, 3000);
 
-console.log('✅ resultado.js (VERSIÓN CORREGIDA) cargado');
+console.log('✅ resultado.js Calificacion) cargado');

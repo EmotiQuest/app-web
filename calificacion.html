@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiQuest - Califica tu Experiencia</title>
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/calificacion.css">
+</head>
+<body class="calificacion-page">
+  
+  <!-- Header -->
+  <header class="calificacion-header">
+    <div class="container">
+      <div class="app-logo">
+        <img src="./images/logo/emotiquest-logo.png" alt="EmotiQuest Logo" class="logo-image">
+      </div>
+      <h1 class="calificacion-title">EmotiQuest</h1>
+      <p class="calificacion-subtitle">Tu opinión nos importa</p>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    
+    <div class="calificacion-container">
+      
+      <!-- Card de calificación -->
+      <div class="calificacion-card">
+        
+        <div class="calificacion-intro">
+          <div class="intro-icon">⭐</div>
+          <h2 class="intro-title">¿Cómo fue tu experiencia?</h2>
+          <p class="intro-text">
+            Ayúdanos a mejorar EmotiQuest compartiendo tu opinión.
+            Tu feedback es valioso para nosotros.
+          </p>
+        </div>
+
+        <!-- Formulario de calificación -->
+        <form id="calificacion-form" class="calificacion-form">
+          
+          <!-- Calificación con estrellas -->
+          <div class="form-section">
+            <h3 class="section-title">⭐ Califica EmotiQuest</h3>
+            <p class="section-description">¿Qué tan satisfecho estás con la experiencia?</p>
+            
+            <div class="rating-container">
+              <div class="stars" id="stars-container">
+                <button type="button" class="star" data-rating="1" aria-label="1 estrella">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                </button>
+                <button type="button" class="star" data-rating="2" aria-label="2 estrellas">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                </button>
+                <button type="button" class="star" data-rating="3" aria-label="3 estrellas">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                </button>
+                <button type="button" class="star" data-rating="4" aria-label="4 estrellas">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                </button>
+                <button type="button" class="star" data-rating="5" aria-label="5 estrellas">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                </button>
+              </div>
+              
+              <div class="rating-label" id="rating-label">
+                Selecciona una calificación
+              </div>
+              
+              <input 
+                type="hidden" 
+                id="rating-value" 
+                name="rating" 
+                value="0"
+                required
+              >
+            </div>
+          </div>
+
+          <!-- Pregunta: ¿Usarías EmotiQuest de nuevo? -->
+          <div class="form-section">
+            <h3 class="section-title">🔄 ¿Volverías a usar EmotiQuest?</h3>
+            
+            <div class="choice-buttons">
+              <button 
+                type="button" 
+                class="choice-btn" 
+                data-choice="si"
+                id="choice-si"
+              >
+                <span class="choice-icon">👍</span>
+                <span class="choice-text">Sí</span>
+              </button>
+              
+              <button 
+                type="button" 
+                class="choice-btn" 
+                data-choice="tal-vez"
+                id="choice-tal-vez"
+              >
+                <span class="choice-icon">🤔</span>
+                <span class="choice-text">Tal vez</span>
+              </button>
+              
+              <button 
+                type="button" 
+                class="choice-btn" 
+                data-choice="no"
+                id="choice-no"
+              >
+                <span class="choice-icon">👎</span>
+                <span class="choice-text">No</span>
+              </button>
+            </div>
+            
+            <input 
+              type="hidden" 
+              id="volveria-value" 
+              name="volveria" 
+              value=""
+              required
+            >
+          </div>
+
+          <!-- Comentarios opcionales -->
+          <div class="form-section">
+            <h3 class="section-title">💬 Comentarios (Opcional)</h3>
+            <p class="section-description">¿Algo más que quieras compartir?</p>
+            
+            <textarea 
+              id="comentarios" 
+              name="comentarios" 
+              rows="4" 
+              placeholder="Escribe tus sugerencias, lo que te gustó o lo que podríamos mejorar..."
+              maxlength="500"
+            ></textarea>
+            
+            <div class="char-count">
+              <span id="char-counter">0</span> / 500 caracteres
+            </div>
+          </div>
+
+          <!-- Mensaje de error -->
+          <div id="error-message" class="error-message hidden">
+            <!-- Mensaje dinámico -->
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="form-actions">
+            <button 
+              type="button" 
+              id="btn-omitir" 
+              class="btn btn-secondary"
+            >
+              Omitir calificación
+            </button>
+            
+            <button 
+              type="submit" 
+              id="btn-enviar" 
+              class="btn btn-primary"
+            >
+              ✅ Enviar calificación
+            </button>
+          </div>
+
+        </form>
+
+        <!-- Mensaje de agradecimiento (oculto por defecto) -->
+        <div id="mensaje-gracias" class="mensaje-gracias hidden">
+          <div class="gracias-icon">🎉</div>
+          <h2 class="gracias-title">¡Gracias por tu opinión!</h2>
+          <p class="gracias-text">
+            Tu feedback nos ayuda a mejorar EmotiQuest para todos.
+          </p>
+          <button id="btn-finalizar" class="btn btn-primary btn-lg">
+            🏠 Volver al inicio
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>© 2025 EmotiQuest - Tu opinión nos importa</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/storage.js"></script>
+  <script src="./js/calificacion.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmotiQuest - Instrucciones</title>
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/instrucciones.css">
+
+</head>
+<body class="instrucciones-page">
+  
+  <!-- Header -->
+  <header class="instrucciones-header">
+    <div class="container">
+      <div class="app-logo">
+        <img src="./images/logo/emotiquest-logo.png" alt="EmotiQuest Logo" class="logo-image">
+      </div>
+      <h1 class="app-title">EmotiQuest</h1>
+      <p class="app-subtitle">Lo que callas también pesa</p>
+    </div>
+  </header>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    
+    <div class="instrucciones-card">
+      
+      <!-- Saludo personalizado con avatar -->
+      <div class="instrucciones-greeting">
+        <div class="avatar-circle">
+          <img src="" alt="Tu avatar" id="user-avatar">
+        </div>
+        <h2 id="greeting-name">¡Perfecto, [Nombre]!</h2>
+        <p class="subtitle-text">Antes de comenzar, conoce cómo funciona EmotiQuest</p>
+      </div>
+
+      <!-- Sección: ¿Cómo funciona? -->
+      <div class="instrucciones-section">
+        <div class="section-icon">💡</div>
+        <h3>¿Cómo funciona?</h3>
+        <p>
+          Te haremos <strong> preguntas</strong> sobre cómo te sientes. 
+          Después de cada respuesta, verás cómo tus emociones se <strong>mezclan</strong>. 
+          Al final, descubrirás qué emoción predomina en ti en este momento.
+        </p>
+      </div>
+
+      <!-- Sección: Las 9 Emociones -->
+      <div class="instrucciones-section">
+        <div class="section-icon">🎨</div>
+        <h3>Exploraremos 9 emociones</h3>
+        <p class="emociones-intro">
+          Cada emoción tiene un <strong>color único</strong> que verás en tu batido:
+        </p>
+        
+        <!-- Grid de emociones -->
+        <div class="emociones-grid">
+          
+        <!-- Alegría -->
+        <div class="emocion-item" data-emocion="alegria">
+        <div class="emocion-emoji">😊</div>
+         <div class="emocion-color" style="background-color: #e1c83cff;"></div>
+          <p class="emocion-nombre">Alegría</p>
+        </div>
+
+        <!-- Tristeza -->
+        <div class="emocion-item" data-emocion="tristeza">
+         <div class="emocion-emoji">😢</div>
+        <div class="emocion-color" style="background-color: #3e54aeff;"></div>
+         <p class="emocion-nombre">Tristeza</p>
+        </div>
+
+        <!-- Enojo -->
+        <div class="emocion-item" data-emocion="enojo">
+        <div class="emocion-emoji">😠</div>
+        <div class="emocion-color" style="background-color: #ee2c22ff;"></div>
+        <p class="emocion-nombre">Enojo</p>
+        </div>
+
+<!-- Calma -->
+<div class="emocion-item" data-emocion="calma">
+  <div class="emocion-emoji">😌</div>
+  <div class="emocion-color" style="background-color: #4ee249ff;"></div>
+  <p class="emocion-nombre">Calma</p>
+</div>
+
+<!-- Miedo -->
+<div class="emocion-item" data-emocion="miedo">
+  <div class="emocion-emoji">😨</div>
+  <div class="emocion-color" style="background-color: #943ad8ff;"></div>
+  <p class="emocion-nombre">Miedo</p>
+</div>
+
+<!-- Nerviosismo -->
+<div class="emocion-item" data-emocion="nerviosismo">
+  <div class="emocion-emoji">😰</div>
+  <div class="emocion-color" style="background-color: #f06e3eff;"></div>
+  <p class="emocion-nombre">Nerviosismo</p>
+</div>
+
+<!-- Desmotivación -->
+<div class="emocion-item" data-emocion="desmotivacion">
+  <div class="emocion-emoji">😔</div>
+  <div class="emocion-color" style="background-color: #6b698c;"></div>
+  <p class="emocion-nombre">Desmotivación</p>
+</div>
+
+<!-- Motivación -->
+<div class="emocion-item" data-emocion="motivacion">
+  <div class="emocion-emoji">🤩</div>
+  <div class="emocion-color" style="background-color: #38d5c6ff;"></div>
+  <p class="emocion-nombre">Motivación</p>
+</div>
+
+<!-- Inseguridad -->
+<div class="emocion-item" data-emocion="inseguridad">
+  <div class="emocion-emoji">😕</div>
+  <div class="emocion-color" style="background-color: #c434a0;"></div>
+  <p class="emocion-nombre">Inseguridad</p>
+</div>
+
+        </div>
+      </div>
+
+      <!-- Sección: Importante -->
+      <div class="instrucciones-section importante">
+        <div class="section-icon">⚠️</div>
+        <h3>Importante</h3>
+        <ul class="instrucciones-list">
+          <li>✅ No hay respuestas correctas o incorrectas</li>
+          <li>✅ Responde con <strong>sinceridad</strong></li>
+          <li>✅ Tómate tu tiempo en cada pregunta</li>
+          <li>✅ Al final verás tu emoción predominante</li>
+        </ul>
+      </div>
+
+      <!-- Botones de control -->
+      <div class="instrucciones-controls">
+        <button id="btn-volver" class="btn btn-secondary">
+          ← Volver a elegir avatar
+        </button>
+        
+        <button id="btn-comenzar" class="btn btn-primary btn-pulse">
+          Entendido, ¡comenzar! 🚀
+        </button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <p>© 2025 EmotiQuest - Descubre tus emociones</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="./js/storage.js"></script>
+  <script src="./js/instrucciones.js"></script>
+
+</body>
+</html>

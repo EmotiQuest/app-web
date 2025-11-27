@@ -8,6 +8,7 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/admin.css">
+  <link rel="stylesheet" href="./css/responsive-fix.css">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,7 +113,92 @@
         </div>
       </div>
     </section>
+<!-- ========================================
+         NUEVA SECCIÓN: CALIFICACIONES
+         ======================================== -->
+    <section class="admin-calificaciones-section">
+      <div class="calificaciones-card">
+        <div class="calificaciones-header">
+          <h2>⭐ Feedback de Usuarios</h2>
+          <p>Calificaciones y opiniones sobre EmotiQuest</p>
+        </div>
 
+        <!-- Estadísticas de Calificaciones -->
+        <div class="calificaciones-stats" id="calificaciones-stats">
+          <div class="cal-stat-card">
+            <div class="cal-stat-icon">📝</div>
+            <div class="cal-stat-content">
+              <h3 id="cal-stat-total">0</h3>
+              <p>Total Calificaciones</p>
+            </div>
+          </div>
+
+          <div class="cal-stat-card">
+            <div class="cal-stat-icon">⭐</div>
+            <div class="cal-stat-content">
+              <h3 id="cal-stat-promedio">0.0</h3>
+              <p>Promedio de Estrellas</p>
+            </div>
+          </div>
+
+          <div class="cal-stat-card">
+            <div class="cal-stat-icon">👍</div>
+            <div class="cal-stat-content">
+              <h3 id="cal-stat-volverian">0%</h3>
+              <p>Volverían a Usar</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráfico de Estrellas -->
+        <div class="calificaciones-chart">
+          <h3 class="chart-subtitle">Distribución de Calificaciones</h3>
+          <div class="stars-chart" id="stars-chart">
+            <!-- Barras horizontales generadas dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Gráfico de "Volvería a usar" -->
+        <div class="calificaciones-volveria">
+          <h3 class="chart-subtitle">¿Volverían a usar EmotiQuest?</h3>
+          <div class="volveria-chart" id="volveria-chart">
+            <!-- Barras generadas dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Tabla de Calificaciones -->
+        <div class="calificaciones-tabla">
+          <h3 class="table-subtitle">Registro de Calificaciones</h3>
+          <p id="calificaciones-count">Total: 0 calificaciones</p>
+
+          <div class="table-wrapper">
+            <table class="admin-table" id="calificaciones-table">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Edad</th>
+                  <th>Género</th>
+                  <th>Escolaridad</th>
+                  <th>Estrellas</th>
+                  <th>¿Volvería?</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="calificaciones-table-body">
+                <!-- Filas generadas dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-empty" id="calificaciones-empty" style="display: none;">
+            <p>📭 No hay calificaciones registradas</p>
+            <p class="text-muted">Las calificaciones aparecerán aquí cuando los usuarios califiquen la experiencia</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- FIN SECCIÓN CALIFICACIONES -->
     <!-- Filtros -->
     <section class="admin-filters">
       <div class="filters-card">
@@ -200,19 +286,27 @@
       </div>
     </section>
 
-    <!-- Modal de Detalles (opcional) -->
+    <!-- Modal de Detalles de Sesión -->
     <div class="modal" id="modal-detalles" style="display: none;">
       <div class="modal-content">
         <div class="modal-header">
           <h2>📊 Detalles de la Sesión</h2>
           <button class="modal-close" id="modal-close">✕</button>
         </div>
-        <div class="modal-body" id="modal-body">
-          <!-- Contenido dinámico -->
-        </div>
+        <div class="modal-body" id="modal-body"></div>
       </div>
     </div>
 
+    <!-- Modal de Detalles de Calificación -->
+    <div class="modal" id="modal-calificacion" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>⭐ Detalles de la Calificación</h2>
+          <button class="modal-close" id="modal-calificacion-close">✕</button>
+        </div>
+        <div class="modal-body" id="modal-calificacion-body"></div>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->

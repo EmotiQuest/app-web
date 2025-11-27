@@ -17,9 +17,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializar event listeners
   inicializarEventListeners();
   
-  // Actualizar interfaz
+  // Configurar modal de calificación
+  configurarModalCalificacion();
+  
+  // Actualizar interfaz de sesiones
   actualizarDashboard();
+  
+  // Actualizar interfaz de calificaciones (NUEVO)
+  actualizarDashboardCalificaciones();
+  
+  // Reemplazar exportar/importar con versiones completas
+  document.getElementById('btn-exportar').removeEventListener('click', exportarDatos);
+  document.getElementById('btn-exportar').addEventListener('click', exportarDatosCompleto);
+  
+  const fileInput = document.getElementById('file-input');
+  fileInput.removeEventListener('change', importarDatos);
+  fileInput.addEventListener('change', importarDatosCompleto);
 });
+
 
 // ==================== CARGAR DATOS (TAREA 1 - CORREGIDA) ====================
 function cargarDatos() {
@@ -615,7 +630,477 @@ function importarDatos(event) {
   // Limpiar el input para permitir reimportar el mismo archivo
   event.target.value = '';
 }
+// ==================== SECCIÓN CALIFICACIONES (AGREGAR AL FINAL) ====================
 
+/**
+ * Actualiza el dashboard de calificaciones
+ */
+function actualizarDashboardCalificaciones() {
+  const calificaciones = obtenerTodasLasCalificaciones();
+  
+  console.log('⭐ Actualizando dashboard de calificaciones:', calificaciones.length);
+  
+  // Actualizar estadísticas
+  actualizarEstadisticasCalificaciones(calificaciones);
+  
+  // Actualizar gráfico de estrellas
+  generarGraficoEstrellas(calificaciones);
+  
+  // Actualizar gráfico de "Volvería"
+  generarGraficoVolveria(calificaciones);
+  
+  // Actualizar tabla
+  generarTablaCalificaciones(calificaciones);
+}
+
+/**
+ * Actualiza las estadísticas de calificaciones
+ */
+function actualizarEstadisticasCalificaciones(calificaciones) {
+  const total = calificaciones.length;
+  
+  // Total de calificaciones
+  document.getElementById('cal-stat-total').textContent = total;
+  
+  if (total === 0) {
+    document.getElementById('cal-stat-promedio').textContent = '0.0';
+    document.getElementById('cal-stat-volverian').textContent = '0%';
+    return;
+  }
+  
+  // Promedio de estrellas
+  const sumaRating = calificaciones.reduce((sum, cal) => sum + cal.rating, 0);
+  const promedioRating = (sumaRating / total).toFixed(1);
+  document.getElementById('cal-stat-promedio').textContent = promedioRating;
+  
+  // Porcentaje de "Sí volverían"
+  const volverianSi = calificaciones.filter(cal => cal.volveria === 'si').length;
+  const porcentajeSi = Math.round((volverianSi / total) * 100);
+  document.getElementById('cal-stat-volverian').textContent = `${porcentajeSi}%`;
+  
+  console.log('✅ Estadísticas de calificaciones actualizadas');
+}
+
+/**
+ * Genera el gráfico de distribución de estrellas
+ */
+function generarGraficoEstrellas(calificaciones) {
+  const starsChart = document.getElementById('stars-chart');
+  starsChart.innerHTML = '';
+  
+  if (calificaciones.length === 0) {
+    starsChart.innerHTML = '<p style="text-align: center; color: var(--text-medium);">No hay datos para mostrar</p>';
+    return;
+  }
+  
+  // Contar calificaciones por estrellas
+  const conteo = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  calificaciones.forEach(cal => {
+    conteo[cal.rating] = (conteo[cal.rating] || 0) + 1;
+  });
+  
+  const total = calificaciones.length;
+  
+  // Generar barras (de 5 a 1)
+  for (let stars = 5; stars >= 1; stars--) {
+    const cantidad = conteo[stars];
+    const porcentaje = total > 0 ? (cantidad / total) * 100 : 0;
+    
+    const row = document.createElement('div');
+    row.className = 'star-bar-row';
+    
+    row.innerHTML = `
+      <div class="star-bar-label">
+        <span>${'⭐'.repeat(stars)}</span>
+      </div>
+      <div class="star-bar-container">
+        <div class="star-bar-fill" style="width: ${porcentaje}%;">
+          ${cantidad > 0 ? cantidad : ''}
+        </div>
+      </div>
+      <div class="star-bar-count">${cantidad} (${porcentaje.toFixed(0)}%)</div>
+    `;
+    
+    starsChart.appendChild(row);
+  }
+  
+  console.log('✅ Gráfico de estrellas generado');
+}
+
+/**
+ * Genera el gráfico de "Volvería a usar"
+ */
+function generarGraficoVolveria(calificaciones) {
+  const volveriaChart = document.getElementById('volveria-chart');
+  volveriaChart.innerHTML = '';
+  
+  if (calificaciones.length === 0) {
+    volveriaChart.innerHTML = '<p style="text-align: center; color: var(--text-medium);">No hay datos para mostrar</p>';
+    return;
+  }
+  
+  // Contar respuestas
+  const conteo = {
+    'si': 0,
+    'tal-vez': 0,
+    'no': 0
+  };
+  
+  calificaciones.forEach(cal => {
+    const volveria = cal.volveria || 'no';
+    conteo[volveria] = (conteo[volveria] || 0) + 1;
+  });
+  
+  const total = calificaciones.length;
+  
+  // Configuración de opciones
+  const opciones = [
+    { key: 'si', label: 'Sí', emoji: '👍', clase: 'si' },
+    { key: 'tal-vez', label: 'Tal vez', emoji: '🤔', clase: 'tal-vez' },
+    { key: 'no', label: 'No', emoji: '👎', clase: 'no' }
+  ];
+  
+  // Generar barras
+  opciones.forEach(opcion => {
+    const cantidad = conteo[opcion.key];
+    const porcentaje = total > 0 ? (cantidad / total) * 100 : 0;
+    
+    const row = document.createElement('div');
+    row.className = 'volveria-bar-row';
+    
+    row.innerHTML = `
+      <div class="volveria-bar-label">
+        <span>${opcion.emoji}</span>
+        <span>${opcion.label}</span>
+      </div>
+      <div class="volveria-bar-container">
+        <div class="volveria-bar-fill ${opcion.clase}" style="width: ${porcentaje}%;">
+          ${cantidad > 0 ? `${cantidad}` : ''}
+        </div>
+      </div>
+      <div class="volveria-bar-count">${cantidad} (${porcentaje.toFixed(0)}%)</div>
+    `;
+    
+    volveriaChart.appendChild(row);
+  });
+  
+  console.log('✅ Gráfico de volvería generado');
+}
+
+/**
+ * Genera la tabla de calificaciones
+ */
+function generarTablaCalificaciones(calificaciones) {
+  const tableBody = document.getElementById('calificaciones-table-body');
+  const tableCount = document.getElementById('calificaciones-count');
+  const tableEmpty = document.getElementById('calificaciones-empty');
+  const tableWrapper = document.querySelector('.calificaciones-tabla .table-wrapper');
+  
+  // Limpiar tabla
+  tableBody.innerHTML = '';
+  
+  if (calificaciones.length === 0) {
+    tableWrapper.style.display = 'none';
+    tableEmpty.style.display = 'block';
+    tableCount.textContent = 'Total: 0 calificaciones';
+    return;
+  }
+  
+  tableWrapper.style.display = 'block';
+  tableEmpty.style.display = 'none';
+  tableCount.textContent = `Total: ${calificaciones.length} calificaciones`;
+  
+  // Ordenar por fecha descendente
+  const calificacionesOrdenadas = [...calificaciones].sort((a, b) => {
+    return new Date(b.fecha + ' ' + b.hora) - new Date(a.fecha + ' ' + a.hora);
+  });
+  
+  // Generar filas
+  calificacionesOrdenadas.forEach(cal => {
+    const row = document.createElement('tr');
+    
+    // Generar estrellas visuales
+    let estrellasHTML = '<div class="rating-stars">';
+    for (let i = 1; i <= 5; i++) {
+      if (i <= cal.rating) {
+        estrellasHTML += '<span class="star-filled">⭐</span>';
+      } else {
+        estrellasHTML += '<span class="star-empty">☆</span>';
+      }
+    }
+    estrellasHTML += '</div>';
+    
+    // Badge de "Volvería"
+    const volveriaTexto = {
+      'si': 'Sí',
+      'tal-vez': 'Tal vez',
+      'no': 'No'
+    };
+    
+    const volveriaClase = cal.volveria || 'no';
+    
+    row.innerHTML = `
+      <td>${formatearFecha(cal.fecha)}</td>
+      <td>${cal.edad} años</td>
+      <td style="text-transform: capitalize;">${formatearGenero(cal.genero)}</td>
+      <td>${cal.grado}</td>
+      <td>${estrellasHTML}</td>
+      <td>
+        <span class="volveria-badge ${volveriaClase}">
+          ${volveriaTexto[volveriaClase] || 'No'}
+        </span>
+      </td>
+      <td>
+        <div class="table-actions">
+          <button class="btn-table btn-ver-detalles" onclick="verDetallesCalificacion('${cal.id}')">
+            👁️ Ver
+          </button>
+        </div>
+      </td>
+    `;
+    
+    tableBody.appendChild(row);
+  });
+  
+  console.log('✅ Tabla de calificaciones generada');
+}
+
+/**
+ * Formatea el género para mostrar
+ */
+function formatearGenero(genero) {
+  if (genero === 'pnd') {
+    return 'Prefiero no decirlo';
+  }
+  return genero.charAt(0).toUpperCase() + genero.slice(1);
+}
+
+/**
+ * Muestra los detalles de una calificación en modal
+ */
+function verDetallesCalificacion(idCalificacion) {
+  const calificaciones = obtenerTodasLasCalificaciones();
+  const cal = calificaciones.find(c => c.id === idCalificacion);
+  
+  if (!cal) {
+    alert('Calificación no encontrada');
+    return;
+  }
+  
+  const modal = document.getElementById('modal-calificacion');
+  const modalBody = document.getElementById('modal-calificacion-body');
+  
+  // Generar estrellas visuales
+  let estrellasHTML = '<div class="rating-stars">';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= cal.rating) {
+      estrellasHTML += '<span class="star-filled">⭐</span>';
+    } else {
+      estrellasHTML += '<span class="star-empty">☆</span>';
+    }
+  }
+  estrellasHTML += '</div>';
+  
+  // Badge de volvería
+  const volveriaTexto = {
+    'si': '👍 Sí',
+    'tal-vez': '🤔 Tal vez',
+    'no': '👎 No'
+  };
+  
+  const volveriaClase = cal.volveria || 'no';
+  
+  modalBody.innerHTML = `
+    <div class="detail-row">
+      <span class="detail-label">ID de Calificación:</span>
+      <span class="detail-value">${cal.id}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">ID de Sesión:</span>
+      <span class="detail-value">${cal.sesionId}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Fecha:</span>
+      <span class="detail-value">${formatearFecha(cal.fecha)}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Hora:</span>
+      <span class="detail-value">${cal.hora}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Edad:</span>
+      <span class="detail-value">${cal.edad} años</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Género:</span>
+      <span class="detail-value" style="text-transform: capitalize;">${formatearGenero(cal.genero)}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Escolaridad:</span>
+      <span class="detail-value">${cal.grado}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Emoción del Usuario:</span>
+      <span class="detail-value">${cal.emocionPredominante}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Calificación:</span>
+      <span class="detail-value">${estrellasHTML}</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">¿Volvería a usar?:</span>
+      <span class="detail-value">
+        <span class="volveria-badge ${volveriaClase}">
+          ${volveriaTexto[volveriaClase] || 'No'}
+        </span>
+      </span>
+    </div>
+    
+    <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: var(--text-dark);">
+      💬 Comentarios:
+    </h3>
+    
+    <div class="comentarios-box">
+      ${cal.comentarios && cal.comentarios.trim() !== '' 
+        ? cal.comentarios 
+        : '<span class="comentarios-vacio">Sin comentarios</span>'}
+    </div>
+  `;
+  
+  modal.style.display = 'flex';
+  
+  console.log('👁️ Mostrando detalles de calificación:', idCalificacion);
+}
+
+/**
+ * Configura el modal de calificación
+ */
+function configurarModalCalificacion() {
+  const modalClose = document.getElementById('modal-calificacion-close');
+  const modal = document.getElementById('modal-calificacion');
+  
+  if (modalClose) {
+    modalClose.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
+  
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  }
+}
+
+/**
+ * Modifica la función exportarDatos para incluir calificaciones
+ */
+function exportarDatosCompleto() {
+  const sesiones = obtenerTodasLasSesiones();
+  const calificaciones = obtenerTodasLasCalificaciones();
+  
+  if (sesiones.length === 0 && calificaciones.length === 0) {
+    alert('❌ No hay datos para exportar');
+    return;
+  }
+  
+  try {
+    const dataExport = {
+      exportDate: new Date().toISOString(),
+      totalSessions: sesiones.length,
+      totalCalificaciones: calificaciones.length,
+      sessions: sesiones,
+      calificaciones: calificaciones
+    };
+    
+    const jsonString = JSON.stringify(dataExport, null, 2);
+    
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `emotiquest_completo_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    console.log('✅ Datos completos exportados');
+    alert(`✅ Datos exportados:\n${sesiones.length} sesiones\n${calificaciones.length} calificaciones`);
+  } catch (error) {
+    console.error('❌ Error al exportar:', error);
+    alert('❌ Error al exportar los datos');
+  }
+}
+
+/**
+ * Modifica la función importarDatos para incluir calificaciones
+ */
+function importarDatosCompleto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  
+  reader.onload = (e) => {
+    try {
+      const jsonData = JSON.parse(e.target.result);
+      
+      // Validar estructura
+      if (!jsonData.sessions || !Array.isArray(jsonData.sessions)) {
+        alert('❌ Archivo JSON inválido: falta el array de sesiones');
+        return;
+      }
+      
+      const numSesiones = jsonData.sessions.length;
+      const numCalificaciones = jsonData.calificaciones ? jsonData.calificaciones.length : 0;
+      
+      // Confirmar importación
+      const confirmacion = confirm(
+        `¿Deseas importar estos datos?\n\n` +
+        `Sesiones: ${numSesiones}\n` +
+        `Calificaciones: ${numCalificaciones}\n\n` +
+        `Esto REEMPLAZARÁ todos los datos actuales.`
+      );
+      
+      if (!confirmacion) {
+        console.log('❌ Importación cancelada');
+        return;
+      }
+      
+      // Guardar sesiones
+      localStorage.setItem('emotiquest_sesiones', JSON.stringify(jsonData.sessions));
+      
+      // Guardar calificaciones (si existen)
+      if (jsonData.calificaciones && Array.isArray(jsonData.calificaciones)) {
+        localStorage.setItem('emotiquest_calificaciones', JSON.stringify(jsonData.calificaciones));
+      }
+      
+      // Recargar datos
+      cargarDatos();
+      actualizarDashboard();
+      actualizarDashboardCalificaciones();
+      
+      console.log('✅ Datos completos importados');
+      alert(`✅ Datos importados:\n${numSesiones} sesiones\n${numCalificaciones} calificaciones`);
+    } catch (error) {
+      console.error('❌ Error al importar:', error);
+      alert('❌ Error al leer el archivo JSON');
+    }
+  };
+  
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+
+// Exponer función global
+window.verDetallesCalificacion = verDetallesCalificacion;
+
+console.log('✅ admin.js con CALIFICACIONES cargado completamente');
 // ==================== EXPONER FUNCIONES GLOBALES ====================
 // Necesario para que onclick funcione en HTML generado dinámicamente
 window.verDetalles = verDetalles;

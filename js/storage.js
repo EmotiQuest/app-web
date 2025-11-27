@@ -1,5 +1,5 @@
 // ============================================
-// EMOTIQUEST - STORAGE.JS (VERSIÓN CORREGIDA CON DEBUG)
+// EMOTIQUEST - STORAGE.JS (VERSIÓN CON CALIFICACIONES)
 // Sistema de almacenamiento 100% funcional
 // ============================================
 
@@ -7,7 +7,8 @@
 const STORAGE_KEYS = {
   SESIONES: 'emotiquest_sesiones',
   SESION_ACTUAL: 'emotiquest_sesion_actual',
-  USUARIO_ACTUAL: 'emotiquest_usuario_actual'
+  USUARIO_ACTUAL: 'emotiquest_usuario_actual',
+  CALIFICACIONES: 'emotiquest_calificaciones' // NUEVO
 };
 
 // ==================== FUNCIONES DE SESIÓN ACTUAL ====================
@@ -105,7 +106,7 @@ function obtenerTodasLasSesiones() {
   try {
     const data = localStorage.getItem(STORAGE_KEYS.SESIONES);
     const sesiones = data ? JSON.parse(data) : [];
-    console.log(`📊 DEBUG - ${sesiones.length} sesiones cargadas desde localStorage`);
+    console.log(`📊 ${sesiones.length} sesiones cargadas`);
     return sesiones;
   } catch (error) {
     console.error('❌ Error al obtener sesiones:', error);
@@ -114,21 +115,18 @@ function obtenerTodasLasSesiones() {
 }
 
 /**
- * Guarda una sesión completada en el historial (TAREA 6 - CORREGIDA)
+ * Guarda una sesión completada en el historial
  */
 function guardarSesionCompletada(sesion) {
   try {
-    console.log('💾 DEBUG - Guardando sesión completada:', sesion.id); // DEBUG
-    
     // Validar que la sesión tenga datos mínimos
     if (!sesion.id || !sesion.emocionPredominante) {
-      console.error('❌ DEBUG - Sesión incompleta:', sesion);
+      console.error('❌ Sesión incompleta:', sesion);
       return false;
     }
 
     // Obtener sesiones existentes
     const sesiones = obtenerTodasLasSesiones();
-    console.log('📊 DEBUG - Sesiones actuales:', sesiones.length); // DEBUG
     
     // Verificar si ya existe
     const indice = sesiones.findIndex(s => s.id === sesion.id);
@@ -136,58 +134,23 @@ function guardarSesionCompletada(sesion) {
     if (indice !== -1) {
       // Actualizar sesión existente
       sesiones[indice] = sesion;
-      console.log('🔄 DEBUG - Sesión actualizada:', sesion.id);
+      console.log('🔄 Sesión actualizada:', sesion.id);
     } else {
       // Agregar nueva sesión
       sesiones.push(sesion);
-      console.log('➕ DEBUG - Nueva sesión agregada:', sesion.id);
+      console.log('➕ Nueva sesión agregada:', sesion.id);
     }
-    
-    console.log('📊 DEBUG - Total sesiones después de agregar:', sesiones.length); // DEBUG
     
     // Guardar en localStorage
-    const jsonString = JSON.stringify(sesiones);
-    console.log('📝 DEBUG - JSON a guardar (primeros 100 chars):', jsonString.substring(0, 100)); // DEBUG
+    localStorage.setItem(STORAGE_KEYS.SESIONES, JSON.stringify(sesiones));
     
-    localStorage.setItem(STORAGE_KEYS.SESIONES, jsonString);
-    
-    // VERIFICAR que se guardó
-    const verificacion = localStorage.getItem(STORAGE_KEYS.SESIONES);
-    if (verificacion) {
-      const sesionesVerificadas = JSON.parse(verificacion);
-      console.log('✅ DEBUG - Verificación exitosa: datos guardados en localStorage');
-      console.log('📊 DEBUG - Total sesiones guardadas:', sesionesVerificadas.length);
-      
-      // Verificar que la sesión actual está en el array
-      const sesionEncontrada = sesionesVerificadas.find(s => s.id === sesion.id);
-      if (sesionEncontrada) {
-        console.log('✅ DEBUG - Sesión específica encontrada en localStorage');
-        console.log('📅 DEBUG - Fecha de la sesión guardada:', sesionEncontrada.fecha);
-        console.log('😊 DEBUG - Emoción de la sesión guardada:', sesionEncontrada.emocionPredominante);
-      } else {
-        console.error('❌ DEBUG - Sesión NO encontrada después de guardar');
-        return false;
-      }
-    } else {
-      console.error('❌ DEBUG - Verificación falló: no se guardó en localStorage');
-      return false;
-    }
-    
-    console.log('✅ ========================================');
     console.log('✅ SESIÓN GUARDADA EXITOSAMENTE');
-    console.log('✅ ========================================');
     console.log(`📊 Total de sesiones: ${sesiones.length}`);
-    console.log(`🎯 ID: ${sesion.id}`);
-    console.log(`😊 Emoción: ${sesion.emocionPredominante}`);
-    console.log(`📅 Fecha: ${sesion.fecha}`);
-    console.log(`🕐 Hora: ${sesion.hora}`);
+    console.log(`🎯 Emoción: ${sesion.emocionPredominante}`);
     
     return true;
   } catch (error) {
-    console.error('❌ ========================================');
     console.error('❌ ERROR CRÍTICO al guardar sesión:', error);
-    console.error('Stack:', error.stack); // DEBUG
-    console.error('❌ ========================================');
     return false;
   }
 }
@@ -237,6 +200,87 @@ function limpiarTodasLasSesiones() {
   }
 }
 
+// ==================== FUNCIONES DE CALIFICACIONES (NUEVO) ====================
+
+/**
+ * Obtiene todas las calificaciones guardadas
+ */
+function obtenerTodasLasCalificaciones() {
+  try {
+    const data = localStorage.getItem(STORAGE_KEYS.CALIFICACIONES);
+    const calificaciones = data ? JSON.parse(data) : [];
+    console.log(`⭐ ${calificaciones.length} calificaciones cargadas`);
+    return calificaciones;
+  } catch (error) {
+    console.error('❌ Error al obtener calificaciones:', error);
+    return [];
+  }
+}
+
+/**
+ * Guarda una calificación
+ */
+function guardarCalificacion(calificacion) {
+  try {
+    const calificaciones = obtenerTodasLasCalificaciones();
+    calificaciones.push(calificacion);
+    
+    localStorage.setItem(STORAGE_KEYS.CALIFICACIONES, JSON.stringify(calificaciones));
+    
+    console.log('✅ Calificación guardada:', calificacion.id);
+    console.log(`⭐ Total de calificaciones: ${calificaciones.length}`);
+    return true;
+  } catch (error) {
+    console.error('❌ Error al guardar calificación:', error);
+    return false;
+  }
+}
+
+/**
+ * Elimina una calificación específica
+ */
+function eliminarCalificacion(idCalificacion) {
+  try {
+    const calificaciones = obtenerTodasLasCalificaciones();
+    const filtradas = calificaciones.filter(c => c.id !== idCalificacion);
+    
+    if (calificaciones.length === filtradas.length) {
+      console.log('⚠️ Calificación no encontrada:', idCalificacion);
+      return false;
+    }
+    
+    localStorage.setItem(STORAGE_KEYS.CALIFICACIONES, JSON.stringify(filtradas));
+    console.log('🗑️ Calificación eliminada:', idCalificacion);
+    return true;
+  } catch (error) {
+    console.error('❌ Error al eliminar calificación:', error);
+    return false;
+  }
+}
+
+/**
+ * Limpia TODAS las calificaciones
+ */
+function limpiarTodasLasCalificaciones() {
+  try {
+    const confirmacion = confirm(
+      '⚠️ ¿Eliminar TODAS las calificaciones?\n\n' +
+      'Esta acción NO se puede deshacer.'
+    );
+    
+    if (!confirmacion) {
+      return false;
+    }
+    
+    localStorage.removeItem(STORAGE_KEYS.CALIFICACIONES);
+    console.log('🗑️ Todas las calificaciones eliminadas');
+    return true;
+  } catch (error) {
+    console.error('❌ Error al limpiar calificaciones:', error);
+    return false;
+  }
+}
+
 // ==================== FUNCIONES DE EMOTIQUEST (COMPATIBILIDAD) ====================
 
 /**
@@ -255,12 +299,18 @@ window.EmotiQuestStorage = {
   limpiarUsuarioActual: limpiarUsuarioActual,
   
   // Sesiones guardadas
-  obtenerHistorial: obtenerTodasLasSesiones, // Alias
-  guardarEnHistorial: guardarSesionCompletada, // Alias
+  obtenerHistorial: obtenerTodasLasSesiones,
+  guardarEnHistorial: guardarSesionCompletada,
   obtenerTodasLasSesiones: obtenerTodasLasSesiones,
   guardarSesionCompletada: guardarSesionCompletada,
   eliminarSesion: eliminarSesion,
   limpiarHistorial: limpiarTodasLasSesiones,
+  
+  // Calificaciones (NUEVO)
+  obtenerTodasLasCalificaciones: obtenerTodasLasCalificaciones,
+  guardarCalificacion: guardarCalificacion,
+  eliminarCalificacion: eliminarCalificacion,
+  limpiarTodasLasCalificaciones: limpiarTodasLasCalificaciones,
   
   // Respuestas (para compatibilidad)
   guardarRespuestas: function(respuestas) {
@@ -288,20 +338,9 @@ window.EmotiQuestStorage = {
 };
 
 // ==================== VERIFICACIÓN INICIAL ====================
-console.log('✅ storage.js (VERSIÓN CORREGIDA) cargado correctamente');
-
-const sesionesExistentes = obtenerTodasLasSesiones();
-console.log('📊 DEBUG - Sesiones guardadas al cargar:', sesionesExistentes.length);
-
-if (sesionesExistentes.length > 0) {
-  console.log('📋 DEBUG - Primera sesión en localStorage:', sesionesExistentes[0]);
-  console.log('📅 DEBUG - Fecha primera sesión:', sesionesExistentes[0].fecha);
-  
-  // Verificar sesiones de hoy
-  const hoy = new Date().toISOString().split('T')[0];
-  const sesionesHoy = sesionesExistentes.filter(s => s.fecha === hoy);
-  console.log(`📅 DEBUG - Sesiones de hoy (${hoy}):`, sesionesHoy.length);
-}
+console.log('✅ storage.js (CON CALIFICACIONES) cargado correctamente');
+console.log('📊 Sesiones guardadas:', obtenerTodasLasSesiones().length);
+console.log('⭐ Calificaciones guardadas:', obtenerTodasLasCalificaciones().length);
 
 // Verificar si hay sesión activa
 const sesionActiva = obtenerSesionActual();
