@@ -13,7 +13,7 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/instrucciones.css">
-
+  <link rel="stylesheet" href="./css/responsive.css">
 </head>
 <body class="instrucciones-page">
   
@@ -33,12 +33,12 @@
     
     <div class="instrucciones-card">
       
-      <!-- Saludo personalizado con avatar -->
+      <!-- Saludo personalizado -->
       <div class="instrucciones-greeting">
         <div class="avatar-circle">
-          <img src="" alt="Tu avatar" id="user-avatar">
+          <span class="avatar-icon">📝</span>
         </div>
-        <h2 id="greeting-name">¡Perfecto, [Nombre]!</h2>
+        <h2 id="greeting-name">¡Perfecto!</h2>
         <p class="subtitle-text">Antes de comenzar, conoce cómo funciona EmotiQuest</p>
       </div>
 
@@ -47,8 +47,8 @@
         <div class="section-icon">💡</div>
         <h3>¿Cómo funciona?</h3>
         <p>
-          Te haremos <strong> preguntas</strong> sobre cómo te sientes. 
-          Después de cada respuesta, verás cómo tus emociones se <strong>mezclan</strong>. 
+          Te haremos <strong>varias preguntas</strong> sobre cómo te sientes. 
+          Después de cada respuesta, verás cómo tus emociones se <strong>mezclan como un batido</strong>. 
           Al final, descubrirás qué emoción predomina en ti en este momento.
         </p>
       </div>
@@ -58,74 +58,74 @@
         <div class="section-icon">🎨</div>
         <h3>Exploraremos 9 emociones</h3>
         <p class="emociones-intro">
-          Cada emoción tiene un <strong>color único</strong> que verás en tu batido:
+          Cada emoción tiene un <strong>color único</strong> que verás representado en forma de botella:
         </p>
         
         <!-- Grid de emociones -->
         <div class="emociones-grid">
           
-        <!-- Alegría -->
-        <div class="emocion-item" data-emocion="alegria">
-        <div class="emocion-emoji">😊</div>
-         <div class="emocion-color" style="background-color: #e1c83cff;"></div>
-          <p class="emocion-nombre">Alegría</p>
-        </div>
+          <!-- Alegría -->
+          <div class="emocion-item" data-emocion="alegria">
+            <div class="emocion-emoji">😊</div>
+            <div class="emocion-color" style="background-color: #e1c83cff;"></div>
+            <p class="emocion-nombre">Alegría</p>
+          </div>
 
-        <!-- Tristeza -->
-        <div class="emocion-item" data-emocion="tristeza">
-         <div class="emocion-emoji">😢</div>
-        <div class="emocion-color" style="background-color: #3e54aeff;"></div>
-         <p class="emocion-nombre">Tristeza</p>
-        </div>
+          <!-- Tristeza -->
+          <div class="emocion-item" data-emocion="tristeza">
+            <div class="emocion-emoji">😢</div>
+            <div class="emocion-color" style="background-color: #3e54aeff;"></div>
+            <p class="emocion-nombre">Tristeza</p>
+          </div>
 
-        <!-- Enojo -->
-        <div class="emocion-item" data-emocion="enojo">
-        <div class="emocion-emoji">😠</div>
-        <div class="emocion-color" style="background-color: #ee2c22ff;"></div>
-        <p class="emocion-nombre">Enojo</p>
-        </div>
+          <!-- Enojo -->
+          <div class="emocion-item" data-emocion="enojo">
+            <div class="emocion-emoji">😠</div>
+            <div class="emocion-color" style="background-color: #ee2c22ff;"></div>
+            <p class="emocion-nombre">Enojo</p>
+          </div>
 
-<!-- Calma -->
-<div class="emocion-item" data-emocion="calma">
-  <div class="emocion-emoji">😌</div>
-  <div class="emocion-color" style="background-color: #4ee249ff;"></div>
-  <p class="emocion-nombre">Calma</p>
-</div>
+          <!-- Calma -->
+          <div class="emocion-item" data-emocion="calma">
+            <div class="emocion-emoji">😌</div>
+            <div class="emocion-color" style="background-color: #4ee249ff;"></div>
+            <p class="emocion-nombre">Calma</p>
+          </div>
 
-<!-- Miedo -->
-<div class="emocion-item" data-emocion="miedo">
-  <div class="emocion-emoji">😨</div>
-  <div class="emocion-color" style="background-color: #943ad8ff;"></div>
-  <p class="emocion-nombre">Miedo</p>
-</div>
+          <!-- Miedo -->
+          <div class="emocion-item" data-emocion="miedo">
+            <div class="emocion-emoji">😨</div>
+            <div class="emocion-color" style="background-color: #943ad8ff;"></div>
+            <p class="emocion-nombre">Miedo</p>
+          </div>
 
-<!-- Nerviosismo -->
-<div class="emocion-item" data-emocion="nerviosismo">
-  <div class="emocion-emoji">😰</div>
-  <div class="emocion-color" style="background-color: #f06e3eff;"></div>
-  <p class="emocion-nombre">Nerviosismo</p>
-</div>
+          <!-- Nerviosismo -->
+          <div class="emocion-item" data-emocion="nerviosismo">
+            <div class="emocion-emoji">😰</div>
+            <div class="emocion-color" style="background-color: #f06e3eff;"></div>
+            <p class="emocion-nombre">Nerviosismo</p>
+          </div>
 
-<!-- Desmotivación -->
-<div class="emocion-item" data-emocion="desmotivacion">
-  <div class="emocion-emoji">😔</div>
-  <div class="emocion-color" style="background-color: #6b698c;"></div>
-  <p class="emocion-nombre">Desmotivación</p>
-</div>
+          <!-- Desmotivación -->
+          <div class="emocion-item" data-emocion="desmotivacion">
+            <div class="emocion-emoji">😔</div>
+            <div class="emocion-color" style="background-color: #6b698c;"></div>
+            <p class="emocion-nombre">Desmotivación</p>
+          </div>
 
-<!-- Motivación -->
-<div class="emocion-item" data-emocion="motivacion">
-  <div class="emocion-emoji">🤩</div>
-  <div class="emocion-color" style="background-color: #38d5c6ff;"></div>
-  <p class="emocion-nombre">Motivación</p>
-</div>
+          <!-- Motivación -->
+          <div class="emocion-item" data-emocion="motivacion">
+            <div class="emocion-emoji">🤩</div>
+            <div class="emocion-color" style="background-color: #38d5c6ff;"></div>
+            <p class="emocion-nombre">Motivación</p>
+          </div>
 
-<!-- Inseguridad -->
-<div class="emocion-item" data-emocion="inseguridad">
-  <div class="emocion-emoji">😕</div>
-  <div class="emocion-color" style="background-color: #c434a0;"></div>
-  <p class="emocion-nombre">Inseguridad</p>
-</div>
+          <!-- Inseguridad -->
+          <div class="emocion-item" data-emocion="inseguridad">
+            <div class="emocion-emoji">😕</div>
+            <div class="emocion-color" style="background-color: #c434a0;"></div>
+            <p class="emocion-nombre">Inseguridad</p>
+          </div>
 
         </div>
       </div>
@@ -145,10 +145,10 @@
       <!-- Botones de control -->
       <div class="instrucciones-controls">
         <button id="btn-volver" class="btn btn-secondary">
-          ← Volver a elegir avatar
+          ← Volver al inicio
         </button>
         
-        <button id="btn-comenzar" class="btn btn-primary btn-pulse">
+        <button id="btn-comenzar" class="btn btn-primary">
           Entendido, ¡comenzar! 🚀
         </button>
       </div>

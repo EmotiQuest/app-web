@@ -1,0 +1,948 @@
+/* ============================================
+   EMOTIQUEST - RESPONSIVE.CSS
+   Todas las Media Queries Centralizadas
+   Versión 4.0 - 2025
+   ============================================ */
+
+/* ============================================
+   BREAKPOINTS DEFINIDOS:
+   - Tablet: 768px - 1024px
+   - Móvil: 480px - 767px
+   - Móvil pequeño: < 480px
+   ============================================ */
+
+/* ============================================
+   REGLA CRÍTICA: EVITAR SCROLL HORIZONTAL
+   ============================================ */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Evitar que cualquier elemento cause overflow */
+* {
+  max-width: 100%;
+}
+
+/* Excepciones para elementos que necesitan scroll interno */
+.table-wrapper,
+.modal-rutas-body,
+.admin-table-section {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+/* ==================== TABLET (768px - 1024px) ==================== */
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  /* === STYLES.CSS === */
+  .container {
+    padding: var(--spacing-sm);
+  }
+  
+  .card,
+  .login-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .logo-image {
+    width: 112px;
+  }
+
+  .app-title,
+  .quiz-title,
+  .resultado-title {
+    font-size: 2.5rem;
+  }
+  
+  button,
+  .btn {
+    padding: 0.9rem 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .option-btn {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  /* Botones flotantes */
+  .boton-perfil {
+    bottom: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    gap: 10px;
+    font-size: 0.9rem;
+    max-width: 160px;
+  }
+
+  .boton-perfil__avatar {
+    width: 35px;
+    height: 35px;
+  }
+
+  .boton-perfil__avatar svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .boton-ruta {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    gap: 8px;
+    font-size: 0.9rem;
+    max-width: 140px;
+  }
+
+  .ruta-icono {
+    font-size: 1.5rem;
+  }
+
+  .ruta-texto {
+    font-size: 0.9rem;
+  }
+
+  /* === QUIZ.CSS === */
+  .quiz-header .container {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .quiz-header .logo-image {
+    width: 45px;
+  }
+  
+  .quiz-title {
+    font-size: 1.625rem;
+  }
+  
+  .user-greeting {
+    font-size: 1.1rem;
+  }
+  
+  .question-title {
+    font-size: 1.3rem;
+  }
+  
+  .quiz-controls {
+    flex-direction: column;
+  }
+  
+  .quiz-controls button {
+    width: 100%;
+  }
+  
+  .options-grid {
+    gap: 1rem;
+  }
+  
+  .botella {
+    width: 75px;
+    height: 135px;
+  }
+  
+  .botella::before {
+    width: 68px;
+    height: 102px;
+    border-width: 5px;
+  }
+  
+  .botella::after {
+    width: 28px;
+    height: 30px;
+    border-width: 3px;
+    top: 4px;
+  }
+  
+  .botella .tapa-botella {
+    width: 32px;
+    height: 9px;
+  }
+  
+  .botella-emoji {
+    font-size: 1.8rem;
+    bottom: 22px;
+  }
+  
+  .emocion-nombre {
+    font-size: 1.3rem;
+  }
+
+  /* === RESULTADO.CSS === */
+  .resultado-header .logo-image {
+    width: 45px;
+  }
+
+  .resultado-title {
+    font-size: 1.625rem;
+  }
+  
+  .resultado-subtitle {
+    font-size: 0.65rem;
+  }
+  
+  .seccion-title {
+    font-size: 1.5rem;
+  }
+  
+  .seccion-descripcion {
+    font-size: 1rem;
+  }
+  
+  .batidos-grid {
+    gap: 1rem;
+    padding: var(--spacing-md);
+  }
+  
+  .batido {
+    width: 75px;
+    height: 135px;
+  }
+  
+  .batido::before {
+    width: 68px;
+    height: 102px;
+    border-width: 5px;
+  }
+  
+  .batido::after {
+    width: 28px;
+    height: 30px;
+    top: 4px;
+    border-width: 3px;
+  }
+  
+  .batido .tapa-botella {
+    width: 32px;
+    height: 9px;
+  }
+  
+  .batido-emoji {
+    font-size: 1.8rem;
+    bottom: 22px;
+  }
+  
+  .licuadora {
+    transform: scale(0.85);
+  }
+  
+  .avatar-circle {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .avatar-emoji {
+    font-size: 4rem;
+  }
+  
+  .emocion-badge {
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .badge-emoji {
+    font-size: 1.5rem;
+  }
+  
+  .mensaje-principal {
+    font-size: 1.1rem;
+  }
+  
+  .mensaje-secundario {
+    font-size: 1rem;
+  }
+  
+  .resultado-controles {
+    flex-direction: column;
+  }
+  
+  .resultado-controles button {
+    width: 100%;
+  }
+  
+  .stat-item-simple {
+    padding: 0.8rem 1rem;
+  }
+  
+  .stat-item-simple .stat-emoji {
+    font-size: 1.5rem;
+  }
+  
+  .stat-item-simple .stat-nombre {
+    font-size: 1rem;
+  }
+
+  /* === ADMIN.CSS === */
+  .admin-container {
+    padding: 1.5rem;
+    max-width: 1000px;
+  }
+
+  .admin-header-content {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.5rem 1rem;
+  }
+
+  .admin-branding .logo-image {
+    width: 45px;
+  }
+
+  .admin-title {
+    font-size: 1.1rem;
+  }
+
+  .admin-subtitle {
+    font-size: 0.55rem;
+  }
+
+  .admin-actions {
+    flex-direction: column;
+  }
+
+  .admin-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chart-bars {
+    height: 320px;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .chart-bar {
+    max-width: 60px;
+    min-width: 45px;
+  }
+
+  .bar-value {
+    font-size: 0.95rem;
+    top: -25px;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .bar-emoji {
+    font-size: 1.4rem;
+  }
+
+  .bar-label {
+    font-size: 0.75rem;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-actions {
+    flex-direction: column;
+  }
+
+  .table-wrapper {
+    border-radius: 0;
+  }
+
+  .admin-table {
+    font-size: 0.85rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .table-actions {
+    flex-direction: column;
+  }
+
+  .calificaciones-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .star-bar-row,
+  .volveria-bar-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .star-bar-label,
+  .volveria-bar-label {
+    min-width: 100%;
+  }
+
+  .star-bar-container,
+  .volveria-bar-container {
+    width: 100%;
+  }
+
+  .star-bar-count,
+  .volveria-bar-count {
+    display: none;
+  }
+
+  .star-bar-fill,
+  .volveria-bar-fill {
+    justify-content: center;
+  }
+
+  /* === AVATAR-SELECTION.CSS === */
+  .avatar-selection-card {
+    padding: var(--spacing-lg);
+  }
+
+  .avatar-greeting h2 {
+    font-size: 1.6rem;
+  }
+
+  .avatar-greeting p {
+    font-size: 1rem;
+  }
+
+  .avatars-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    padding: var(--spacing-md);
+  }
+
+  .avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-width: 3px;
+  }
+
+  .avatar-option.selected .avatar-circle {
+    border-width: 5px;
+  }
+
+  .avatar-option.selected::after {
+    width: 35px;
+    height: 35px;
+    font-size: 1.3rem;
+    top: -8px;
+    right: calc(50% - 58px);
+  }
+
+  .preview-circle {
+    width: 120px;
+    height: 120px;
+    border-width: 5px;
+  }
+
+  .avatar-controls {
+    flex-direction: column;
+  }
+
+  .avatar-controls button {
+    width: 100%;
+  }
+
+  /* === CALIFICACION.CSS === */
+  .calificacion-container {
+    padding: var(--spacing-md);
+  }
+
+  .calificacion-card {
+    padding: var(--spacing-lg);
+  }
+
+  .intro-icon {
+    font-size: 3rem;
+  }
+
+  .intro-title {
+    font-size: 1.5rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .star {
+    width: 50px;
+    height: 50px;
+  }
+
+  .choice-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    max-width: 100%;
+  }
+
+  /* === PERFIL.CSS === */
+  .perfil-container {
+    padding: 1rem;
+  }
+
+  .perfil-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .perfil-header .container {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .perfil-avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .perfil-avatar-emoji {
+    font-size: 4rem;
+  }
+
+  .perfil-nombre {
+    font-size: 1.5rem;
+  }
+
+  .perfil-datos {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* === RUTAS.CSS === */
+  .rutas-title {
+    font-size: 2rem;
+  }
+
+  .rutas-subtitle {
+    font-size: 1rem;
+  }
+
+  .intro-card {
+    padding: 1.5rem;
+  }
+
+  .intro-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .intro-card p {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .modulos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emergencia-card {
+    padding: 1.5rem;
+  }
+
+  .emergencia-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .emergencia-botones {
+    grid-template-columns: 1fr;
+  }
+
+  .rutas-acciones {
+    flex-direction: column;
+  }
+
+  .rutas-acciones button,
+  .rutas-acciones a {
+    width: 100%;
+  }
+
+  .modal-rutas-content {
+    max-height: 85vh;
+  }
+
+  .modal-rutas-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .modal-rutas-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .modal-rutas-body {
+    padding: 1.5rem;
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .articulos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reto-dias {
+    grid-template-columns: 1fr;
+  }
+
+  .linea-boton {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .linea-info {
+    text-align: center;
+  }
+}
+
+/* ==================== MÓVIL (max-width: 480px) ==================== */
+@media (max-width: 480px) {
+  
+  /* === STYLES.CSS === */
+  .logo-image {
+    width: 96px;
+  }
+
+  .app-title,
+  .quiz-title,
+  .resultado-title {
+    font-size: 2rem;
+  }
+  
+  .app-subtitle {
+    font-size: 1rem;
+  }
+  
+  button,
+  .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  /* Botones flotantes móviles */
+  .boton-perfil {
+    bottom: 10px;
+    left: 10px;
+    padding: 8px 12px;
+    gap: 8px;
+    font-size: 0.85rem;
+    max-width: 140px;
+  }
+
+  .boton-perfil__avatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .boton-ruta {
+    bottom: 10px;
+    right: 10px;
+    padding: 8px 12px;
+    gap: 6px;
+    font-size: 0.85rem;
+    max-width: 120px;
+  }
+
+  .ruta-icono {
+    font-size: 1.3rem;
+  }
+
+  .ruta-texto {
+    font-size: 0.85rem;
+  }
+
+  /* === QUIZ.CSS === */
+  .quiz-header .logo-image {
+    width: 37.5px;
+  }
+  
+  .quiz-title {
+    font-size: 1.3rem;
+  }
+  
+  .user-greeting {
+    font-size: 0.585rem;
+  }
+
+  .quiz-container {
+    padding: var(--spacing-sm);
+  }
+  
+  .question-card {
+    padding: var(--spacing-md);
+  }
+  
+  .question-title {
+    font-size: 1.1rem;
+  }
+  
+  .options-grid {
+    gap: 0.8rem;
+  }
+  
+  .botella {
+    width: 65px;
+    height: 120px;
+  }
+  
+  .botella::before {
+    width: 58px;
+    height: 90px;
+    border-width: 4px;
+  }
+  
+  .botella::after {
+    width: 24px;
+    height: 28px;
+    border-width: 3px;
+    top: 3px;
+  }
+  
+  .botella .tapa-botella {
+    width: 28px;
+    height: 8px;
+  }
+  
+  .botella-emoji {
+    font-size: 1.5rem;
+    bottom: 18px;
+  }
+  
+  .emocion-nombre {
+    font-size: 1.1rem;
+  }
+
+  /* === RESULTADO.CSS === */
+  .resultado-header .logo-image {
+    width: 37.5px;
+  }
+  
+  .resultado-title {
+    font-size: 1.3rem;
+  }
+  
+  .resultado-subtitle {
+    font-size: 0.585rem;
+  }
+
+  .resultado-container {
+    padding: var(--spacing-md);
+  }
+  
+  .batido {
+    width: 65px;
+    height: 120px;
+  }
+  
+  .batido::before {
+    width: 58px;
+    height: 90px;
+    border-width: 4px;
+  }
+  
+  .batido::after {
+    width: 24px;
+    height: 28px;
+    top: 3px;
+    border-width: 3px;
+  }
+  
+  .batido .tapa-botella {
+    width: 28px;
+    height: 8px;
+  }
+  
+  .batido-emoji {
+    font-size: 1.5rem;
+    bottom: 18px;
+  }
+  
+  .licuadora {
+    transform: scale(0.7);
+  }
+  
+  .avatar-circle {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .avatar-emoji {
+    font-size: 3rem;
+  }
+  
+  .stats-title {
+    font-size: 1.3rem;
+  }
+
+  /* === ADMIN.CSS === */
+  .admin-title {
+    font-size: 1rem;
+  }
+
+  .admin-subtitle {
+    font-size: 0.5rem;
+  }
+
+  .welcome-card h2 {
+    font-size: 1.4rem;
+  }
+
+  .stat-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .chart-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .chart-bars {
+    height: 250px;
+  }
+
+  .calificaciones-card {
+    padding: 1.5rem;
+  }
+
+  .calificaciones-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .chart-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .cal-stat-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .rating-stars {
+    font-size: 1rem;
+  }
+
+  /* === AVATAR-SELECTION.CSS === */
+  .avatar-greeting h2 {
+    font-size: 1.4rem;
+  }
+
+  .avatars-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .avatar-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-emoji {
+    font-size: 3rem;
+  }
+
+  .preview-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .preview-text {
+    font-size: 1rem;
+  }
+
+  /* === CALIFICACION.CSS === */
+  .calificacion-title {
+    font-size: 2rem;
+  }
+
+  .intro-title {
+    font-size: 1.3rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  .star {
+    width: 40px;
+    height: 40px;
+  }
+
+  .stars {
+    gap: 0.3rem;
+  }
+
+  .choice-icon {
+    font-size: 2.5rem;
+  }
+
+  .choice-text {
+    font-size: 1rem;
+  }
+
+  /* === RUTAS.CSS === */
+  .rutas-container {
+    padding: var(--spacing-sm);
+  }
+
+  .rutas-title {
+    font-size: 1.8rem;
+  }
+
+  .intro-card h2 {
+    font-size: 1.4rem;
+  }
+
+  .intro-card p {
+    font-size: 0.95rem;
+  }
+
+  .modulo-card {
+    padding: 1.5rem;
+  }
+
+  .modulo-icon {
+    font-size: 2.8rem;
+  }
+
+  .emergencia-card {
+    padding: 1.5rem;
+  }
+
+  .btn-emergencia {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .btn-emergencia-info {
+    text-align: center;
+  }
+
+  .modal-rutas-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-rutas-close {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .modal-seccion h3 {
+    font-size: 1.2rem;
+  }
+
+  .mensaje-offline {
+    left: 10px;
+    right: 10px;
+  }
+
+  .mensaje-offline-content {
+    max-width: 100%;
+  }
+}
+
+/* ==================== FIN RESPONSIVE.CSS ==================== */

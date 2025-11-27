@@ -1,6 +1,8 @@
 /* ============================================
    QUIZ.CSS - Cuestionario Estilo Canva
    Versión con Botellas 3D Mejoradas
+   SIN MEDIA QUERIES (ver responsive.css)
+   SIN SCROLL HORIZONTAL
    ============================================ */
 
 /* ==================== HEADER DEL QUIZ ==================== */
@@ -52,6 +54,8 @@
   max-width: 700px;
   margin: 0 auto;
   padding: var(--spacing-md);
+  /* CRÍTICO: Evitar overflow horizontal */
+  overflow-x: hidden;
 }
 
 /* ==================== CARD DE PREGUNTA ==================== */
@@ -61,6 +65,9 @@
   padding: 2rem;
   box-shadow: 0 6px 25px rgba(209, 128, 253, 0.25);
   margin-bottom: var(--spacing-md);
+  /* CRÍTICO: Evitar que el card cause overflow */
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .question-header {
@@ -76,6 +83,9 @@
   text-align: center;
   margin: 0;
   font-weight: 600;
+  /* Asegurar que el texto no cause overflow */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* ==================== OPCIONES DE RESPUESTA (BOTELLAS 3D MEJORADAS) ==================== */
@@ -87,6 +97,9 @@
   flex-wrap: wrap;
   padding: var(--spacing-lg) 0;
   min-height: 200px;
+  /* CRÍTICO: Evitar overflow horizontal */
+  max-width: 100%;
+  overflow: visible;
 }
 
 /* Contenedor de cada botella */
@@ -97,6 +110,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* CRÍTICO: Asegurar que las botellas no salgan del contenedor */
+  flex-shrink: 0;
 }
 
 .botella-option:hover {
@@ -147,6 +162,8 @@
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
   background: transparent;
   display: block;
+  /* Mantener dentro del contenedor */
+  flex-shrink: 0;
 }
 
 /* Cuerpo de la botella con borde grueso 3D */
@@ -251,6 +268,9 @@
   border-radius: 20px;
   border: 2px solid var(--color-morado);
   animation: fadeInUp 0.5s ease;
+  /* Asegurar que no cause overflow */
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .emocion-nombre {
@@ -258,6 +278,7 @@
   font-weight: 700;
   color: var(--text-dark);
   margin: 0;
+  word-wrap: break-word;
 }
 
 /* ==================== CONTROLES DE NAVEGACIÓN ==================== */
@@ -266,11 +287,16 @@
   justify-content: space-between;
   gap: var(--spacing-sm);
   margin-top: var(--spacing-lg);
+  /* Asegurar que no cause overflow */
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 
 .quiz-controls button {
   flex: 1;
   min-width: 120px;
+  /* Evitar que los botones se salgan en pantallas pequeñas */
+  max-width: 100%;
 }
 
 /* ==================== ANIMACIONES ==================== */
@@ -285,130 +311,4 @@
   }
 }
 
-/* ==================== RESPONSIVE ==================== */
-@media (max-width: 768px) {
-  .quiz-header .container {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
-  }
-  
-  .logo-image {
-    width: 45px;
-  }
-  .quiz-title {
-    font-size: 1.625rem;
-  }
-  
-  .user-greeting {
-    font-size: 1.1rem;
-  }
-  
-  .question-title {
-    font-size: 1.3rem;
-  }
-  
-  .quiz-controls {
-    flex-direction: column;
-  }
-  
-  .quiz-controls button {
-    width: 100%;
-  }
-  
-  .options-grid {
-    gap: 1rem;
-  }
-  
-  .botella {
-    width: 75px;
-    height: 135px;
-  }
-  
-  .botella::before {
-    width: 68px;
-    height: 102px;
-    border-width: 5px;
-  }
-  
-  .botella::after {
-    width: 28px;
-    height: 30px;
-    border-width: 3px;
-    top: 4px;
-  }
-  
-  .botella .tapa-botella {
-    width: 32px;
-    height: 9px;
-  }
-  
-  .botella-emoji {
-    font-size: 1.8rem;
-    bottom: 22px;
-  }
-  
-  .emocion-nombre {
-    font-size: 1.3rem;
-  }
-}
-
-@media (max-width: 480px) {
-.logo-image {
-    width: 37.5px;
-  }
-  .quiz-title {
-    font-size: 1.3rem;
-  }
-  .user-greeting {
-    font-size: 0.585rem;
-  }
-
-  .quiz-container {
-    padding: var(--spacing-sm);
-  }
-  
-  .question-card {
-    padding: var(--spacing-md);
-  }
-  
-  .question-title {
-    font-size: 1.1rem;
-  }
-  
-  .options-grid {
-    gap: 0.8rem;
-  }
-  
-  .botella {
-    width: 65px;
-    height: 120px;
-  }
-  
-  .botella::before {
-    width: 58px;
-    height: 90px;
-    border-width: 4px;
-  }
-  
-  .botella::after {
-    width: 24px;
-    height: 28px;
-    border-width: 3px;
-    top: 3px;
-  }
-  
-  .botella .tapa-botella {
-    width: 28px;
-    height: 8px;
-  }
-  
-  .botella-emoji {
-    font-size: 1.5rem;
-    bottom: 18px;
-  }
-  
-  .emocion-nombre {
-    font-size: 1.1rem;
-  }
-}
+/* ==================== FIN QUIZ.CSS (SIN MEDIA QUERIES) ==================== */

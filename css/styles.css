@@ -1,6 +1,8 @@
 /* ============================================
-   EMOTIQUEST - ESTILOS COMPLETOS CANVA
-   Diseño v3.0 - 2024 cambios despues de feedback
+   EMOTIQUEST - ESTILOS BASE (SIN MEDIA QUERIES)
+   Diseño v4.0 - 2025 Refactorización
+   Este archivo contiene SOLO estilos base
+   Las media queries están en responsive.css
    ============================================ */
 
 /* ==================== VARIABLES - PALETA CANVA ==================== */
@@ -57,6 +59,12 @@ html {
 }
 
 /* ==================== BODY Y FONDO ==================== */
+html {
+  /* CRÍTICO: Evitar scroll horizontal en todas las páginas */
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
 body {
   font-size: 1rem;
   line-height: 1.6;
@@ -65,6 +73,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  /* CRÍTICO: Evitar scroll horizontal */
+  max-width: 100vw;
   overflow-x: hidden;
   position: relative;
 }
@@ -170,19 +180,7 @@ h3 { font-size: 1.5rem; }
 }
 
 /* Crear efecto bicolor con texto */
-.app-title {
-  background: linear-gradient(
-    to right,
-    var(--color-morado-titulo) 0%,
-    var(--color-morado-titulo) 49%,
-    var(--color-amarillo-titulo) 51%,
-    var(--color-amarillo-titulo) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
+.app-title,
 .quiz-title,
 .resultado-title {
   background: linear-gradient(
@@ -581,7 +579,7 @@ button:disabled,
   left: 0;
   right: 0;
   padding: 20px;
-  pointer-events: none; /* Permite hacer clic solo en los botones */
+  pointer-events: none;
   z-index: 1000;
 }
 
@@ -607,6 +605,9 @@ button:disabled,
   color: var(--text-dark);
   max-width: 200px;
   z-index: 1001;
+  /* CRÍTICO: Evitar que el botón cause scroll horizontal */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .boton-perfil:hover {
@@ -638,7 +639,6 @@ button:disabled,
   object-fit: cover;
 }
 
-/* Icono SVG del avatar (por defecto) */
 .boton-perfil__avatar svg {
   width: 24px;
   height: 24px;
@@ -654,7 +654,7 @@ button:disabled,
   text-align: left;
 }
 
-/* Botón de Ruta (Inferior Derecha) - NUEVO ESTILO RECTANGULAR */
+/* Botón de Ruta (Inferior Derecha) */
 .boton-ruta {
   position: fixed;
   bottom: 20px;
@@ -676,6 +676,9 @@ button:disabled,
   color: white;
   max-width: 200px;
   z-index: 1001;
+  /* CRÍTICO: Evitar que el botón cause scroll horizontal */
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .boton-ruta:hover {
@@ -698,129 +701,6 @@ button:disabled,
   font-weight: 700;
   letter-spacing: 0.5px;
   white-space: nowrap;
-}
-/* ==================== RESPONSIVE ==================== */
-@media (max-width: 768px) {
-  .container {
-    padding: var(--spacing-sm);
-  }
-  
-  .card,
-  .login-card {
-    padding: var(--spacing-lg);
-  }
-  
-  .logo-image {
-    width: 112px;
-  }
-
-  .app-title,
-  .quiz-title,
-  .resultado-title {
-    font-size: 2.5rem;
-  }
-  
-  button,
-  .btn {
-    padding: 0.9rem 2rem;
-    font-size: 1.1rem;
-  }
-  
-  .option-btn {
-    padding: 1rem;
-    font-size: 1rem;
-  }
-
-  /* Botones flotantes responsive */
-  .boton-perfil {
-    bottom: 15px;
-    left: 15px;
-    padding: 10px 16px;
-    gap: 10px;
-    font-size: 0.9rem;
-    max-width: 160px;
-  }
-
-  .boton-perfil__avatar {
-    width: 35px;
-    height: 35px;
-  }
-
-  .boton-perfil__avatar svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .boton-ruta {
-  bottom: 15px;
-  right: 15px;
-  padding: 10px 16px;      /* Espaciado medio */
-  gap: 8px;                /* Separación entre emoji y texto */
-  font-size: 0.9rem;       /* Texto ligeramente más pequeño */
-  max-width: 140px;        /* Ancho máximo */
-}
-
-.ruta-icono {
-  font-size: 1.5rem;       /* Emoji medio */
-}
-
-.ruta-texto {
-  font-size: 0.9rem;       /* Texto "Rutas" */
-}
- 
-}
-
-@media (max-width: 480px) {
- .logo-image {
-    width: 96px;
-  }
-
-  .app-title,
-  .quiz-title,
-  .resultado-title {
-    font-size: 2rem;
-  }
-  
-  .app-subtitle {
-    font-size: 1rem;
-  }
-  
-  button,
-  .btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-  }
-
-  /* Botones flotantes móviles */
-  .boton-perfil {
-    bottom: 10px;
-    left: 10px;
-    padding: 8px 12px;
-    gap: 8px;
-    font-size: 0.85rem;
-    max-width: 140px;
-  }
-
-  .boton-perfil__avatar {
-    width: 32px;
-    height: 32px;
-  }
-.boton-ruta {
-  bottom: 10px;
-  right: 10px;
-  padding: 8px 12px;       /* Espaciado compacto */
-  gap: 6px;                /* Separación reducida */
-  font-size: 0.85rem;      /* Texto más pequeño */
-  max-width: 120px;        /* Ancho máximo reducido */
-}
-
-.ruta-icono {
-  font-size: 1.3rem;       /* Emoji más pequeño */
-}
-
-.ruta-texto {
-  font-size: 0.85rem;      /* Texto "Rutas" pequeño */
-}
 }
 
 /* ==================== ACCESIBILIDAD ==================== */

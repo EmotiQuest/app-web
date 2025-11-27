@@ -1,181 +1,202 @@
+// ============================================
+// INSTRUCCIONES.JS - EmotiQuest
+// Lógica de la página de instrucciones
+// ============================================
+
+console.log('🚀 instrucciones.js cargado');
+
+// Referencias del DOM
+const greetingName = document.getElementById('greeting-name');
+const btnVolver = document.getElementById('btn-volver');
+const btnComenzar = document.getElementById('btn-comenzar');
+
 /**
- * ============================================
- * INSTRUCCIONES.JS - EmotiQuest
- * ============================================
- * Maneja la página de instrucciones antes del cuestionario
- * 
- * Funcionalidades:
- * - Muestra el nombre y avatar del usuario
- * - Explica el sistema de emociones y colores
- * - Registra que el usuario vio las instrucciones
- * - Navega al cuestionario o vuelve a avatar
+ * Inicialización
  */
-
-// ============================================
-// ESPERAR A QUE EL DOM ESTÉ LISTO
-// ============================================
-document.addEventListener('DOMContentLoaded', inicializarInstrucciones);
-
-// ============================================
-// FUNCIÓN PRINCIPAL DE INICIALIZACIÓN
-// ============================================
-function inicializarInstrucciones() {
-  console.log('📋 Inicializando página de instrucciones...');
-
-  // Verificar que el usuario haya iniciado sesión
-  const sesionActual = obtenerSesionActual();
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('📋 DOM cargado');
   
-  if (!sesionActual) {
-    console.warn('⚠️ No hay sesión activa. Redirigiendo a inicio...');
-    alert('Debes iniciar sesión primero');
+  // Verificar que storage.js está cargado
+  if (!window.EmotiQuestStorage) {
+    console.error('❌ storage.js NO está cargado');
+    alert('Error: Sistema de almacenamiento no disponible. Recarga la página.');
+    return;
+  }
+  
+  console.log('✅ storage.js disponible');
+  
+  // Cargar datos del usuario
+  cargarDatosUsuario();
+  
+  // Configurar eventos de botones
+  configurarEventos();
+  
+  // Animaciones de entrada
+  aplicarAnimacionesEntrada();
+});
+
+/**
+ * Carga los datos del usuario actual
+ */
+function cargarDatosUsuario() {
+  try {
+    const sesion = window.EmotiQuestStorage.obtenerSesionActual();
+    
+    if (sesion && sesion.nombre) {
+      greetingName.textContent = `¡Perfecto, ${sesion.nombre}!`;
+      console.log('✅ Usuario:', sesion.nombre);
+    } else {
+      greetingName.textContent = '¡Perfecto!';
+      console.log('⚠️ No hay sesión activa');
+    }
+  } catch (error) {
+    console.error('❌ Error al cargar datos:', error);
+    greetingName.textContent = '¡Perfecto!';
+  }
+}
+
+/**
+ * Configura los event listeners de los botones
+ */
+function configurarEventos() {
+  if (btnVolver) {
+    btnVolver.addEventListener('click', volverAlInicio);
+  }
+  
+  if (btnComenzar) {
+    btnComenzar.addEventListener('click', comenzarCuestionario);
+  }
+  
+  console.log('✅ Eventos configurados');
+}
+
+/**
+ * Vuelve a la página de inicio
+ */
+function volverAlInicio() {
+  console.log('🔙 Volviendo al inicio...');
+  
+  // Mostrar confirmación
+  const confirmar = confirm('¿Deseas volver al inicio? Se perderán los datos actuales.');
+  
+  if (confirmar) {
+    // Limpiar sesión actual
+    try {
+      window.EmotiQuestStorage.limpiarSesionActual();
+      console.log('🧹 Sesión limpiada');
+    } catch (error) {
+      console.error('❌ Error al limpiar sesión:', error);
+    }
+    
+    // Redirigir
+    window.location.href = './index.html';
+  }
+}
+
+/**
+ * Comienza el cuestionario
+ */
+function comenzarCuestionario() {
+  console.log('🚀 Iniciando cuestionario...');
+  
+  // Verificar que hay sesión activa
+  const sesion = window.EmotiQuestStorage.obtenerSesionActual();
+  
+  if (!sesion) {
+    console.error('❌ No hay sesión activa');
+    alert('Error: No hay sesión activa. Por favor, vuelve al inicio y completa el registro.');
     window.location.href = './index.html';
     return;
   }
-
-  // Verificar que haya seleccionado avatar
-  if (!sesionActual.avatar) {
-    console.warn('⚠️ No hay avatar seleccionado. Redirigiendo...');
-    alert('Debes seleccionar un avatar primero');
-    window.location.href = './avatar-selection.html';
-    return;
-  }
-
-  // Mostrar información del usuario
-  mostrarInformacionUsuario(sesionActual);
-
-  // Registrar que vio las instrucciones
-  registrarVisualizacionInstrucciones(sesionActual);
-
-  // Configurar botones
-  configurarBotones();
-
-  // Animaciones de entrada
-  animarEmociones();
-
-  console.log('✅ Instrucciones cargadas correctamente');
+  
+  // Mostrar mensaje de carga
+  mostrarMensajeCarga();
+  
+  // Redirigir después de un momento
+  setTimeout(() => {
+    window.location.href = './cuestionario.html';
+  }, 800);
 }
 
-// ============================================
-// MOSTRAR INFORMACIÓN DEL USUARIO
-// ============================================
-function mostrarInformacionUsuario(sesion) {
-  // Mostrar nombre
-  const greetingElement = document.getElementById('greeting-name');
-  if (greetingElement) {
-    greetingElement.textContent = `¡Perfecto, ${sesion.nombre}!`;
-  }
-
-  // Mostrar avatar seleccionado
-  const avatarImg = document.getElementById('user-avatar');
-  if (avatarImg && sesion.avatar) {
-    avatarImg.src = sesion.avatar;
-    avatarImg.alt = `Avatar de ${sesion.nombre}`;
-  }
+/**
+ * Muestra un mensaje de carga
+ */
+function mostrarMensajeCarga() {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+  `;
+  
+  const mensaje = document.createElement('div');
+  mensaje.style.cssText = `
+    background: linear-gradient(135deg, #d180fd, #fde895);
+    color: white;
+    padding: 2.5rem 3rem;
+    border-radius: 25px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+    animation: scaleIn 0.5s ease;
+  `;
+  
+  mensaje.innerHTML = `
+    <div style="font-size: 4rem; margin-bottom: 1rem; animation: bounce 1s infinite;">🎨</div>
+    <div>Preparando el cuestionario...</div>
+  `;
+  
+  overlay.appendChild(mensaje);
+  document.body.appendChild(overlay);
+  
+  // Agregar animaciones CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  console.log('✅ Mensaje de carga mostrado');
 }
 
-// ============================================
-// REGISTRAR QUE VIO LAS INSTRUCCIONES
-// ============================================
-function registrarVisualizacionInstrucciones(sesion) {
-  // Agregar timestamp de visualización
-  sesion.instruccionesVistas = true;
-  sesion.timestampInstrucciones = new Date().toISOString();
-
-  // Guardar cambios en localStorage
-  guardarSesionActual(sesion);
-
-  console.log('📝 Registro: Usuario vio las instrucciones');
-}
-
-// ============================================
-// CONFIGURAR BOTONES
-// ============================================
-function configurarBotones() {
-  const btnVolver = document.getElementById('btn-volver');
-  const btnComenzar = document.getElementById('btn-comenzar');
-
-  // Botón: Volver a selección de avatar
-  if (btnVolver) {
-    btnVolver.addEventListener('click', () => {
-      console.log('🔙 Volviendo a selección de avatar...');
-      window.location.href = './avatar-selection.html';
-    });
-  }
-
-  // Botón: Comenzar cuestionario
-  if (btnComenzar) {
-    btnComenzar.addEventListener('click', () => {
-      console.log('🚀 Iniciando cuestionario...');
-      window.location.href = './cuestionario.html';
-    });
-  }
-}
-
-// ============================================
-// ANIMACIONES DE EMOCIONES
-// ============================================
-function animarEmociones() {
+/**
+ * Aplica animaciones de entrada a las emociones
+ */
+function aplicarAnimacionesEntrada() {
   const emocionItems = document.querySelectorAll('.emocion-item');
   
   emocionItems.forEach((item, index) => {
-    // Retrasar la animación de cada emoción
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(20px)';
+    
     setTimeout(() => {
-      item.style.opacity = '0';
-      item.style.transform = 'translateY(20px)';
-      
-      setTimeout(() => {
-        item.style.transition = 'all 0.5s ease-out';
-        item.style.opacity = '1';
-        item.style.transform = 'translateY(0)';
-      }, 50);
-      
-    }, index * 100); // 100ms de diferencia entre cada una
+      item.style.transition = 'all 0.5s ease';
+      item.style.opacity = '1';
+      item.style.transform = 'translateY(0)';
+    }, 100 * index);
   });
-
-  // Efecto hover para las emociones
-  emocionItems.forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      const emoji = item.querySelector('.emocion-emoji');
-      if (emoji) {
-        emoji.style.transform = 'scale(1.2) rotate(10deg)';
-      }
-    });
-
-    item.addEventListener('mouseleave', () => {
-      const emoji = item.querySelector('.emocion-emoji');
-      if (emoji) {
-        emoji.style.transform = 'scale(1) rotate(0deg)';
-      }
-    });
-  });
+  
+  console.log('✅ Animaciones aplicadas');
 }
 
-// ============================================
-// FUNCIONES AUXILIARES DE STORAGE
-// ============================================
-
-/**
- * Obtener sesión actual del localStorage
- */
-function obtenerSesionActual() {
-  try {
-    const sesionJSON = localStorage.getItem('emotiquest_sesion_actual');
-    if (!sesionJSON) return null;
-    return JSON.parse(sesionJSON);
-  } catch (error) {
-    console.error('❌ Error al obtener sesión actual:', error);
-    return null;
-  }
-}
-
-/**
- * Guardar sesión actual en localStorage
- */
-function guardarSesionActual(sesion) {
-  try {
-    localStorage.setItem('emotiquest_sesion_actual', JSON.stringify(sesion));
-    console.log('💾 Sesión actualizada en localStorage');
-  } catch (error) {
-    console.error('❌ Error al guardar sesión:', error);
-  }
-}
+console.log('✅ instrucciones.js configurado correctamente');

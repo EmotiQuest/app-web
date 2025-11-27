@@ -46,8 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
   
-  // Cargar datos del usuario
-  cargarDatosUsuario();
   
   // Configurar sistema de estrellas
   configurarEstrellas();
@@ -354,7 +352,7 @@ function omitirCalificacion() {
   
   if (confirmar) {
     console.log('⏭️ Calificación omitida');
-    window.location.href = './index.html';
+    window.location.href = './resultado.html';
   }
 }
 

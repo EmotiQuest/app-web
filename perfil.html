@@ -15,6 +15,7 @@
     
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="./css/perfil.css">
+    <link rel="stylesheet" href="./css/responsive.css">
 </head>
 <body>
 
@@ -171,11 +172,11 @@
       // Determinar emoji según género
       let emoji = '😊';
       if (sesion.genero === 'masculino') {
-        emoji = '👦';
+        emoji = '👨🏾';
       } else if (sesion.genero === 'femenino') {
-        emoji = '👧';
+        emoji = '👩🏽';
       } else {
-        emoji = '🧑';
+        emoji = '🧑🏽‍🦰';
       }
 
       // Si hay avatar personalizado, usar ese emoji
