@@ -12,23 +12,32 @@ console.log('🎨 avatar-selection.js cargado');
  */
 const AVATARES = {
   masculino: [
-    { id: 'avatar-m1', ruta: './images/avatars/masculino/1.png', emoji: '👦' },
-    { id: 'avatar-m2', ruta: './images/avatars/masculino/2.png', emoji: '🧑' },
-
-    { id: 'avatar-m4', ruta: './images/avatars/masculino/4.png', emoji: '🧔' },
-    { id: 'avatar-m5', ruta: './images/avatars/masculino/5.png', emoji: '👨🏽‍🦱' },
-    { id: 'avatar-m6', ruta: './images/avatars/masculino/6.png', emoji: '👨🏿' },
-    { id: 'avatar-m7', ruta: './images/avatars/masculino/7.png', emoji: '👨🏻‍🦰' },
-    { id: 'avatar-m8', ruta: './images/avatars/masculino/8.png', emoji: '👨🏼‍🦱' },
-    
+    { id: 'avatar-m1', ruta: './images/avatars/masculino/1.png', emoji: '🧒🏻' },
+    { id: 'avatar-m2', ruta: './images/avatars/masculino/2.png', emoji: '👨🏿‍🦱' },
+    { id: 'avatar-m3', ruta: './images/avatars/masculino/3.png', emoji: '🧑🏼‍🦰' },
+    { id: 'avatar-m4', ruta: './images/avatars/masculino/4.png', emoji: '🧔🏾‍♂️' },
+    { id: 'avatar-m5', ruta: './images/avatars/masculino/5.png', emoji: '👦🏻' },
+    { id: 'avatar-m6', ruta: './images/avatars/masculino/6.png', emoji: '👨🏽' },
+    { id: 'avatar-m7', ruta: './images/avatars/masculino/7.png', emoji: '🧔🏽' },
+    { id: 'avatar-m8', ruta: './images/avatars/masculino/8.png', emoji: '👨🏻' },
   ],
   femenino: [
-    { id: 'avatar-f1', ruta: './images/avatars/femenino/1.png', emoji: '👧' },
-    { id: 'avatar-f2', ruta: './images/avatars/femenino/2.png', emoji: '👩' },
-    { id: 'avatar-f3', ruta: './images/avatars/femenino/3.png', emoji: '👩🏼‍🦰' },
-    { id: 'avatar-f4', ruta: './images/avatars/femenino/4.png', emoji: '👩🏻‍🦱' },
-    { id: 'avatar-f5', ruta: './images/avatars/femenino/5.png', emoji: '👩🏽' },
-    { id: 'avatar-f6', ruta: './images/avatars/femenino/6.png', emoji: '👧🏿' },
+    { id: 'avatar-f1', ruta: './images/avatars/femenino/1.png', emoji: '👧🏻' },
+    { id: 'avatar-f2', ruta: './images/avatars/femenino/2.png', emoji: '👩🏼' },
+    { id: 'avatar-f3', ruta: './images/avatars/femenino/3.png', emoji: '👩🏿‍🦱' },
+    { id: 'avatar-f4', ruta: './images/avatars/femenino/4.png', emoji: '👩🏽' },
+    { id: 'avatar-f5', ruta: './images/avatars/femenino/5.png', emoji: '👩🏼‍🦰' },
+    { id: 'avatar-f6', ruta: './images/avatars/femenino/6.png', emoji: '👧🏾' },
+  ],
+  pnd:[
+    { id: 'avatar-neutro', ruta: './images/avatars/pnd/n1.png', emoji: '🧑🏽' },
+    { id: 'avatar-neutro2', ruta: './images/avatars/pnd/n2.png', emoji: '🧑🏽‍🦰' },
+    { id: 'avatar-neutro3', ruta: './images/avatars/pnd/n3.png', emoji: '🧑🏾‍🦱' },
+    { id: 'avatar-neutro4', ruta: './images/avatars/pnd/n4.png', emoji: '👱🏼' },
+    { id: 'avatar-neutro5', ruta: './images/avatars/pnd/n5.png', emoji: '🧑🏻‍🦲' },
+    { id: 'avatar-neutro6', ruta: './images/avatars/pnd/n6.png', emoji: '🧑🏼‍🦰' },
+    { id: 'avatar-neutro7', ruta: './images/avatars/pnd/n7.png', emoji: '🧓🏼' },
+    { id: 'avatar-neutro8', ruta: './images/avatars/pnd/n8.png', emoji: '👱🏽' },
   ]
 };
 
@@ -90,20 +99,6 @@ function verificarSesion() {
     console.error('❌ No hay sesión activa');
     alert('No hay sesión activa. Por favor, inicia sesión primero.');
     window.location.href = './index.html';
-    return false;
-  }
-  
-  // Si el género es "pnd" (prefiero no decirlo), saltar esta página
-  if (sesion.genero === 'pnd') {
-    console.log('⏩ Usuario prefirió no especificar género, saltando selección de avatar');
-    // Asignar avatar neutro y continuar
-    sesion.avatar = {
-      id: 'avatar-neutro',
-      ruta: null,
-      emoji: '😊'
-    };
-    guardarSesionActual(sesion);
-    redirigirACuestionario();
     return false;
   }
   

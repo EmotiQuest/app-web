@@ -8,11 +8,12 @@
   <!-- Fuentes Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Estilos -->
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/rutas.css">
+
 </head>
 <body class="rutas-page">
   
@@ -36,98 +37,94 @@
       <section class="rutas-intro">
         <div class="intro-card">
           <h2>🌟 ¡Bienvenido a tus Rutas de Bienestar!</h2>
-          <p>Aquí encontrarás recursos, enlaces y herramientas para cuidar tu salud emocional.</p>
+          <p>Aquí encontrarás recursos, herramientas y apoyo para cuidar tu salud emocional. Explora cada módulo y descubre lo que necesitas.</p>
         </div>
       </section>
 
-      <!-- Grid de recursos -->
-      <section class="rutas-recursos">
-        <h2 class="section-title">📚 Recursos Disponibles</h2>
+      <!-- Grid de 4 Módulos Principales -->
+      <section class="rutas-modulos">
+        <h2 class="section-title">📚 Módulos de Bienestar</h2>
         
-        <div class="recursos-grid" id="recursos-grid">
+        <div class="modulos-grid">
           
-          <!-- Card de ejemplo 1 -->
-          <div class="recurso-card">
-            <div class="recurso-icon">🧘</div>
+          <!-- Módulo 1: Meditación Guiada -->
+          <div class="modulo-card" onclick="abrirModal('meditacion')">
+            <div class="modulo-icon">🧘</div>
             <h3>Meditación Guiada</h3>
-            <p>Ejercicios de relajación y mindfulness</p>
-            <a href="#" class="btn btn-primary btn-sm">Explorar</a>
+            <p>Ejercicios de relajación, mindfulness y respiración consciente</p>
+            <button class="btn btn-primary btn-sm">Explorar →</button>
           </div>
 
-          <!-- Card de ejemplo 2 -->
-          <div class="recurso-card">
-            <div class="recurso-icon">📞</div>
+          <!-- Módulo 2: Líneas de Ayuda -->
+          <div class="modulo-card" onclick="abrirModal('lineas')">
+            <div class="modulo-icon">📞</div>
             <h3>Líneas de Ayuda</h3>
-            <p>Contactos de apoyo emocional 24/7</p>
-            <a href="#" class="btn btn-primary btn-sm">Ver contactos</a>
+            <p>Contactos de apoyo emocional disponibles 24/7 en Cartagena</p>
+            <button class="btn btn-primary btn-sm">Ver contactos →</button>
           </div>
 
-          <!-- Card de ejemplo 3 -->
-          <div class="recurso-card">
-            <div class="recurso-icon">📖</div>
+          <!-- Módulo 3: Guías y Artículos -->
+          <div class="modulo-card" onclick="abrirModal('guias')">
+            <div class="modulo-icon">📖</div>
             <h3>Guías y Artículos</h3>
-            <p>Información sobre salud mental</p>
-            <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+            <p>Biblioteca digital sobre salud mental y autocuidado</p>
+            <button class="btn btn-primary btn-sm">Leer más →</button>
           </div>
 
-          <!-- Card de ejemplo 4 -->
-          <div class="recurso-card">
-            <div class="recurso-icon">🎯</div>
+          <!-- Módulo 4: Ejercicios Prácticos -->
+          <div class="modulo-card" onclick="abrirModal('ejercicios')">
+            <div class="modulo-icon">🎯</div>
             <h3>Ejercicios Prácticos</h3>
-            <p>Actividades para tu bienestar diario</p>
-            <a href="#" class="btn btn-primary btn-sm">Comenzar</a>
+            <p>Actividades breves para fortalecer tu bienestar diario</p>
+            <button class="btn btn-primary btn-sm">Comenzar →</button>
           </div>
 
         </div>
       </section>
 
-      <!-- Sección de enlaces -->
-      <section class="rutas-enlaces">
-        <h2 class="section-title">🔗 Enlaces Útiles</h2>
-        
-        <div class="enlaces-list">
+      <!-- Sección de Emergencia (Destacada) -->
+      <section class="rutas-emergencia">
+        <div class="emergencia-card">
+          <h2>🚨 ¿Necesitas ayuda urgente?</h2>
+          <p>Si estás en una crisis emocional, estas líneas están disponibles 24/7:</p>
           
-          <div class="enlace-item">
-            <span class="enlace-icon">🌐</span>
-            <div class="enlace-info">
-              <h4>Sitio Web de Ejemplo 1</h4>
-              <p>Descripción del recurso externo</p>
-              <a href="https://www.ejemplo.com" target="_blank" rel="noopener noreferrer" class="enlace-url">
-                Visitar sitio →
-              </a>
-            </div>
+          <div class="emergencia-botones">
+            <a href="tel:6053399999" class="btn-emergencia btn-emergencia-1">
+              <span class="btn-emergencia-icon">📱</span>
+              <div class="btn-emergencia-info">
+                <span class="btn-emergencia-titulo">Línea de la Vida</span>
+                <span class="btn-emergencia-numero">605 3399999</span>
+              </div>
+            </a>
+
+            <a href="tel:3173532548" class="btn-emergencia btn-emergencia-2">
+              <span class="btn-emergencia-icon">🚑</span>
+              <div class="btn-emergencia-info">
+                <span class="btn-emergencia-titulo">CRUE Bolívar</span>
+                <span class="btn-emergencia-numero">317 353 2548</span>
+              </div>
+            </a>
+
+            <a href="tel:3106318080" class="btn-emergencia btn-emergencia-3">
+              <span class="btn-emergencia-icon">💙</span>
+              <div class="btn-emergencia-info">
+                <span class="btn-emergencia-titulo">Fundación Ser</span>
+                <span class="btn-emergencia-numero">310 631 8080</span>
+              </div>
+            </a>
           </div>
 
-          <div class="enlace-item">
-            <span class="enlace-icon">📱</span>
-            <div class="enlace-info">
-              <h4>App de Ejemplo 2</h4>
-              <p>Descripción de la aplicación</p>
-              <a href="https://www.ejemplo.com" target="_blank" rel="noopener noreferrer" class="enlace-url">
-                Descargar →
-              </a>
-            </div>
-          </div>
-
-          <div class="enlace-item">
-            <span class="enlace-icon">💬</span>
-            <div class="enlace-info">
-              <h4>Comunidad de Ejemplo 3</h4>
-              <p>Descripción del recurso comunitario</p>
-              <a href="https://www.ejemplo.com" target="_blank" rel="noopener noreferrer" class="enlace-url">
-                Unirse →
-              </a>
-            </div>
-          </div>
-
+          <p class="emergencia-nota">
+            <strong>Recuerda:</strong> No estás solo. Buscar ayuda es un acto de valentía. 💪
+          </p>
         </div>
       </section>
 
-      <!-- Botones de acción -->
+      <!-- Botones de navegación -->
       <section class="rutas-acciones">
-        <a href="./cuestionario.html" class="btn btn-secondary">
-             ← Volver atrás
-        </a>
+        <button onclick="window.history.back()" class="btn btn-secondary">
+          ← Volver atrás
+        </button>
         <a href="./index.html" class="btn btn-primary">
           🏠 Volver al inicio
         </a>
@@ -141,6 +138,403 @@
   <footer class="main-footer">
     <p>© 2025 EmotiQuest - Lo que callas también pesa, cuida tu bienestar</p>
   </footer>
+
+  <!-- ============================================
+       MODALES
+       ============================================ -->
+
+  <!-- MODAL 1: MEDITACIÓN GUIADA -->
+  <div id="modal-meditacion" class="modal-rutas">
+    <div class="modal-rutas-content">
+      <div class="modal-rutas-header">
+        <h2>🧘 Meditación Guiada</h2>
+        <button class="modal-rutas-close" onclick="cerrarModal('meditacion')">✕</button>
+      </div>
+      <div class="modal-rutas-body">
+        <p class="modal-descripcion">
+          Ejercicios de relajación y mindfulness para reducir el estrés, mejorar el enfoque y fortalecer tu bienestar emocional.
+        </p>
+
+        <!-- Audios Guiados -->
+        <div class="modal-seccion">
+          <h3>🎧 Audios Guiados</h3>
+          <ul class="modal-lista">
+            <li><strong>Respiración consciente:</strong> Técnicas de respiración para calmar la mente</li>
+            <li><strong>Escaneo corporal:</strong> Conexión con tu cuerpo y relajación profunda</li>
+            <li><strong>Visualización positiva:</strong> Imágenes mentales que generan paz</li>
+          </ul>
+        </div>
+
+        <!-- Tips Rápidos -->
+        <div class="modal-seccion">
+          <h3>📌 Tips Rápidos</h3>
+          <div class="tips-grid">
+            <div class="tip-card">
+              <div class="tip-emoji">💨</div>
+              <h4>Respira 4x4</h4>
+              <p>Inhala 4 seg, sostén 4 seg, exhala 4 seg</p>
+            </div>
+            <div class="tip-card">
+              <div class="tip-emoji">⚓</div>
+              <h4>Ancla Emocional</h4>
+              <p>Toca algo, escucha, huele: vuelve al presente</p>
+            </div>
+            <div class="tip-card">
+              <div class="tip-emoji">🙏</div>
+              <h4>Pausa de Gratitud</h4>
+              <p>3 cosas por las que agradeces hoy</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rutina Sugerida -->
+        <div class="modal-seccion">
+          <h3>📅 Rutina Sugerida</h3>
+          <ul class="modal-lista">
+            <li><strong>5 minutos antes de clase:</strong> Respiración consciente para centrarte</li>
+            <li><strong>10 minutos al finalizar la jornada:</strong> Escaneo corporal para liberar tensión</li>
+          </ul>
+        </div>
+
+        <!-- Recursos Externos -->
+        <div class="modal-seccion">
+          <h3>🔗 Recursos Recomendados</h3>
+          <div class="enlaces-externos">
+            <a href="https://webdelmaestrocmf.com/portal/100-meditaciones-guiadas/" target="_blank" class="enlace-externo">
+              <span>🌐</span>
+              <div>
+                <strong>100 Meditaciones Guiadas</strong>
+                <small>Para adolescentes y docentes</small>
+              </div>
+            </a>
+            <a href="https://www.comfama.com/aprendizaje/mindfulness-y-tecnicas-de-relajacion-para-docentes/" target="_blank" class="enlace-externo">
+              <span>🧘</span>
+              <div>
+                <strong>Mindfulness para Docentes</strong>
+                <small>Técnicas de relajación</small>
+              </div>
+            </a>
+            <a href="https://www.diba.cat/documents/124901139/333547697/16_actividades_Mindfulness_jovenesyadolescentes_CAST.pdf/41a57ddc-f0dd-fa95-4f33-ed6346c156ce" target="_blank" class="enlace-externo">
+              <span>📄</span>
+              <div>
+                <strong>Actividades de Mindfulness</strong>
+                <small>Para jóvenes y adolescentes (PDF)</small>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: LÍNEAS DE AYUDA -->
+  <div id="modal-lineas" class="modal-rutas">
+    <div class="modal-rutas-content">
+      <div class="modal-rutas-header">
+        <h2>📞 Líneas de Ayuda</h2>
+        <button class="modal-rutas-close" onclick="cerrarModal('lineas')">✕</button>
+      </div>
+      <div class="modal-rutas-body">
+        <p class="modal-descripcion">
+          Acceso directo a redes de apoyo emocional en Cartagena. Disponibles 24 horas, 7 días a la semana.
+        </p>
+
+        <!-- Botones de Llamada -->
+        <div class="modal-seccion">
+          <h3>📱 Llamar Ahora</h3>
+          <div class="lineas-llamadas">
+            <a href="tel:6053399999" class="linea-boton linea-vida">
+              <div class="linea-icon">💚</div>
+              <div class="linea-info">
+                <h4>Línea de la Vida Cartagena</h4>
+                <p class="linea-numero">605 3399999</p>
+                <p class="linea-descripcion">Atención en crisis y orientación psicológica</p>
+              </div>
+            </a>
+
+            <a href="tel:3173532548" class="linea-boton linea-crue">
+              <div class="linea-icon">🚑</div>
+              <div class="linea-info">
+                <h4>CRUE Bolívar</h4>
+                <p class="linea-numero">317 353 2548</p>
+                <p class="linea-descripcion">Centro Regulador de Urgencias y Emergencias</p>
+              </div>
+            </a>
+
+            <a href="tel:3106318080" class="linea-boton linea-fundacion">
+              <div class="linea-icon">💙</div>
+              <div class="linea-info">
+                <h4>Fundación Ser</h4>
+                <p class="linea-numero">310 631 8080</p>
+                <p class="linea-descripcion">Apoyo emocional y acompañamiento</p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Guía Rápida -->
+        <div class="modal-seccion">
+          <h3>📄 ¿Qué hacer en una crisis emocional?</h3>
+          <ol class="modal-lista-numerada">
+            <li><strong>Respira:</strong> Inhala profundo, exhala lento. Repite 5 veces.</li>
+            <li><strong>Busca un lugar seguro:</strong> Aléjate del estímulo que te afecta.</li>
+            <li><strong>Llama a una línea de ayuda:</strong> No estás solo, hay profesionales listos para escucharte.</li>
+            <li><strong>Habla con alguien de confianza:</strong> Familia, amigo, docente.</li>
+            <li><strong>Escribe lo que sientes:</strong> A veces plasmar las emociones ayuda a ordenarlas.</li>
+          </ol>
+        </div>
+
+        <!-- Campaña Local -->
+        <div class="modal-seccion">
+          <h3>🏙️ Campaña Local Destacada</h3>
+          <div class="campana-card">
+            <h4>"Yo te escucho, por tu salud mental y la vida"</h4>
+            <p>Impulsada por la Alcaldía de Cartagena para promover la salud mental en la comunidad.</p>
+            <a href="https://www.cartagena.gov.co/noticias/alcaldia-cartagena-adelanta-campana-yo-te-escucho-tu-salud-mental-vida" target="_blank" class="enlace-externo">
+              <span>🌐</span>
+              <div>
+                <strong>Más información</strong>
+                <small>Sitio oficial de la Alcaldía</small>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Nota Importante -->
+        <div class="nota-importante">
+          <strong>⚠️ Recuerda:</strong> Si sientes que tu vida o la de alguien más está en peligro inmediato, llama al 123 (Emergencias Colombia).
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: GUÍAS Y ARTÍCULOS -->
+  <div id="modal-guias" class="modal-rutas">
+    <div class="modal-rutas-content">
+      <div class="modal-rutas-header">
+        <h2>📖 Guías y Artículos</h2>
+        <button class="modal-rutas-close" onclick="cerrarModal('guias')">✕</button>
+      </div>
+      <div class="modal-rutas-body">
+        <p class="modal-descripcion">
+          Biblioteca digital con contenidos educativos sobre salud mental, autocuidado y convivencia escolar.
+        </p>
+
+        <!-- Guías Descargables -->
+        <div class="modal-seccion">
+          <h3>📘 Guías Descargables</h3>
+          <div class="enlaces-externos">
+            <a href="https://www.psyciencia.com/salud-mental-en-el-aula-guia-practica-para-el-docente/" target="_blank" class="enlace-externo">
+              <span>📕</span>
+              <div>
+                <strong>Salud Mental en el Aula</strong>
+                <small>Guía práctica para docentes</small>
+              </div>
+            </a>
+            <a href="https://www.mineducacion.gov.co/portal/Ministerio/421612:El-Ministerio-de-Educacion-Nacional-refuerza-la-salud-mental-en-Instituciones-de-Educacion-Superior-y-ofrece-herramientas-y-orientaciones-preventivas" target="_blank" class="enlace-externo">
+              <span>🏫</span>
+              <div>
+                <strong>Bienestar en tu Mente</strong>
+                <small>Plataforma del Ministerio de Educación</small>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Artículos Ilustrados -->
+        <div class="modal-seccion">
+          <h3>📰 Artículos Ilustrados</h3>
+          <div class="articulos-grid">
+            <div class="articulo-card">
+              <div class="articulo-emoji">😰</div>
+              <h4>Ansiedad</h4>
+              <p>Qué es, cómo identificarla y técnicas para manejarla</p>
+            </div>
+            <div class="articulo-card">
+              <div class="articulo-emoji">💪</div>
+              <h4>Autoestima</h4>
+              <p>Fortalece tu confianza y amor propio</p>
+            </div>
+            <div class="articulo-card">
+              <div class="articulo-emoji">📱</div>
+              <h4>Redes Sociales</h4>
+              <p>Uso saludable y límites digitales</p>
+            </div>
+            <div class="articulo-card">
+              <div class="articulo-emoji">🕊️</div>
+              <h4>Duelo</h4>
+              <p>Acompañamiento en pérdidas y despedidas</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infografías -->
+        <div class="modal-seccion">
+          <h3>🖼️ Infografías</h3>
+          <ul class="modal-lista">
+            <li><strong>"¿Cómo me siento hoy?"</strong> - Identifica tus emociones</li>
+            <li><strong>"Mi kit emocional"</strong> - Herramientas para el bienestar diario</li>
+          </ul>
+        </div>
+
+        <!-- Recursos para Docentes -->
+        <div class="modal-seccion">
+          <h3>👨‍🏫 Para Docentes y Entidades</h3>
+          <div class="enlaces-externos">
+            <a href="https://www.javeriana.edu.co/enmental/recursos/comunidad-educativa/" target="_blank" class="enlace-externo">
+              <span>🎓</span>
+              <div>
+                <strong>Recursos para Educadores</strong>
+                <small>Universidad Javeriana - EnMental</small>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: EJERCICIOS PRÁCTICOS -->
+  <div id="modal-ejercicios" class="modal-rutas">
+    <div class="modal-rutas-content">
+      <div class="modal-rutas-header">
+        <h2>🎯 Ejercicios Prácticos</h2>
+        <button class="modal-rutas-close" onclick="cerrarModal('ejercicios')">✕</button>
+      </div>
+      <div class="modal-rutas-body">
+        <p class="modal-descripcion">
+          Actividades breves para fortalecer tu bienestar emocional diario en entornos escolares.
+        </p>
+
+        <!-- Actividades Principales -->
+        <div class="modal-seccion">
+          <h3>🌟 Actividades Principales</h3>
+
+          <!-- Reto de 7 Días -->
+          <div class="actividad-destacada">
+            <div class="actividad-header">
+              <h4>🗓️ Reto de 7 Días de Bienestar</h4>
+              <p>Secuencia diaria con microacciones que fortalecen tu autocuidado emocional</p>
+            </div>
+            <div class="reto-dias">
+              <div class="reto-dia">
+                <span class="reto-numero">1</span>
+                <p>Escribe 3 cosas que agradeces hoy</p>
+              </div>
+              <div class="reto-dia">
+                <span class="reto-numero">2</span>
+                <p>Haz una pausa de respiración consciente (3 min)</p>
+              </div>
+              <div class="reto-dia">
+                <span class="reto-numero">3</span>
+                <p>Envía un mensaje positivo a alguien</p>
+              </div>
+              <div class="reto-dia">
+                <span class="reto-numero">4</span>
+                <p>Dibuja cómo te sientes</p>
+              </div>
+              <div class="reto-dia">
+                <span class="reto-numero">5</span>
+                <p>Camina 10 minutos sin celular</p>
+              </div>
+              <div class="reto-dia">
+                <span class="reto-numero">6</span>
+                <p>Escucha una canción que te relaje</p>
+              </div>
+              <div class="reto-dia">
+                <span class="reto-numero">7</span>
+                <p>Reflexiona: ¿Qué aprendiste esta semana?</p>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Funcionalidad próximamente')">
+              Comenzar Reto
+            </button>
+          </div>
+
+          <!-- Historias para Pensar -->
+          <div class="actividad-destacada">
+            <div class="actividad-header">
+              <h4>🎭 Historias para Pensar</h4>
+              <p>Microcuentos emocionales con preguntas reflexivas</p>
+            </div>
+            <div class="historia-ejemplo">
+              <blockquote>
+                "Sara se sentía invisible en su grupo. Un día, escribió lo que pensaba y lo compartió con su docente. No cambió todo, pero se sintió escuchada."
+              </blockquote>
+              <div class="historia-preguntas">
+                <p><strong>Preguntas para reflexionar:</strong></p>
+                <ul>
+                  <li>¿Alguna vez te has sentido como Sara?</li>
+                  <li>¿Qué harías tú en su lugar?</li>
+                  <li>¿A quién podrías contarle cómo te sientes?</li>
+                </ul>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Funcionalidad próximamente')">
+              Leer más Historias
+            </button>
+          </div>
+
+          <!-- Mapa de Energía Semanal -->
+          <div class="actividad-destacada">
+            <div class="actividad-header">
+              <h4>🧭 Mapa de Energía Semanal</h4>
+              <p>Registro visual de cómo te sientes cada día</p>
+            </div>
+            <div class="mapa-descripcion">
+              <ul class="modal-lista">
+                <li>Elige tu estado emocional cada día (color + palabra clave)</li>
+                <li>Visualiza tu semana como un mapa de emociones</li>
+                <li>Recibe sugerencias según tu patrón emocional</li>
+              </ul>
+            </div>
+            <button class="btn btn-primary" onclick="alert('Funcionalidad próximamente')">
+              Registrar Hoy
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Más Ejercicios -->
+        <div class="modal-seccion">
+          <h3>📓 Más Ejercicios</h3>
+          <ul class="modal-lista">
+            <li><strong>Diario Emocional:</strong> "Hoy me sentí...", "Lo que agradezco", "Mi meta"</li>
+            <li><strong>Ejercicios Creativos:</strong> Dibujo libre, escritura terapéutica, playlist emocional</li>
+            <li><strong>Dinámicas Grupales:</strong> "Círculo de palabra", "Mural de gratitud", "Reto de empatía"</li>
+          </ul>
+        </div>
+
+        <!-- Recursos Externos -->
+        <div class="modal-seccion">
+          <h3>🔗 Recursos Recomendados</h3>
+          <div class="enlaces-externos">
+            <a href="https://share.google.com/KXhG2j7cBogPoUJQq" target="_blank" class="enlace-externo">
+              <span>📚</span>
+              <div>
+                <strong>Manual de Entrenamiento Emocional</strong>
+                <small>Para adolescentes</small>
+              </div>
+            </a>
+            <a href="https://ayudapsicologica.co/blog/actividades-para-trabajar-emociones-adolescentes/" target="_blank" class="enlace-externo">
+              <span>🎨</span>
+              <div>
+                <strong>10 Actividades para Trabajar Emociones</strong>
+                <small>Guía práctica</small>
+              </div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="./js/rutas.js"></script>
 
 </body>
 </html>
