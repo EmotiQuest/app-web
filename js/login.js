@@ -206,17 +206,10 @@ function redirigirSegunGenero() {
   let paginaDestino;
   
   if (sesion.genero === 'pnd') {
-    // Si prefiere no decirlo, ir directo al cuestionario
-    paginaDestino = 'cuestionario.html';
-    console.log('⏩ Usuario prefirió no especificar género, ir a cuestionario');
+    // Si prefiere no decirlo, avatar neutro
+    paginaDestino = 'avatar-selection.html';
+    console.log('⏩ Usuario prefirió no especificar género, ir a selección de avatar neutro');
     
-    // Asignar avatar neutro
-    sesion.avatar = {
-      id: 'avatar-neutro',
-      ruta: null,
-      emoji: '😊'
-    };
-    guardarSesionActual(sesion);
     
   } else {
     // Si especificó masculino o femenino, ir a selección de avatar

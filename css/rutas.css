@@ -1,5 +1,6 @@
 /* ============================================
    RUTAS.CSS - Página de Rutas de Bienestar
+   Versión con Modales y Secciones Completas
    ============================================ */
 
 /* ==================== HEADER ==================== */
@@ -10,6 +11,9 @@
   box-shadow: 0 2px 10px rgba(209, 128, 253, 0.1);
   text-align: center;
   margin-bottom: 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 90;
 }
 
 .rutas-title {
@@ -67,11 +71,11 @@
   font-size: 1.2rem;
   opacity: 0.95;
   margin: 0;
+  line-height: 1.6;
 }
 
-/* ==================== SECCIONES ==================== */
-.rutas-recursos,
-.rutas-enlaces {
+/* ==================== SECCIÓN DE MÓDULOS ==================== */
+.rutas-modulos {
   margin-bottom: var(--spacing-xl);
 }
 
@@ -83,15 +87,14 @@
   font-weight: 700;
 }
 
-/* ==================== GRID DE RECURSOS ==================== */
-.recursos-grid {
+.modulos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
 }
 
-.recurso-card {
+.modulo-card {
   background: white;
   padding: 2rem;
   border-radius: var(--radius-card);
@@ -102,100 +105,156 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.recurso-card:hover {
+.modulo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(209, 128, 253, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.modulo-card:hover::before {
+  left: 100%;
+}
+
+.modulo-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-medium);
 }
 
-.recurso-icon {
+.modulo-icon {
   font-size: 3.5rem;
   margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
 }
 
-.recurso-card h3 {
+.modulo-card:hover .modulo-icon {
+  transform: scale(1.2);
+}
+
+.modulo-card h3 {
   font-size: 1.3rem;
   color: var(--text-dark);
   margin: 0;
   font-weight: 700;
 }
 
-.recurso-card p {
+.modulo-card p {
   font-size: 1rem;
   color: var(--text-medium);
   margin: 0;
   flex: 1;
+  line-height: 1.5;
 }
 
-.btn-sm {
-  padding: 0.7rem 1.5rem;
-  font-size: 0.95rem;
-  text-decoration: none;
-  display: inline-block;
+.modulo-card .btn {
+  margin-top: 0.5rem;
 }
 
-/* ==================== LISTA DE ENLACES ==================== */
-.enlaces-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-  max-width: 800px;
-  margin: 0 auto;
+/* ==================== SECCIÓN DE EMERGENCIA ==================== */
+.rutas-emergencia {
+  margin-bottom: var(--spacing-xl);
 }
 
-.enlace-item {
+.emergencia-card {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+  color: white;
+  padding: 2.5rem;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-strong);
+  text-align: center;
+}
+
+.emergencia-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 800;
+}
+
+.emergencia-card > p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.emergencia-botones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-emergencia {
   background: white;
+  color: var(--text-dark);
   padding: 1.5rem;
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-soft);
+  text-decoration: none;
   display: flex;
-  gap: 1.5rem;
   align-items: center;
+  gap: 1rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 3px solid transparent;
 }
 
-.enlace-item:hover {
-  transform: translateX(8px);
-  box-shadow: var(--shadow-medium);
+.btn-emergencia:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.enlace-icon {
+.btn-emergencia-1:hover {
+  border-color: #27ae60;
+}
+
+.btn-emergencia-2:hover {
+  border-color: #e67e22;
+}
+
+.btn-emergencia-3:hover {
+  border-color: #3498db;
+}
+
+.btn-emergencia-icon {
   font-size: 2.5rem;
   flex-shrink: 0;
 }
 
-.enlace-info {
-  flex: 1;
-}
-
-.enlace-info h4 {
-  font-size: 1.2rem;
-  color: var(--text-dark);
-  margin: 0 0 0.5rem 0;
-  font-weight: 700;
-}
-
-.enlace-info p {
-  font-size: 0.95rem;
-  color: var(--text-medium);
-  margin: 0 0 0.75rem 0;
-}
-
-.enlace-url {
-  color: var(--color-morado);
-  font-weight: 600;
-  text-decoration: none;
-  font-size: 0.95rem;
-  display: inline-flex;
-  align-items: center;
+.btn-emergencia-info {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
   gap: 0.25rem;
-  transition: all 0.3s ease;
 }
 
-.enlace-url:hover {
-  color: var(--color-morado-hover);
-  text-decoration: underline;
+.btn-emergencia-titulo {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-medium);
+}
+
+.btn-emergencia-numero {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  font-family: 'Courier New', monospace;
+}
+
+.emergencia-nota {
+  font-size: 1rem;
+  margin: 0;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-small);
+  backdrop-filter: blur(10px);
 }
 
 /* ==================== ACCIONES ==================== */
@@ -212,6 +271,566 @@
   min-width: 180px;
 }
 
+/* ==================== MODALES ==================== */
+.modal-rutas {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.modal-rutas-content {
+  background: white;
+  border-radius: var(--radius-card);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-strong);
+  animation: modalZoomIn 0.4s ease;
+}
+
+@keyframes modalZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-rutas-header {
+  position: sticky;
+  top: 0;
+  background: linear-gradient(135deg, var(--color-morado) 0%, var(--color-morado-hover) 100%);
+  color: white;
+  padding: 1.5rem 2rem;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.modal-rutas-header h2 {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 800;
+}
+
+.modal-rutas-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.modal-rutas-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.modal-rutas-body {
+  padding: 2rem;
+}
+
+.modal-descripcion {
+  font-size: 1.1rem;
+  color: var(--text-medium);
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-align: center;
+  padding: 1rem;
+  background: var(--color-lila-claro);
+  border-radius: var(--radius-small);
+}
+
+/* ==================== SECCIONES DEL MODAL ==================== */
+.modal-seccion {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--color-lila-claro);
+}
+
+.modal-seccion:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.modal-seccion h3 {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modal-lista li {
+  padding: 0.75rem 0;
+  padding-left: 2rem;
+  position: relative;
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
+.modal-lista li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--color-morado);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.modal-lista-numerada {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.modal-lista-numerada li {
+  padding: 0.75rem 0;
+  line-height: 1.6;
+  color: var(--text-dark);
+}
+
+/* ==================== TIPS RÁPIDOS ==================== */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.tip-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.tip-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-morado);
+  box-shadow: var(--shadow-soft);
+}
+
+.tip-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tip-card h4 {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.tip-card p {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ==================== ENLACES EXTERNOS ==================== */
+.enlaces-externos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.enlace-externo {
+  background: white;
+  border: 2px solid var(--color-lila-claro);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-card);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+.enlace-externo:hover {
+  border-color: var(--color-morado);
+  background: rgba(209, 128, 253, 0.05);
+  transform: translateX(5px);
+}
+
+.enlace-externo > span {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.enlace-externo > div {
+  flex: 1;
+}
+
+.enlace-externo strong {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.25rem;
+}
+
+.enlace-externo small {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-medium);
+}
+
+/* ==================== LÍNEAS DE AYUDA (MODAL) ==================== */
+.lineas-llamadas {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.linea-boton {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+  box-shadow: var(--shadow-soft);
+}
+
+.linea-boton:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+}
+
+.linea-vida:hover {
+  border-color: #27ae60;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.linea-crue:hover {
+  border-color: #e67e22;
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+}
+
+.linea-fundacion:hover {
+  border-color: #3498db;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+}
+
+.linea-icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.linea-info {
+  flex: 1;
+  text-align: left;
+}
+
+.linea-info h4 {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.linea-numero {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-morado);
+  font-family: 'Courier New', monospace;
+  margin: 0.25rem 0;
+  display: block;
+}
+
+.linea-descripcion {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  margin: 0;
+}
+
+/* ==================== CAMPAÑA CARD ==================== */
+.campana-card {
+  background: var(--color-crema);
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  border-left: 5px solid var(--color-amarillo);
+}
+
+.campana-card h4 {
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.campana-card p {
+  font-size: 1rem;
+  color: var(--text-medium);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+/* ==================== NOTA IMPORTANTE ==================== */
+.nota-importante {
+  background: #fff3cd;
+  border: 2px solid #ffc107;
+  border-radius: var(--radius-small);
+  padding: 1rem;
+  margin-top: 1.5rem;
+  color: #856404;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ==================== ARTÍCULOS GRID ==================== */
+.articulos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.articulo-card {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.articulo-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-morado);
+  box-shadow: var(--shadow-soft);
+}
+
+.articulo-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.articulo-card h4 {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.articulo-card p {
+  font-size: 0.95rem;
+  color: var(--text-medium);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ==================== ACTIVIDADES DESTACADAS ==================== */
+.actividad-destacada {
+  background: white;
+  border: 2px solid var(--color-lila-claro);
+  border-radius: var(--radius-card);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.actividad-header {
+  margin-bottom: 1.5rem;
+}
+
+.actividad-header h4 {
+  font-size: 1.4rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.actividad-header p {
+  font-size: 1rem;
+  color: var(--text-medium);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ==================== RETO DE 7 DÍAS ==================== */
+.reto-dias {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.reto-dia {
+  background: linear-gradient(135deg, var(--color-lila-claro) 0%, #f0e7f8 100%);
+  padding: 1rem;
+  border-radius: var(--radius-small);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.reto-dia:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-soft);
+}
+
+.reto-numero {
+  background: var(--color-morado);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.reto-dia p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+
+/* ==================== HISTORIAS ==================== */
+.historia-ejemplo {
+  background: var(--color-crema);
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  margin-bottom: 1.5rem;
+}
+
+.historia-ejemplo blockquote {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-dark);
+  margin: 0 0 1.5rem 0;
+  padding: 1rem;
+  background: white;
+  border-radius: var(--radius-small);
+  border-left: 4px solid var(--color-morado);
+  line-height: 1.7;
+}
+
+.historia-preguntas {
+  background: white;
+  padding: 1rem;
+  border-radius: var(--radius-small);
+}
+
+.historia-preguntas p {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+}
+
+.historia-preguntas ul {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+
+.historia-preguntas li {
+  padding: 0.5rem 0;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+/* ==================== MAPA DE ENERGÍA ==================== */
+.mapa-descripcion {
+  background: var(--color-lila-claro);
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  margin-bottom: 1.5rem;
+}
+
+.mapa-descripcion .modal-lista {
+  list-style: disc;
+  padding-left: 2rem;
+}
+
+.mapa-descripcion .modal-lista li::before {
+  content: none;
+}
+
+/* ==================== MENSAJE OFFLINE ==================== */
+.mensaje-offline {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  animation: slideInRight 0.5s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.mensaje-offline-content {
+  background: #ff9800;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 350px;
+}
+
+.mensaje-offline-content span {
+  font-size: 2rem;
+}
+
+.mensaje-offline-content p {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 /* ==================== ANIMACIONES ==================== */
 @keyframes fadeInDown {
   from {
@@ -221,6 +840,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -250,13 +878,20 @@
     font-size: 1.5rem;
   }
 
-  .recursos-grid {
+  .modulos-grid {
     grid-template-columns: 1fr;
   }
 
-  .enlace-item {
-    flex-direction: column;
-    text-align: center;
+  .emergencia-card {
+    padding: 1.5rem;
+  }
+
+  .emergencia-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .emergencia-botones {
+    grid-template-columns: 1fr;
   }
 
   .rutas-acciones {
@@ -266,6 +901,43 @@
   .rutas-acciones button,
   .rutas-acciones a {
     width: 100%;
+  }
+
+  .modal-rutas-content {
+    max-height: 85vh;
+  }
+
+  .modal-rutas-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .modal-rutas-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .modal-rutas-body {
+    padding: 1.5rem;
+  }
+
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .articulos-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reto-dias {
+    grid-template-columns: 1fr;
+  }
+
+  .linea-boton {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .linea-info {
+    text-align: center;
   }
 }
 
@@ -286,15 +958,47 @@
     font-size: 0.95rem;
   }
 
-  .recurso-card {
+  .modulo-card {
     padding: 1.5rem;
   }
 
-  .recurso-icon {
+  .modulo-icon {
     font-size: 2.8rem;
   }
 
-  .enlace-icon {
-    font-size: 2rem;
+  .emergencia-card {
+    padding: 1.5rem;
+  }
+
+  .btn-emergencia {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .btn-emergencia-info {
+    text-align: center;
+  }
+
+  .modal-rutas-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-rutas-close {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+  }
+
+  .modal-seccion h3 {
+    font-size: 1.2rem;
+  }
+
+  .mensaje-offline {
+    left: 10px;
+    right: 10px;
+  }
+
+  .mensaje-offline-content {
+    max-width: 100%;
   }
 }
